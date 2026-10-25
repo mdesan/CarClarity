@@ -1,0 +1,1 @@
+//this file is for getting the information from content.js and sending it to the backend
