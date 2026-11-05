@@ -1,0 +1,14 @@
+body {
+  width: 340px;
+  overflow-wrap: anywhere;
+}
+
+#details {
+  padding-left: 20px;
+}
+
+#description {
+  white-space: pre-wrap;
+  max-height: 250px;
+  overflow: auto;
+}
