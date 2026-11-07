@@ -17,3 +17,8 @@ body {
   max-height: 250px;
   overflow: auto;
 }
+
+#listingJson {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

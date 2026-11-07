@@ -13,8 +13,8 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 ## M2 · Craigslist listing extraction
 
 - [x] Add a first pass that reads and displays the listing title, asking price, visible specs, seller description, and post ID.
-- [ ] Return structured year, make, model, optional trim, price in USD, mileage in miles, optional VIN, source, listing URL, and tab ID.
-- [ ] Normalize price and mileage formats and leave missing values blank.
+- [x] Return structured year, make, model, optional trim, price in USD, mileage in miles, optional VIN, source, listing URL, and tab ID.
+- [x] Normalize price and mileage formats and leave missing values blank.
 - [ ] Make sure extraction works across complete, incomplete, and ambiguous listings.
 
 ## M3 · Seller issues and user verification
@@ -46,4 +46,5 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 - [ ] Show vehicle details, seller issues, model complaints, recalls, pricing, sources, and a short summary.
 - [ ] Keep available sections visible when an outside source fails.
 - [ ] Verify that switching tabs or navigating to another listing never mixes report data.
+  - If we save listing data or reports later, key them by both `tabId` and `listingUrl`. Test switching tabs and opening a different listing in the same tab, including while a lookup is still running.
 - [ ] Run the end-to-end demo in Chrome and Edge.
