@@ -19,15 +19,11 @@ const postTitleInput = document.getElementById("postTitle");
 const postDescriptionInput = document.getElementById("postDescription");
 const postStatus = document.getElementById("postStatus");
 const listingJson = document.getElementById("listingJson");
-const sellerIssues = document.getElementById("sellerIssues");
-const sellerIssuesMessage = document.getElementById("sellerIssuesMessage");
-const sellerIssueList = document.getElementById("sellerIssueList");
-const userIssueList = document.getElementById("userIssueList");
-const addIssueForm = document.getElementById("addIssueForm");
-const issueChoice = document.getElementById("issueChoice");
-const confirmIssues = document.getElementById("confirmIssues");
-const editIssues = document.getElementById("editIssues");
-const userIssueStatus = document.getElementById("userIssueStatus");
+const issueReview = setupIssueReview(
+  () => activeListing && getConfirmations(activeListing),
+  saveConfirmation,
+  setStatus
+);
 
 function getConfirmations(listing) {
   const saved = confirmedByTab.get(listing.tabId);
@@ -40,92 +36,6 @@ function saveConfirmation(section, value) {
   confirmedByTab.set(activeListing.tabId, saved);
   showListingJson(activeListing);
 }
-
-function identityKey(value) {
-  return (value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
-function showSellerIssues(post, userIssues = []) {
-  sellerIssueList.replaceChildren();
-  userIssueList.replaceChildren();
-  sellerIssues.hidden = !post;
-  if (!post) return;
-
-  const locked = Boolean(post.issuesVerified);
-  addIssueForm.hidden = locked;
-  confirmIssues.hidden = locked;
-  editIssues.hidden = !locked;
-  if (locked) setStatus(userIssueStatus, "Issues confirmed.");
-  sellerIssuesMessage.hidden = locked && post.issues.length > 0;
-  sellerIssuesMessage.textContent = post.issues.length
-    ? "These phrases may describe current problems."
-    : "No detected seller issues in this review.";
-  for (const issue of post.issues) {
-    const row = document.createElement("li");
-    row.textContent = issue.name + ": “" + issue.sourceText + "”";
-    sellerIssueList.append(row);
-  }
-  for (const issue of userIssues) {
-    appendUserIssue(issue, locked);
-  }
-}
-
-function appendUserIssue(issue, locked) {
-  const row = document.createElement("li");
-  row.textContent = issue.name;
-  if (!locked) {
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "remove-issue";
-    remove.textContent = "×";
-    remove.setAttribute("aria-label", "Remove " + issue.name);
-    remove.title = "Remove " + issue.name;
-    remove.addEventListener("click", () => {
-      if (!activeListing) return;
-      const { post, userIssues = [] } = getConfirmations(activeListing);
-      if (!post || post.issuesVerified) return;
-      saveConfirmation("userIssues", userIssues.filter((item) => item.issueId !== issue.issueId));
-      setStatus(userIssueStatus, "Issue removed.");
-    });
-    row.append(" ", remove);
-  }
-  userIssueList.append(row);
-}
-
-addIssueForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (!activeListing || !issueChoice.value) return;
-  const { post, userIssues = [] } = getConfirmations(activeListing);
-  if (!post || post.issuesVerified) return;
-
-  const issueId = "user-" + issueChoice.value;
-  if (userIssues.some((issue) => issue.issueId === issueId)) {
-    setStatus(userIssueStatus, "You already added that issue.", true);
-    return;
-  }
-  const name = issueChoice.selectedOptions[0].textContent;
-  const issue = { issueId, name, category: "user-added", sourceText: null, reviewed: true, status: "reviewed" };
-  saveConfirmation("userIssues", [...userIssues, issue]);
-  issueChoice.value = "";
-  setStatus(userIssueStatus, name + " added.");
-});
-
-confirmIssues.addEventListener("click", () => {
-  if (!activeListing) return;
-  const { post } = getConfirmations(activeListing);
-  if (!post || post.issuesVerified) return;
-  saveConfirmation("post", { ...post, issuesVerified: true });
-  editIssues.focus();
-});
-
-editIssues.addEventListener("click", () => {
-  if (!activeListing) return;
-  const { post } = getConfirmations(activeListing);
-  if (!post?.issuesVerified) return;
-  saveConfirmation("post", { ...post, issuesVerified: false });
-  setStatus(userIssueStatus, "Confirm again when you’re done editing.");
-  issueChoice.focus();
-});
 
 function showListingJson(listing) {
   const output = { ...listing };
@@ -153,7 +63,7 @@ function showListingJson(listing) {
   }
   output.issuesVerified = Boolean(post?.issuesVerified);
   output.userAddedIssues = userIssues;
-  showSellerIssues(post, userIssues);
+  issueReview.show(post, userIssues);
   listingJson.textContent = JSON.stringify(output, null, 2);
 }
 
@@ -183,23 +93,6 @@ function showPostMode(editing, confirmed = false) {
   postFields.disabled = !editing;
   confirmPost.hidden = confirmed;
   editPost.hidden = editing;
-}
-
-async function findVehicle(year, make, model) {
-  const url = "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/" +
-    encodeURIComponent(make) + "/modelyear/" + year + "?format=json";
-  const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
-  if (!response.ok) throw new Error("NHTSA lookup failed");
-  const data = await response.json();
-  const models = data.Results.filter((item) => identityKey(item.Make_Name) === identityKey(make));
-  if (!models.length) {
-    return { error: "NHTSA couldn’t find that make for " + year + ". Check the year and make spelling." };
-  }
-  const match = models.find((item) => identityKey(item.Model_Name) === identityKey(model));
-  if (!match) {
-    return { error: "NHTSA couldn’t find that model for " + year + " " + models[0].Make_Name + ". Check the model name." };
-  }
-  return { year, make: match.Make_Name, model: match.Model_Name };
 }
 
 vehicleForm.addEventListener("submit", async (event) => {
@@ -276,44 +169,12 @@ editPost.addEventListener("click", () => {
   postTitleInput.focus();
 });
 
-async function decodeVin(vin) {
-  try {
-    const url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/" + vin + "?format=json";
-    const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    const decoded = data.Results?.[0];
-    if (decoded?.ErrorCode !== "0") return null;
-
-    const year = Number(decoded.ModelYear);
-    const make = decoded.Make?.trim();
-    const model = decoded.Model?.trim();
-    const trim = decoded.Trim?.trim() || null;
-    if (!Number.isInteger(year) || year < 1900 || year > new Date().getFullYear() + 1 || !make || !model) {
-      return null;
-    }
-
-    return {
-      year,
-      make,
-      model,
-      trim,
-      vehicleTitle: [year, make, model, trim].filter(Boolean).join(" ")
-    };
-  } catch {
-    return null;
-  }
-}
-
 async function showListing() {
   const request = ++latestRequest;
   activeListing = null;
   vehicleForm.hidden = true;
   postForm.hidden = true;
-  issueChoice.value = "";
-  setStatus(userIssueStatus, "");
-  showSellerIssues(null);
+  issueReview.reset();
   setStatus(verificationStatus, "");
   setStatus(postStatus, "");
   const urlCheck = document.getElementById("urlCheck");
