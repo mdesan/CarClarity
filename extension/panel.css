@@ -92,6 +92,10 @@ body {
   resize: vertical;
 }
 
+.review-card ::placeholder {
+  color: GrayText;
+}
+
 .review-card button {
   margin-top: 12px;
   padding: 7px 12px;
@@ -134,6 +138,7 @@ body {
 }
 
 .review-card [role="status"]:empty,
+#urlCheck:empty,
 #description:empty {
   display: none;
 }

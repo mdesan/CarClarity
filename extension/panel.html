@@ -16,14 +16,17 @@
         <dt>Year</dt><dd id="previewYear"></dd>
         <dt>Make</dt><dd id="previewMake"></dd>
         <dt>Model</dt><dd id="previewModel"></dd>
+        <dt>Mileage</dt><dd id="previewMileage"></dd>
       </dl>
-      <fieldset id="vehicleFields" aria-label="Year, make, and model" hidden>
+      <fieldset id="vehicleFields" aria-label="Year, make, model, and mileage" hidden>
         <label for="year">Year</label>
         <input id="year" inputmode="numeric" maxlength="4" required>
         <label for="make">Make</label>
         <input id="make" required>
         <label for="model">Model</label>
         <input id="model" required>
+        <label for="mileage">Mileage</label>
+        <input id="mileage" inputmode="numeric" placeholder="Optional – e.g. 85,000">
       </fieldset>
       <button id="confirmVehicle" type="submit">Confirm vehicle</button>
       <button id="editVehicle" type="button">Edit vehicle</button>
