@@ -5,12 +5,89 @@
     <title>CarClarity</title>
     <link rel="stylesheet" href="panel.css">
   </head>
-  <body>
+  <body class="listing-panel">
     <h1>CarClarity</h1>
     <p id="urlCheck">Loading website...</p>
-    <ul id="details"></ul>
-    <p id="description"></p>
+    <p id="description" role="status"></p>
+    <form id="vehicleForm" class="review-card" hidden novalidate>
+      <h2>Vehicle details</h2>
+      <p id="identitySource"></p>
+      <dl id="vehiclePreview" class="vehicle-preview">
+        <dt>Year</dt><dd id="previewYear"></dd>
+        <dt>Make</dt><dd id="previewMake"></dd>
+        <dt>Model</dt><dd id="previewModel"></dd>
+      </dl>
+      <fieldset id="vehicleFields" aria-label="Year, make, and model" hidden>
+        <label for="year">Year</label>
+        <input id="year" inputmode="numeric" maxlength="4" required>
+        <label for="make">Make</label>
+        <input id="make" required>
+        <label for="model">Model</label>
+        <input id="model" required>
+      </fieldset>
+      <button id="confirmVehicle" type="submit">Confirm vehicle</button>
+      <button id="editVehicle" type="button">Edit vehicle</button>
+      <p id="verificationStatus" role="status"></p>
+    </form>
+    <form id="postForm" class="review-card" hidden novalidate>
+      <h2>Seller post</h2>
+      <div id="postPreview">
+        <p id="previewPostTitle" class="post-title"></p>
+        <p id="previewPostDescription" class="post-description"></p>
+      </div>
+      <fieldset id="postFields" aria-label="Post title and description" hidden>
+        <label for="postTitle">Post title</label>
+        <input id="postTitle" required>
+        <label for="postDescription">Seller description</label>
+        <textarea id="postDescription" rows="5"></textarea>
+      </fieldset>
+      <button id="confirmPost" type="submit">Confirm post</button>
+      <button id="editPost" type="button">Edit post</button>
+      <p id="postStatus" role="status"></p>
+    </form>
+    <section id="sellerIssues" class="review-card" hidden>
+      <h2>Possible seller issues</h2>
+      <p id="sellerIssuesMessage"></p>
+      <ul id="sellerIssueList"></ul>
+      <h2>Your observations</h2>
+      <ul id="userIssueList"></ul>
+      <form id="addIssueForm">
+        <label for="issueChoice">Issue you noticed</label>
+        <select id="issueChoice" required>
+          <option value="">Choose an issue</option>
+          <option value="bumper-damage">Bumper damage</option>
+          <option value="body-damage">Dents or body damage</option>
+          <option value="paint-damage">Paint damage</option>
+          <option value="glass-damage">Cracked or damaged glass</option>
+          <option value="light-damage">Damaged headlight or taillight</option>
+          <option value="rust">Rust</option>
+          <option value="worn-tires">Worn or damaged tires</option>
+          <option value="warning-light">Dashboard warning light</option>
+          <option value="fluid-leak">Fluid leak</option>
+          <option value="brakes">Brake trouble</option>
+          <option value="transmission">Transmission trouble</option>
+          <option value="starting">Starting trouble</option>
+          <option value="air-conditioning">Air conditioning trouble</option>
+          <option value="other">Other issue</option>
+        </select>
+        <button type="submit">Add issue</button>
+      </form>
+      <button id="confirmIssues" type="button">Confirm issues</button>
+      <button id="editIssues" type="button" hidden>Edit issues</button>
+      <p id="userIssueStatus" role="status"></p>
+    </section>
+    <details id="scrapedDetails" hidden>
+      <summary>Craigslist listing details</summary>
+      <ul id="details"></ul>
+    </details>
+    <details id="formatted" hidden>
+      <summary>Formatted listing data</summary>
+      <pre id="listingJson"></pre>
+    </details>
     <script src="content.js"></script>
+    <script src="seller-issues.js"></script>
+    <script src="nhtsa.js"></script>
+    <script src="issue-review.js"></script>
     <script src="panel.js"></script>
   </body>
 </html>
