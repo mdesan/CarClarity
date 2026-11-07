@@ -1,6 +1,11 @@
 body {
-  width: 340px;
   overflow-wrap: anywhere;
+}
+
+.unsupported-popup {
+  width: 260px;
+  margin: 12px;
+  font: 14px system-ui, sans-serif;
 }
 
 #details {

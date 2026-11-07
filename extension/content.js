@@ -1,4 +1,13 @@
 function readCraigslistListing() {
+  // Shared links leave the category out of the URL. Read it from the breadcrumb.
+  if (location.pathname.startsWith("/view/d/")) {
+    const categoryLink = document.querySelector(".breadcrumbs .category a");
+    if (!categoryLink) return null;
+
+    const category = new URL(categoryLink.href).searchParams.get("cat");
+    if (category !== "cta" && category !== "cto" && category !== "ctd") return null;
+  }
+
   const text = (selector) => document.querySelector(selector)?.innerText.trim();
   const title = text("#titletextonly");
   const description = text("#postingbody");

@@ -1,11 +1,22 @@
 {
-  "name": "Hello Extensions",
+  "name": "CarClarity",
   "description": "Base Level Extension",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "sidePanel"],
+  "host_permissions": ["*://*.craigslist.org/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "32": "car-blue.png",
+    "48": "car-blue-48.png",
+    "96": "car-blue-96.png",
+    "128": "car-blue-128.png"
+  },
   "action": {
-    "default_popup": "panel.html",
-    "default_icon": "icon.png"
+    "default_title": "Open CarClarity",
+    "default_popup": "unsupported.html",
+    "default_icon": "car-gray.png"
   }
 }
