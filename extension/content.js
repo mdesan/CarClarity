@@ -84,7 +84,10 @@ function readCraigslistListing(tabId) {
   const modelValue = makeText ? vehicle.slice(makeText.length).trim() : "";
   const ambiguousModel = /\s(?:or|\/)\s|[|*]|^(?:unknown|other|n\/?a)$/i.test(modelValue);
   const modelText = ambiguousModel ? "" : modelValue;
-  const trimMatch = modelText.match(/(?:^|\s+)["“]?(EX-L|XLE|XLS|XLT|LTZ|SEL|TRD Pro)["”]?(?:\s+(?:AWD|FWD|RWD|4WD|hybrid))*$/i);
+  let trimMatch = modelText.match(/(?:^|\s+)["“]?(EX-L|XLE|XLS|XLT|LTZ|SEL|TRD Pro)["”]?(?:\s+(?:AWD|FWD|RWD|4WD|hybrid))*$/i);
+  if (!trimMatch && make === "toyota") {
+    trimMatch = modelText.match(/\s+["“]?(LE)["”]?(?:\s+(?:AWD|FWD|RWD|4WD|hybrid))*$/i);
+  }
   let trim = trimMatch?.[1].toUpperCase() ?? null;
   const model = (trimMatch ? modelText.slice(0, trimMatch.index) : modelText) || null;
 

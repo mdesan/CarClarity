@@ -21,8 +21,11 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 
 - [x] Let the buyer review and edit year, make, and model. Check all three with NHTSA before confirming the vehicle.
 - [x] Let the buyer review, edit, and separately confirm the post title and seller description.
-- [ ] Identify a small set of seller-disclosed issues and distinguish active problems, negations, and past repairs.
-- [ ] Let the buyer correct, dismiss, or add issues before generating the report.
+- [x] Identify a small set of seller-disclosed issues and distinguish active problems, negations, and past repairs.
+- [x] Let the buyer add or remove their own observations before generating the report.
+- [x] Keep detected seller phrases visible for review alongside buyer observations.
+- [x] Let the buyer confirm and lock the issue list, then reopen it to make changes.
+- [ ] Verify the full M3 confirmation flow in the browser.
 
 ## M4 · Vehicle research
 

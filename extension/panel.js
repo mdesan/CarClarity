@@ -19,6 +19,15 @@ const postTitleInput = document.getElementById("postTitle");
 const postDescriptionInput = document.getElementById("postDescription");
 const postStatus = document.getElementById("postStatus");
 const listingJson = document.getElementById("listingJson");
+const sellerIssues = document.getElementById("sellerIssues");
+const sellerIssuesMessage = document.getElementById("sellerIssuesMessage");
+const sellerIssueList = document.getElementById("sellerIssueList");
+const userIssueList = document.getElementById("userIssueList");
+const addIssueForm = document.getElementById("addIssueForm");
+const issueChoice = document.getElementById("issueChoice");
+const confirmIssues = document.getElementById("confirmIssues");
+const editIssues = document.getElementById("editIssues");
+const userIssueStatus = document.getElementById("userIssueStatus");
 
 function getConfirmations(listing) {
   const saved = confirmedByTab.get(listing.tabId);
@@ -36,9 +45,91 @@ function identityKey(value) {
   return (value || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+function showSellerIssues(post, userIssues = []) {
+  sellerIssueList.replaceChildren();
+  userIssueList.replaceChildren();
+  sellerIssues.hidden = !post;
+  if (!post) return;
+
+  const locked = Boolean(post.issuesVerified);
+  addIssueForm.hidden = locked;
+  confirmIssues.hidden = locked;
+  editIssues.hidden = !locked;
+  if (locked) setStatus(userIssueStatus, "Issues confirmed.");
+  sellerIssuesMessage.hidden = locked && post.issues.length > 0;
+  sellerIssuesMessage.textContent = post.issues.length
+    ? "These phrases may describe current problems."
+    : "No detected seller issues in this review.";
+  for (const issue of post.issues) {
+    const row = document.createElement("li");
+    row.textContent = issue.name + ": “" + issue.sourceText + "”";
+    sellerIssueList.append(row);
+  }
+  for (const issue of userIssues) {
+    appendUserIssue(issue, locked);
+  }
+}
+
+function appendUserIssue(issue, locked) {
+  const row = document.createElement("li");
+  row.textContent = issue.name;
+  if (!locked) {
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "remove-issue";
+    remove.textContent = "×";
+    remove.setAttribute("aria-label", "Remove " + issue.name);
+    remove.title = "Remove " + issue.name;
+    remove.addEventListener("click", () => {
+      if (!activeListing) return;
+      const { post, userIssues = [] } = getConfirmations(activeListing);
+      if (!post || post.issuesVerified) return;
+      saveConfirmation("userIssues", userIssues.filter((item) => item.issueId !== issue.issueId));
+      setStatus(userIssueStatus, "Issue removed.");
+    });
+    row.append(" ", remove);
+  }
+  userIssueList.append(row);
+}
+
+addIssueForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!activeListing || !issueChoice.value) return;
+  const { post, userIssues = [] } = getConfirmations(activeListing);
+  if (!post || post.issuesVerified) return;
+
+  const issueId = "user-" + issueChoice.value;
+  if (userIssues.some((issue) => issue.issueId === issueId)) {
+    setStatus(userIssueStatus, "You already added that issue.", true);
+    return;
+  }
+  const name = issueChoice.selectedOptions[0].textContent;
+  const issue = { issueId, name, category: "user-added", sourceText: null, reviewed: true, status: "reviewed" };
+  saveConfirmation("userIssues", [...userIssues, issue]);
+  issueChoice.value = "";
+  setStatus(userIssueStatus, name + " added.");
+});
+
+confirmIssues.addEventListener("click", () => {
+  if (!activeListing) return;
+  const { post } = getConfirmations(activeListing);
+  if (!post || post.issuesVerified) return;
+  saveConfirmation("post", { ...post, issuesVerified: true });
+  editIssues.focus();
+});
+
+editIssues.addEventListener("click", () => {
+  if (!activeListing) return;
+  const { post } = getConfirmations(activeListing);
+  if (!post?.issuesVerified) return;
+  saveConfirmation("post", { ...post, issuesVerified: false });
+  setStatus(userIssueStatus, "Confirm again when you’re done editing.");
+  issueChoice.focus();
+});
+
 function showListingJson(listing) {
   const output = { ...listing };
-  const { vehicle: confirmed, post } = getConfirmations(listing);
+  const { vehicle: confirmed, post, userIssues = [] } = getConfirmations(listing);
   if (confirmed) {
     const changed = confirmed.year !== listing.year ||
       identityKey(confirmed.make) !== identityKey(listing.make) ||
@@ -56,7 +147,13 @@ function showListingJson(listing) {
     output.postTitle = post.title;
     output.sellerDescription = post.description;
     output.postVerified = true;
+    output.sellerIssues = post.issuesVerified
+      ? post.issues.map((issue) => ({ ...issue, reviewed: true, status: "reviewed" }))
+      : post.issues;
   }
+  output.issuesVerified = Boolean(post?.issuesVerified);
+  output.userAddedIssues = userIssues;
+  showSellerIssues(post, userIssues);
   listingJson.textContent = JSON.stringify(output, null, 2);
 }
 
@@ -165,7 +262,8 @@ postForm.addEventListener("submit", (event) => {
   const description = postDescriptionInput.value.trim();
   postTitleInput.value = title;
   postDescriptionInput.value = description;
-  saveConfirmation("post", { title, description });
+  const issues = findSellerIssues(description);
+  saveConfirmation("post", { title, description, issues });
   showPostMode(false, true);
   setStatus(postStatus, "Post confirmed.");
 });
@@ -213,6 +311,9 @@ async function showListing() {
   activeListing = null;
   vehicleForm.hidden = true;
   postForm.hidden = true;
+  issueChoice.value = "";
+  setStatus(userIssueStatus, "");
+  showSellerIssues(null);
   setStatus(verificationStatus, "");
   setStatus(postStatus, "");
   const urlCheck = document.getElementById("urlCheck");

@@ -45,6 +45,37 @@
       <button id="editPost" type="button">Edit post</button>
       <p id="postStatus" role="status"></p>
     </form>
+    <section id="sellerIssues" class="review-card" hidden>
+      <h2>Possible seller issues</h2>
+      <p id="sellerIssuesMessage"></p>
+      <ul id="sellerIssueList"></ul>
+      <h2>Your observations</h2>
+      <ul id="userIssueList"></ul>
+      <form id="addIssueForm">
+        <label for="issueChoice">Issue you noticed</label>
+        <select id="issueChoice" required>
+          <option value="">Choose an issue</option>
+          <option value="bumper-damage">Bumper damage</option>
+          <option value="body-damage">Dents or body damage</option>
+          <option value="paint-damage">Paint damage</option>
+          <option value="glass-damage">Cracked or damaged glass</option>
+          <option value="light-damage">Damaged headlight or taillight</option>
+          <option value="rust">Rust</option>
+          <option value="worn-tires">Worn or damaged tires</option>
+          <option value="warning-light">Dashboard warning light</option>
+          <option value="fluid-leak">Fluid leak</option>
+          <option value="brakes">Brake trouble</option>
+          <option value="transmission">Transmission trouble</option>
+          <option value="starting">Starting trouble</option>
+          <option value="air-conditioning">Air conditioning trouble</option>
+          <option value="other">Other issue</option>
+        </select>
+        <button type="submit">Add issue</button>
+      </form>
+      <button id="confirmIssues" type="button">Confirm issues</button>
+      <button id="editIssues" type="button" hidden>Edit issues</button>
+      <p id="userIssueStatus" role="status"></p>
+    </section>
     <details id="scrapedDetails" hidden>
       <summary>Craigslist listing details</summary>
       <ul id="details"></ul>
@@ -54,6 +85,7 @@
       <pre id="listingJson"></pre>
     </details>
     <script src="content.js"></script>
+    <script src="seller-issues.js"></script>
     <script src="panel.js"></script>
   </body>
 </html>

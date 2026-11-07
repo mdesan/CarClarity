@@ -77,6 +77,7 @@ body {
 }
 
 .review-card input,
+.review-card select,
 .review-card textarea {
   box-sizing: border-box;
   width: 100%;
@@ -109,6 +110,22 @@ body {
 .review-card button[type="button"] {
   background: Canvas;
   color: CanvasText;
+  border-color: GrayText;
+}
+
+.review-card button.remove-issue {
+  margin: 0 0 0 4px;
+  padding: 0;
+  width: 26px;
+  height: 26px;
+  border-color: transparent;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.review-card button.remove-issue:hover {
   border-color: GrayText;
 }
 
