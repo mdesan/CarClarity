@@ -13,7 +13,6 @@ ALIASES = {
     'year': ('year', 'model_year', 'modelyear'),
     'make': ('make', 'manufacturer', 'brand'),
     'model': ('model', 'vehicle_model'),
-    'averagePriceUsd': ('averagepriceusd', 'average_price', 'avg_price', 'averageprice', 'price', 'sellingprice'),
     'listingCount': ('listingcount', 'listing_count', 'listings', 'count', 'num_listings', 'number_of_listings'),
     'averageMileageMiles': ('averagemileagemiles', 'average_mileage', 'avg_mileage', 'mileage', 'odometer'),
     'averagePriceUsd': ('averagepriceusd', 'average_price', 'avg_price', 'avg_price_usd', 'averageprice', 'price', 'sellingprice'),
@@ -52,7 +51,7 @@ def clean_row(row, source):
     make = normalize_name(pick(row, 'make'))
     model = normalize_name(pick(row, 'model'))
     price = number(pick(row, 'averagePriceUsd'))
-    if year is None or not 1886 <= year <= 2100 or not make or not model or price is None or price <= 0:
+    if year is None or not 1886 <= year <= 2028 or not make or not model or price is None or price <= 0:
         return None, 'missing/invalid year, make, model or price'
     count = number(pick(row, 'listingCount'), True)
     mileage = number(pick(row, 'averageMileageMiles'))
@@ -64,10 +63,17 @@ def clean_row(row, source):
     if high is not None and high <= 0: high = None
     if low is not None and high is not None and low > high:
         low = high = None
-    return dict(year=year, make=make, model=model, listingCount=count,
-                averagePriceUsd=price, averageMileageMiles=mileage,
+    listing_id = str(row.get('id', '')).strip() if source == 'craigslist' else None
+    price_field = 'askingPriceUsd' if source == 'craigslist' else 'averagePriceUsd'
+    mileage_field = 'odometerMiles' if source == 'craigslist' else 'averageMileageMiles'
+    if source == 'craigslist':
+        data_status = 'valid listing'
+    else:
+        data_status = 'usable benchmark' if count is not None and count >= 5 else 'limited'
+    return dict(year=year, make=make, model=model, listingId=listing_id, listingCount=count,
+                **{price_field: price}, **{mileage_field: mileage},
                 observedMinUsd=low, observedMaxUsd=high,
-                dataStatus='usable benchmark' if count is not None and count >= 5 else 'limited',
+                dataStatus=data_status,
                 source=source), None
 
 def process(path, source, out_dir):
@@ -83,10 +89,22 @@ def process(path, source, out_dir):
     # represent distinct listings or overlapping market aggregates.
     unique, seen = [], set()
     for r in records:
-        signature = json.dumps(r, sort_keys=True)
+        signature = (
+            ('craigslist-id', r['listingId'])
+            if source == 'craigslist' and r.get('listingId')
+            else ('record', json.dumps(r, sort_keys=True))
+        )
         if signature not in seen:
             seen.add(signature); unique.append(r)
-    unique.sort(key=lambda r: (r['year'], r['make'], r['model'], r['averagePriceUsd']))
+    unique.sort(
+        key=lambda r: (
+            r['year'],
+            r['make'],
+            r['model'],
+            r.get('askingPriceUsd', r.get('averagePriceUsd'))
+        )
+    )
+
     out_dir.mkdir(parents=True, exist_ok=True)
     target = out_dir / f'{source}_cleaned.json'
     target.write_text(json.dumps(unique, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
