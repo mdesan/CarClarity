@@ -19,7 +19,8 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 
 ## M3 · Seller issues and user verification
 
-- [ ] Let the buyer review and edit extracted fields. Require a valid year, make, and model before continuing.
+- [x] Let the buyer review and edit year, make, and model. Check all three with NHTSA before confirming the vehicle.
+- [x] Let the buyer review, edit, and separately confirm the post title and seller description.
 - [ ] Identify a small set of seller-disclosed issues and distinguish active problems, negations, and past repairs.
 - [ ] Let the buyer correct, dismiss, or add issues before generating the report.
 

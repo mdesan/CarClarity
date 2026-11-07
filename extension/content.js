@@ -118,24 +118,50 @@ function readCraigslistListing(tabId) {
   const askingPriceUsd = readNumber(price, /^\$?\s*((?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d{2})?)$/);
   let mileageMiles = null;
   let vin = null;
-  let bodyType = "";
+  const sellerSpecs = {
+    condition: null,
+    titleStatus: null,
+    cylinders: null,
+    drivetrain: null,
+    fuelType: null,
+    paintColor: null,
+    transmission: null,
+    bodyStyle: null,
+    size: null
+  };
+  const specFields = {
+    "condition": "condition",
+    "title status": "titleStatus",
+    "drive": "drivetrain",
+    "fuel": "fuelType",
+    "paint color": "paintColor",
+    "transmission": "transmission",
+    "type": "bodyStyle",
+    "size": "size"
+  };
   if (title) details.push(title);
   if (price) details.push("Price: " + price);
 
   const specs = document.querySelectorAll(".attrgroup .attr, p.attrgroup > span");
   for (const spec of specs) {
     const line = spec.innerText.trim().replace(/\s+/g, " ");
-    const type = line.match(/^type\s*:\s*(.*)$/i);
-    if (type) bodyType = type[1];
     if (/^(?:vin\s*:|show vin data\b)/i.test(line)) {
       const value = spec.querySelector(".valu")?.innerText.trim() || line;
       const foundVin = value.match(/\b[A-HJ-NPR-Z0-9]{17}\b/i);
       if (foundVin) vin = foundVin[0].toUpperCase();
       continue;
     }
-    const odometer = line.match(/^odometer\s*:\s*(.+)$/i);
-    if (odometer) {
-      mileageMiles = readNumber(odometer[1], /^(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*(k)?\s*(?:mi(?:les)?)?$/i, true);
+    const labeledSpec = line.match(/^([^:]+):\s*(.+)$/);
+    if (labeledSpec) {
+      const label = labeledSpec[1].trim().toLowerCase();
+      const value = labeledSpec[2];
+      if (label === "odometer") {
+        mileageMiles = readNumber(value, /^(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*(k)?\s*(?:mi(?:les)?)?$/i, true);
+      } else if (label === "cylinders") {
+        sellerSpecs.cylinders = readNumber(value, /^(\d+)\s*(?:cylinders?)?$/i);
+      } else if (Object.hasOwn(specFields, label)) {
+        sellerSpecs[specFields[label]] = value;
+      }
     }
     if (line) details.push(line);
   }
@@ -143,7 +169,7 @@ function readCraigslistListing(tabId) {
   const commercialBody = /\b(?:box truck|dump truck|tow truck|flatbed truck|semi[- ]truck|tractor[- ]trailer|commercial truck|cargo van|chassis cab|cab and chassis|motorhome|school bus)\b/i;
   const commercialMake = /^(?:freightliner|kenworth|peterbilt|mack|western star)\b/i;
   const advertisedVehicle = headline?.split(/\b(?:trade for|trades? welcome|will trade|swap for)\b/i)[0] || "";
-  if (excludedType.test(bodyType) || commercialBody.test(vehicle || "") ||
+  if (excludedType.test(sellerSpecs.bodyStyle || "") || commercialBody.test(vehicle || "") ||
       commercialBody.test(advertisedVehicle) || commercialMake.test(vehicle || "")) {
     return { unsupportedReason: "CarClarity supports passenger vehicles and pickup trucks only." };
   }
@@ -152,14 +178,25 @@ function readCraigslistListing(tabId) {
   }
   details.push("VIN: " + (vin || "Unavailable"));
 
-  const postId = text(".postinginfos")?.match(/\bpost id:\s*(\d+)/i)?.[1];
+  let postId = null;
+  for (const info of document.querySelectorAll(".postinginfo, .postinginfos")) {
+    const match = info.innerText.match(/\bpost\s+id\s*:\s*(\d+)/i);
+    if (match) {
+      postId = match[1];
+      break;
+    }
+  }
+  // Classic listing URLs end in the numeric post ID. Shared links use a different ID.
+  if (!postId) postId = location.pathname.match(/\/(\d+)\.html$/)?.[1] ?? null;
   if (postId) details.push("Post ID: " + postId);
 
   const listingData = {
     tabId,
     listingUrl: location.href,
+    postId,
     sourceSite: "Craigslist",
     vehicleTitle,
+    postTitle: title || "",
     year,
     make,
     model,
@@ -167,9 +204,10 @@ function readCraigslistListing(tabId) {
     askingPriceUsd,
     mileageMiles,
     vin,
+    sellerSpecs,
     sellerDescription: description || "",
-    postId: postId ?? null,
-    userVerified: false
+    userVerified: false,
+    postVerified: false
   };
   return { listingData, details };
 }
