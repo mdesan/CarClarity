@@ -10,6 +10,7 @@ const editVehicle = document.getElementById("editVehicle");
 const yearInput = document.getElementById("year");
 const makeInput = document.getElementById("make");
 const modelInput = document.getElementById("model");
+const mileageInput = document.getElementById("mileage");
 const verificationStatus = document.getElementById("verificationStatus");
 const postForm = document.getElementById("postForm");
 const postFields = document.getElementById("postFields");
@@ -47,6 +48,7 @@ function showListingJson(listing) {
     output.year = confirmed.year;
     output.make = confirmed.make;
     output.model = confirmed.model;
+    output.mileageMiles = confirmed.mileageMiles;
     output.userVerified = true;
     if (changed) {
       output.trim = null;
@@ -72,11 +74,38 @@ function setStatus(element, message, error = false) {
   element.classList.toggle("error", error);
 }
 
+// Mileage is optional: blank returns null, anything else must be a whole number (commas allowed).
+function parseMileage(value) {
+  const text = value.trim();
+  if (!text) return null;
+  if (!/^(?:\d{1,3}(?:,\d{3})+|\d+)$/.test(text)) return NaN;
+  const miles = Number(text.replaceAll(",", ""));
+  return Number.isSafeInteger(miles) ? miles : NaN;
+}
+
+function vehicleConfirmedMessage(vehicle) {
+  const message = "Vehicle confirmed with NHTSA.";
+  const miles = vehicle.mileageMiles;
+  if (miles === null || miles === undefined) return message;
+  const formatted = miles.toLocaleString("en-US") + (miles === 1 ? " mile" : " miles");
+  if (miles > 500000) {
+    return message + " Double-check the mileage: " + formatted + " is unusually high.";
+  }
+  if (miles < 100 && vehicle.year <= new Date().getFullYear() - 2) {
+    return message + " Double-check the mileage: " + formatted + " is unusually low for a " + vehicle.year + " car.";
+  }
+  return message;
+}
+
 function showVehicleMode(editing, confirmed = false) {
   document.getElementById("vehiclePreview").hidden = editing;
   document.getElementById("previewYear").textContent = yearInput.value || "Unavailable";
   document.getElementById("previewMake").textContent = makeInput.value || "Unavailable";
   document.getElementById("previewModel").textContent = modelInput.value || "Unavailable";
+  const miles = parseMileage(mileageInput.value);
+  document.getElementById("previewMileage").textContent = miles === null
+    ? "Not listed"
+    : Number.isNaN(miles) ? mileageInput.value.trim() : miles.toLocaleString("en-US") + " mi";
   vehicleFields.hidden = !editing;
   vehicleFields.disabled = !editing;
   confirmVehicle.hidden = confirmed;
@@ -111,6 +140,11 @@ vehicleForm.addEventListener("submit", async (event) => {
     setStatus(verificationStatus, "Enter both a make and a model.", true);
     return;
   }
+  const mileageMiles = parseMileage(mileageInput.value);
+  if (Number.isNaN(mileageMiles)) {
+    setStatus(verificationStatus, "Enter mileage as a whole number, like 85000.", true);
+    return;
+  }
 
   vehicleFields.disabled = true;
   confirmVehicle.disabled = true;
@@ -126,9 +160,11 @@ vehicleForm.addEventListener("submit", async (event) => {
     }
     makeInput.value = result.make;
     modelInput.value = result.model;
-    saveConfirmation("vehicle", result);
+    mileageInput.value = mileageMiles === null ? "" : String(mileageMiles);
+    const confirmed = { ...result, mileageMiles };
+    saveConfirmation("vehicle", confirmed);
     showVehicleMode(false, true);
-    setStatus(verificationStatus, "Vehicle confirmed with NHTSA.");
+    setStatus(verificationStatus, vehicleConfirmedMessage(confirmed));
   } catch {
     if (activeListing !== listing) return;
     showVehicleMode(!vehicleFields.hidden);
@@ -199,7 +235,7 @@ async function showListing() {
       return;
     }
     url = new URL(tab.url);
-    urlCheck.textContent = "Currently viewing: " + url.hostname;
+    urlCheck.textContent = "";
   } catch {
     if (request !== latestRequest) return;
     urlCheck.textContent = "Could not read the current tab.";
@@ -280,11 +316,12 @@ async function showListing() {
     yearInput.value = String(fields.year ?? "");
     makeInput.value = fields.make || "";
     modelInput.value = fields.model || "";
+    mileageInput.value = fields.mileageMiles == null ? "" : String(fields.mileageMiles);
     postTitleInput.value = post?.title ?? listingData.postTitle ?? "";
     postDescriptionInput.value = post?.description ?? listingData.sellerDescription ?? "";
     showVehicleMode(false, Boolean(vehicle));
     showPostMode(false, Boolean(post));
-    if (vehicle) setStatus(verificationStatus, "Vehicle confirmed with NHTSA.");
+    if (vehicle) setStatus(verificationStatus, vehicleConfirmedMessage(vehicle));
     if (post) setStatus(postStatus, "Post confirmed.");
     showListingJson(listingData);
     vehicleForm.hidden = false;
