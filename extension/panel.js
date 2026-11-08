@@ -20,6 +20,8 @@ const postTitleInput = document.getElementById("postTitle");
 const postDescriptionInput = document.getElementById("postDescription");
 const postStatus = document.getElementById("postStatus");
 const listingJson = document.getElementById("listingJson");
+const reportSections = document.getElementById("reportSections");
+const reportPending = document.getElementById("reportPending");
 const issueReview = setupIssueReview(
   () => activeListing && getConfirmations(activeListing),
   saveConfirmation,
@@ -41,6 +43,10 @@ function saveConfirmation(section, value) {
 function showListingJson(listing) {
   const output = { ...listing };
   const { vehicle: confirmed, post, userIssues = [] } = getConfirmations(listing);
+  // The report sections are built from the confirmed vehicle, so they wait for confirmation.
+  reportSections.hidden = !confirmed;
+  reportPending.hidden = Boolean(confirmed);
+  showSimilarListings(confirmed);
   if (confirmed) {
     const changed = confirmed.year !== listing.year ||
       identityKey(confirmed.make) !== identityKey(listing.make) ||
@@ -209,6 +215,8 @@ async function showListing() {
   const request = ++latestRequest;
   activeListing = null;
   vehicleForm.hidden = true;
+  reportSections.hidden = true;
+  reportPending.hidden = true;
   postForm.hidden = true;
   issueReview.reset();
   setStatus(verificationStatus, "");
