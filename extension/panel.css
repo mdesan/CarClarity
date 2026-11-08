@@ -25,6 +25,42 @@ body {
   font-size: 1.4rem;
 }
 
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.panel-settings {
+  position: relative;
+  margin: 0;
+}
+
+.panel-settings summary {
+  list-style: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.settings-menu {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  width: 180px;
+  padding: 12px;
+  border: 1px solid GrayText;
+  border-radius: 8px;
+  background: Canvas;
+}
+
+.settings-menu p {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+}
+
 .review-card {
   margin: 12px 0;
   padding: 14px;
@@ -57,6 +93,15 @@ body {
   margin: 0;
 }
 
+#researchSpecs small {
+  display: block;
+  color: GrayText;
+}
+
+#researchStatus:empty {
+  display: none;
+}
+
 .post-description {
   white-space: pre-wrap;
   max-height: 180px;
@@ -77,8 +122,7 @@ body {
 }
 
 .review-card input,
-.review-card select,
-.review-card textarea {
+.review-card select {
   box-sizing: border-box;
   width: 100%;
   margin-top: 4px;
@@ -86,10 +130,6 @@ body {
   font: inherit;
   border: 1px solid GrayText;
   border-radius: 6px;
-}
-
-.review-card textarea {
-  resize: vertical;
 }
 
 .review-card ::placeholder {
@@ -151,7 +191,8 @@ details {
   margin-top: 8px;
 }
 
-#listingJson {
+#listingJson,
+#researchJson {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

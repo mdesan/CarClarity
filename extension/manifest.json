@@ -4,7 +4,12 @@
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["activeTab", "scripting", "sidePanel"],
-  "host_permissions": ["*://*.craigslist.org/*", "https://vpic.nhtsa.dot.gov/*"],
+  "host_permissions": [
+    "*://*.craigslist.org/*",
+    "https://vpic.nhtsa.dot.gov/*",
+    "https://api.nhtsa.gov/*",
+    "https://www.fueleconomy.gov/*"
+  ],
   "background": {
     "service_worker": "background.js"
   },
