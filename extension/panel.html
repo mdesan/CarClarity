@@ -32,6 +32,33 @@
       <button id="editVehicle" type="button">Edit vehicle</button>
       <p id="verificationStatus" role="status"></p>
     </form>
+
+    <p id="reportPending" hidden>Your CarClarity report will be available once vehicle details are confirmed.</p>
+
+    <!-- Report sections. Shown only after the buyer confirms the vehicle (panel.js toggles #reportSections). -->
+    <div id="reportSections" hidden>
+      <section class="review-card">
+        <h2>Vehicle overview</h2>
+      </section>
+      <section class="review-card">
+        <h2>Vehicle issues</h2>
+      </section>
+      <section class="review-card">
+        <h2>Repair costs</h2>
+      </section>
+      <section class="review-card">
+        <h2>Clarity report</h2>
+      </section>
+      <section class="review-card">
+        <h2>Similar listings</h2>
+        <p id="similarListingsMessage"></p>
+        <ul id="similarListingsLinks"></ul>
+      </section>
+    </div>
+
+    <!-- Hidden for now: seller post, seller issues, and listing data (testing/debug).
+         They still run in the background; move a part out of this div to show it again. -->
+    <div hidden>
     <form id="postForm" class="review-card" hidden novalidate>
       <h2>Seller post</h2>
       <div id="postPreview">
@@ -87,10 +114,12 @@
       <summary>Formatted listing data</summary>
       <pre id="listingJson"></pre>
     </details>
+    </div>
     <script src="content.js"></script>
     <script src="seller-issues.js"></script>
     <script src="nhtsa.js"></script>
     <script src="issue-review.js"></script>
+    <script src="similar-listings.js"></script>
     <script src="panel.js"></script>
   </body>
 </html>
