@@ -172,6 +172,14 @@ function readCraigslistListing(tabId) {
   const commercialBody = /\b(?:box truck|dump truck|tow truck|flatbed truck|semi[- ]truck|tractor[- ]trailer|commercial truck|cargo van|chassis cab|cab and chassis|motorhome|school bus)\b/i;
   const commercialMake = /^(?:freightliner|kenworth|peterbilt|mack|western star)\b/i;
   const advertisedVehicle = headline?.split(/\b(?:trade for|trades? welcome|will trade|swap for)\b/i)[0] || "";
+  if (!sellerSpecs.drivetrain && year && makeText && model) {
+    const titleKey = advertisedVehicle.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const vehicleKey = expectedHeadline.replace(/[^a-z0-9]/g, "");
+    if (titleKey.startsWith(vehicleKey)) {
+      const drives = new Set(advertisedVehicle.toUpperCase().match(/\b(?:AWD|4WD|FWD|RWD|2WD|4X4|4MATIC)\b/g));
+      if (drives.size === 1) sellerSpecs.drivetrain = [...drives][0];
+    }
+  }
   if (excludedType.test(sellerSpecs.bodyStyle || "") || commercialBody.test(vehicle || "") ||
       commercialBody.test(advertisedVehicle) || commercialMake.test(vehicle || "")) {
     return { unsupportedReason: "CarClarity supports passenger vehicles and pickup trucks only." };
@@ -209,8 +217,7 @@ function readCraigslistListing(tabId) {
     vin,
     sellerSpecs,
     sellerDescription: description || "",
-    userVerified: false,
-    postVerified: false
+    userVerified: false
   };
   return { listingData, details };
 }

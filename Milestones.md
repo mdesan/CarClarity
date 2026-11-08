@@ -21,7 +21,7 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 
 - [x] Let the buyer review and edit year, make, and model. Check all three with NHTSA before confirming the vehicle.
 - [x] Let the buyer review and edit mileage as an optional field (pre-filled from the odometer spec, whole numbers only, soft warning for unusual values).
-- [x] Let the buyer review, edit, and separately confirm the post title and seller description.
+- [x] Keep the scraped post title and description read-only in Debug mode. Review detected issues separately.
 - [x] Identify a small set of seller-disclosed issues and distinguish active problems, negations, and past repairs.
 - [x] Let the buyer add or remove their own observations before generating the report.
 - [x] Keep detected seller phrases visible for review alongside buyer observations.
@@ -30,9 +30,10 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 
 ## M4 · Vehicle research
 
-- [ ] Verify the NHTSA and FuelEconomy.gov endpoints and retrieve available specs, fuel economy, complaints, and recalls.
-- [ ] Separate model-wide complaints and recalls from evidence about the specific car. Verify VIN-specific recall status before claiming an open recall.
-- [ ] Show sources and be able to handle missing data and request failures.
+- [x] Verify the NHTSA and FuelEconomy.gov endpoints and retrieve available specs, fuel economy, complaints, and recall campaigns after vehicle confirmation.
+- [x] Separate seller and buyer observations from model-wide complaints and recalls. Link to NHTSA’s official VIN checker for unrepaired recall status.
+- [x] Show sources and keep partial results when a lookup fails or the exact configuration is ambiguous.
+- [ ] Verify the full M4 flow in Chrome and Edge using a VIN listing, a no-VIN listing, and a tab switch during a lookup.
 
 ## M5 · ForCar pricing data
 

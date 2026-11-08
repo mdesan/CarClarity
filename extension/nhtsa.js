@@ -42,7 +42,14 @@ async function decodeVin(vin) {
       make,
       model,
       trim,
-      vehicleTitle: [year, make, model, trim].filter(Boolean).join(" ")
+      vehicleTitle: [year, make, model, trim].filter(Boolean).join(" "),
+      specs: {
+        bodyStyle: decoded.BodyClass?.trim() || null,
+        engine: engineLabel(decoded.DisplacementL, decoded.EngineCylinders),
+        transmission: decoded.TransmissionStyle?.trim() || null,
+        drivetrain: decoded.DriveType?.trim() || null,
+        fuelType: decoded.FuelTypePrimary?.trim() || null
+      }
     };
   } catch {
     return null;
