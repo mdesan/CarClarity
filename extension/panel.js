@@ -2,6 +2,7 @@ let latestRequest = 0;
 let lastVin;
 let lastDecode;
 let activeListing = null;
+let activeVinData = null;
 const confirmedByTab = new Map();
 const vehicleForm = document.getElementById("vehicleForm");
 const vehicleFields = document.getElementById("vehicleFields");
@@ -12,13 +13,7 @@ const makeInput = document.getElementById("make");
 const modelInput = document.getElementById("model");
 const mileageInput = document.getElementById("mileage");
 const verificationStatus = document.getElementById("verificationStatus");
-const postForm = document.getElementById("postForm");
-const postFields = document.getElementById("postFields");
-const confirmPost = document.getElementById("confirmPost");
-const editPost = document.getElementById("editPost");
-const postTitleInput = document.getElementById("postTitle");
-const postDescriptionInput = document.getElementById("postDescription");
-const postStatus = document.getElementById("postStatus");
+const sellerPost = document.getElementById("sellerPost");
 const listingJson = document.getElementById("listingJson");
 const reportSections = document.getElementById("reportSections");
 const reportPending = document.getElementById("reportPending");
@@ -47,8 +42,9 @@ function showListingJson(listing) {
   reportSections.hidden = !confirmed;
   reportPending.hidden = Boolean(confirmed);
   showSimilarListings(confirmed);
+  let identityChanged = false;
   if (confirmed) {
-    const changed = confirmed.year !== listing.year ||
+    identityChanged = confirmed.year !== listing.year ||
       identityKey(confirmed.make) !== identityKey(listing.make) ||
       identityKey(confirmed.model) !== identityKey(listing.model);
     output.year = confirmed.year;
@@ -56,22 +52,37 @@ function showListingJson(listing) {
     output.model = confirmed.model;
     output.mileageMiles = confirmed.mileageMiles;
     output.userVerified = true;
-    if (changed) {
+    if (identityChanged) {
       output.trim = null;
       output.vehicleTitle = [output.year, output.make, output.model].join(" ");
     }
   }
+  const matchingVin = activeVinData && activeVinData.year === output.year &&
+    identityKey(activeVinData.make) === identityKey(output.make) &&
+    identityKey(activeVinData.model) === identityKey(output.model);
+  const vinDrive = matchingVin
+    ? normalizeDrivetrain(activeVinData.specs?.drivetrain) ||
+      (mercedesVariant(output, activeVinData)?.fourMatic ? "AWD" : null)
+    : null;
+  const sellerDrive = identityChanged ? null : normalizeDrivetrain(listing.sellerSpecs?.drivetrain);
+  output.drivetrain = vinDrive || sellerDrive;
+  output.drivetrainSource = vinDrive ? "NHTSA VIN decode" : sellerDrive ? "Craigslist seller" : null;
+
+  if (confirmed) {
+    // A VIN that decodes to a different car cannot supply this report's specs.
+    const researchInput = activeVinData && !matchingVin ? { ...output, vin: null } : output;
+    showVehicleResearch(researchInput, matchingVin ? activeVinData : null);
+  } else {
+    resetResearch();
+  }
   if (post) {
-    output.postTitle = post.title;
-    output.sellerDescription = post.description;
-    output.postVerified = true;
     output.sellerIssues = post.issuesVerified
       ? post.issues.map((issue) => ({ ...issue, reviewed: true, status: "reviewed" }))
       : post.issues;
   }
   output.issuesVerified = Boolean(post?.issuesVerified);
   output.userAddedIssues = userIssues;
-  issueReview.show(post, userIssues);
+  issueReview.show(confirmed ? post : null, userIssues);
   listingJson.textContent = JSON.stringify(output, null, 2);
 }
 
@@ -118,16 +129,6 @@ function showVehicleMode(editing, confirmed = false) {
   confirmVehicle.disabled = false;
   editVehicle.hidden = editing;
   editVehicle.disabled = false;
-}
-
-function showPostMode(editing, confirmed = false) {
-  document.getElementById("postPreview").hidden = editing;
-  document.getElementById("previewPostTitle").textContent = postTitleInput.value || "No title found.";
-  document.getElementById("previewPostDescription").textContent = postDescriptionInput.value || "No description found.";
-  postFields.hidden = !editing;
-  postFields.disabled = !editing;
-  confirmPost.hidden = confirmed;
-  editPost.hidden = editing;
 }
 
 vehicleForm.addEventListener("submit", async (event) => {
@@ -186,41 +187,17 @@ editVehicle.addEventListener("click", () => {
   yearInput.focus();
 });
 
-postForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (!activeListing || confirmPost.hidden) return;
-  const title = postTitleInput.value.trim();
-  if (!title) {
-    setStatus(postStatus, "Enter a post title before confirming.", true);
-    return;
-  }
-  const description = postDescriptionInput.value.trim();
-  postTitleInput.value = title;
-  postDescriptionInput.value = description;
-  const issues = findSellerIssues(description);
-  saveConfirmation("post", { title, description, issues });
-  showPostMode(false, true);
-  setStatus(postStatus, "Post confirmed.");
-});
-
-editPost.addEventListener("click", () => {
-  if (!activeListing) return;
-  saveConfirmation("post", null);
-  showPostMode(true);
-  setStatus(postStatus, "Confirm again when you’re done editing.");
-  postTitleInput.focus();
-});
-
 async function showListing() {
   const request = ++latestRequest;
   activeListing = null;
+  activeVinData = null;
+  resetResearch();
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
-  postForm.hidden = true;
+  sellerPost.hidden = true;
   issueReview.reset();
   setStatus(verificationStatus, "");
-  setStatus(postStatus, "");
   const urlCheck = document.getElementById("urlCheck");
   const description = document.getElementById("description");
   const details = document.getElementById("details");
@@ -300,7 +277,11 @@ async function showListing() {
       }
       decoded = await lastDecode;
       if (request !== latestRequest) return;
-      if (decoded) Object.assign(listingData, decoded);
+      if (decoded) {
+        activeVinData = decoded;
+        const { specs, ...identity } = decoded;
+        Object.assign(listingData, identity);
+      }
     }
 
     if (listingData.year !== null && listingData.year < 1984) {
@@ -319,21 +300,25 @@ async function showListing() {
     }
     description.textContent = "";
     activeListing = listingData;
-    const { vehicle, post } = getConfirmations(listingData);
+    const saved = getConfirmations(listingData);
+    const postDescription = listingData.sellerDescription || "";
+    if (saved.post?.description !== postDescription) {
+      saved.post = { description: postDescription, issues: findSellerIssues(postDescription) };
+      confirmedByTab.set(listingData.tabId, saved);
+    }
+    const { vehicle } = saved;
     const fields = vehicle || listingData;
     yearInput.value = String(fields.year ?? "");
     makeInput.value = fields.make || "";
     modelInput.value = fields.model || "";
     mileageInput.value = fields.mileageMiles == null ? "" : String(fields.mileageMiles);
-    postTitleInput.value = post?.title ?? listingData.postTitle ?? "";
-    postDescriptionInput.value = post?.description ?? listingData.sellerDescription ?? "";
+    document.getElementById("previewPostTitle").textContent = listingData.postTitle || "No title found.";
+    document.getElementById("previewPostDescription").textContent = postDescription || "No description found.";
     showVehicleMode(false, Boolean(vehicle));
-    showPostMode(false, Boolean(post));
     if (vehicle) setStatus(verificationStatus, vehicleConfirmedMessage(vehicle));
-    if (post) setStatus(postStatus, "Post confirmed.");
     showListingJson(listingData);
     vehicleForm.hidden = false;
-    postForm.hidden = false;
+    sellerPost.hidden = false;
     scrapedDetails.hidden = false;
     formatted.hidden = false;
   } catch {

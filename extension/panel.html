@@ -6,7 +6,16 @@
     <link rel="stylesheet" href="panel.css">
   </head>
   <body class="listing-panel">
-    <h1>CarClarity</h1>
+    <header class="panel-header">
+      <h1>CarClarity</h1>
+      <details class="panel-settings">
+        <summary aria-label="Settings" title="Settings">⚙︎</summary>
+        <div class="settings-menu">
+          <label><input id="debugMode" type="checkbox"> Debug mode</label>
+          <p>Show the seller post, scraped details, and formatted data.</p>
+        </div>
+      </details>
+    </header>
     <p id="urlCheck">Loading website...</p>
     <p id="description" role="status"></p>
     <form id="vehicleForm" class="review-card" hidden novalidate>
@@ -39,9 +48,56 @@
     <div id="reportSections" hidden>
       <section class="review-card">
         <h2>Vehicle overview</h2>
+        <p id="researchStatus" role="status"></p>
+        <dl id="researchSpecs" class="vehicle-preview"></dl>
+        <details>
+          <summary>What do these specs mean?</summary>
+          <p>Drivetrain tells you which wheels get power. Engine size in liters describes the volume inside the cylinders. MPG means miles per gallon. MPGe is the energy-equivalent rating for electric driving.</p>
+        </details>
+        <details>
+          <summary>Research sources</summary>
+          <ul id="researchSources"></ul>
+        </details>
       </section>
       <section class="review-card">
         <h2>Vehicle issues</h2>
+        <h3>Owner complaints for this model</h3>
+        <p>Reports cover the model year. They don’t diagnose this car.</p>
+        <div id="researchComplaints"></div>
+        <h3>Model recall campaigns</h3>
+        <p>These campaigns apply to the model, not necessarily this car.</p>
+        <div id="researchRecalls"></div>
+        <section id="sellerIssues" hidden>
+          <h3>Possible seller issues</h3>
+          <p id="sellerIssuesMessage"></p>
+          <ul id="sellerIssueList"></ul>
+          <h3>Your observations</h3>
+          <ul id="userIssueList"></ul>
+          <form id="addIssueForm">
+            <label for="issueChoice">Issue you noticed</label>
+            <select id="issueChoice" required>
+              <option value="">Choose an issue</option>
+              <option value="bumper-damage">Bumper damage</option>
+              <option value="body-damage">Dents or body damage</option>
+              <option value="paint-damage">Paint damage</option>
+              <option value="glass-damage">Cracked or damaged glass</option>
+              <option value="light-damage">Damaged headlight or taillight</option>
+              <option value="rust">Rust</option>
+              <option value="worn-tires">Worn or damaged tires</option>
+              <option value="warning-light">Dashboard warning light</option>
+              <option value="fluid-leak">Fluid leak</option>
+              <option value="brakes">Brake trouble</option>
+              <option value="transmission">Transmission trouble</option>
+              <option value="starting">Starting trouble</option>
+              <option value="air-conditioning">Air conditioning trouble</option>
+              <option value="other">Other issue</option>
+            </select>
+            <button type="submit">Add issue</button>
+          </form>
+          <button id="confirmIssues" type="button">Confirm issues</button>
+          <button id="editIssues" type="button" hidden>Edit issues</button>
+          <p id="userIssueStatus" role="status"></p>
+        </section>
       </section>
       <section class="review-card">
         <h2>Repair costs</h2>
@@ -56,56 +112,12 @@
       </section>
     </div>
 
-    <!-- Hidden for now: seller post, seller issues, and listing data (testing/debug).
-         They still run in the background; move a part out of this div to show it again. -->
-    <div hidden>
-    <form id="postForm" class="review-card" hidden novalidate>
-      <h2>Seller post</h2>
-      <div id="postPreview">
-        <p id="previewPostTitle" class="post-title"></p>
-        <p id="previewPostDescription" class="post-description"></p>
-      </div>
-      <fieldset id="postFields" aria-label="Post title and description" hidden>
-        <label for="postTitle">Post title</label>
-        <input id="postTitle" required>
-        <label for="postDescription">Seller description</label>
-        <textarea id="postDescription" rows="5"></textarea>
-      </fieldset>
-      <button id="confirmPost" type="submit">Confirm post</button>
-      <button id="editPost" type="button">Edit post</button>
-      <p id="postStatus" role="status"></p>
-    </form>
-    <section id="sellerIssues" class="review-card" hidden>
-      <h2>Possible seller issues</h2>
-      <p id="sellerIssuesMessage"></p>
-      <ul id="sellerIssueList"></ul>
-      <h2>Your observations</h2>
-      <ul id="userIssueList"></ul>
-      <form id="addIssueForm">
-        <label for="issueChoice">Issue you noticed</label>
-        <select id="issueChoice" required>
-          <option value="">Choose an issue</option>
-          <option value="bumper-damage">Bumper damage</option>
-          <option value="body-damage">Dents or body damage</option>
-          <option value="paint-damage">Paint damage</option>
-          <option value="glass-damage">Cracked or damaged glass</option>
-          <option value="light-damage">Damaged headlight or taillight</option>
-          <option value="rust">Rust</option>
-          <option value="worn-tires">Worn or damaged tires</option>
-          <option value="warning-light">Dashboard warning light</option>
-          <option value="fluid-leak">Fluid leak</option>
-          <option value="brakes">Brake trouble</option>
-          <option value="transmission">Transmission trouble</option>
-          <option value="starting">Starting trouble</option>
-          <option value="air-conditioning">Air conditioning trouble</option>
-          <option value="other">Other issue</option>
-        </select>
-        <button type="submit">Add issue</button>
-      </form>
-      <button id="confirmIssues" type="button">Confirm issues</button>
-      <button id="editIssues" type="button" hidden>Edit issues</button>
-      <p id="userIssueStatus" role="status"></p>
-    </section>
+    <div id="debugSections" hidden>
+    <details id="sellerPost" hidden>
+      <summary>Seller post</summary>
+      <p id="previewPostTitle" class="post-title"></p>
+      <p id="previewPostDescription" class="post-description"></p>
+    </details>
     <details id="scrapedDetails" hidden>
       <summary>Craigslist listing details</summary>
       <ul id="details"></ul>
@@ -114,12 +126,19 @@
       <summary>Formatted listing data</summary>
       <pre id="listingJson"></pre>
     </details>
+    <details id="researchDebug" hidden>
+      <summary>Vehicle research JSON</summary>
+      <pre id="researchJson"></pre>
+    </details>
     </div>
+    <script src="panel-settings.js"></script>
     <script src="content.js"></script>
     <script src="seller-issues.js"></script>
     <script src="nhtsa.js"></script>
     <script src="issue-review.js"></script>
     <script src="similar-listings.js"></script>
+    <script src="vehicle-research.js"></script>
+    <script src="research-panel.js"></script>
     <script src="panel.js"></script>
   </body>
 </html>
