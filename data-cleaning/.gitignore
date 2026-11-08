@@ -3,3 +3,15 @@ __pycache__/
 output/
 *.csv
 raw-data/
+
+# Generated databases
+*.sqlite
+*.sqlite3
+*.db
+
+# Downloaded archives
+*.zip
+
+# Temporary integration test data
+sample-data/
+merged-data/
