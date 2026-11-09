@@ -70,6 +70,16 @@
       </section>
       <section class="review-card">
         <h2>Vehicle issues</h2>
+        <section id="listingIssues" hidden>
+          <h3>What the seller mentioned</h3>
+          <p id="listingIssuesStatus" role="status"></p>
+          <ul id="listingIssuesList" class="issue-cards"></ul>
+          <section id="listingGoodSigns" hidden>
+            <h4>Good signs, according to the seller</h4>
+            <ul id="listingGoodSignsList" class="issue-cards"></ul>
+          </section>
+          <p id="listingIssuesNote" hidden>Based on what the seller wrote. Always have a mechanic inspect the car.</p>
+        </section>
         <section id="researchComplaintsSection" hidden>
           <h3>Owner complaints for this model</h3>
           <p>Reports cover the model year. They don’t diagnose this car.</p>
@@ -165,6 +175,7 @@
     <script src="../deal-evaluation.js"></script>
     <script src="research-panel.js"></script>
     <script src="deal-benchmark.js"></script>
+    <script src="listing-issues.js"></script>
     <script src="right-click-panel.js"></script>
     <script src="panel.js"></script>
   </body>
