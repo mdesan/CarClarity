@@ -1,5 +1,3 @@
-import { calculateDealRating } from './deal-evaluation.js';
-
 let activeResearch = null;
 const researchStatus = document.getElementById("researchStatus");
 const researchSpecs = document.getElementById("researchSpecs");
