@@ -1,7 +1,5 @@
 function setupIssueReview(getCurrentConfirmations, saveConfirmation, setStatus) {
   const sellerIssues = document.getElementById("sellerIssues");
-  const sellerIssuesMessage = document.getElementById("sellerIssuesMessage");
-  const sellerIssueList = document.getElementById("sellerIssueList");
   const userIssueList = document.getElementById("userIssueList");
   const addIssueForm = document.getElementById("addIssueForm");
   const issueChoice = document.getElementById("issueChoice");
@@ -10,7 +8,6 @@ function setupIssueReview(getCurrentConfirmations, saveConfirmation, setStatus) 
   const userIssueStatus = document.getElementById("userIssueStatus");
 
   function showSellerIssues(post, userIssues = []) {
-    sellerIssueList.replaceChildren();
     userIssueList.replaceChildren();
     sellerIssues.hidden = !post;
     if (!post) return;
@@ -20,15 +17,6 @@ function setupIssueReview(getCurrentConfirmations, saveConfirmation, setStatus) 
     confirmIssues.hidden = locked;
     editIssues.hidden = !locked;
     if (locked) setStatus(userIssueStatus, "Issues confirmed.");
-    sellerIssuesMessage.hidden = locked && post.issues.length > 0;
-    sellerIssuesMessage.textContent = post.issues.length
-      ? "These phrases may describe current problems."
-      : "No detected seller issues in this review.";
-    for (const issue of post.issues) {
-      const row = document.createElement("li");
-      row.textContent = issue.name + ": “" + issue.sourceText + "”";
-      sellerIssueList.append(row);
-    }
     for (const issue of userIssues) {
       appendUserIssue(issue, locked);
     }
