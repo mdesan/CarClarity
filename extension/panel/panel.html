@@ -22,7 +22,6 @@
       <span id="previewSpinner" aria-hidden="true" hidden></span>
       <span id="previewTimerText"></span>
     </p>
-    <a id="previewLink" target="_blank" rel="noopener noreferrer" hidden>Open original listing</a>
     <form id="vehicleForm" class="review-card" hidden novalidate>
       <h2>Vehicle details</h2>
       <p id="identitySource"></p>
@@ -128,7 +127,13 @@
       </section>
     </div>
 
+    <a id="previewLink" target="_blank" rel="noopener noreferrer" hidden>Open original listing</a>
     <div id="debugSections" hidden>
+    <details>
+      <summary>Unavailable panel elements</summary>
+      <p id="noUnavailableElements">No unavailable panel elements to report.</p>
+      <ul id="unavailableElements"></ul>
+    </details>
     <details id="sellerPost" hidden>
       <summary>Seller post</summary>
       <p id="previewPostTitle" class="post-title"></p>
@@ -144,7 +149,6 @@
     </details>
     <details id="researchDebug" hidden>
       <summary>Vehicle research</summary>
-      <ul id="researchDiagnostics"></ul>
       <pre id="researchJson"></pre>
     </details>
     <details id="forcarDebug" hidden>

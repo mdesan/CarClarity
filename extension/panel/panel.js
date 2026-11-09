@@ -124,18 +124,21 @@ function showVehicleMode(editing, confirmed = false) {
   document.getElementById("vehiclePreview").hidden = editing;
   const miles = parseMileage(mileageInput.value);
   const preview = {
-    previewYear: yearInput.value,
-    previewMake: makeInput.value,
-    previewModel: modelInput.value,
-    previewTrim: trimInput.value,
-    previewMileage: Number.isFinite(miles) ? miles.toLocaleString("en-US") + " mi" : mileageInput.value.trim()
+    Year: yearInput.value,
+    Make: makeInput.value,
+    Model: modelInput.value,
+    Trim: trimInput.value,
+    Mileage: Number.isFinite(miles) ? miles.toLocaleString("en-US") + " mi" : mileageInput.value.trim()
   };
-  for (const [id, value] of Object.entries(preview)) {
-    const detail = document.getElementById(id);
+  const missing = [];
+  for (const [label, value] of Object.entries(preview)) {
+    const detail = document.getElementById("preview" + label);
     detail.textContent = value;
     detail.hidden = !value;
     detail.previousElementSibling.hidden = !value;
+    if (!value) missing.push(label + " was not provided or detected.");
   }
+  showUnavailableElements("Vehicle details", missing);
   vehicleFields.hidden = !editing;
   vehicleFields.disabled = !editing;
   confirmVehicle.hidden = confirmed;
@@ -208,6 +211,7 @@ async function showListing() {
   displayedSearchUrl = null;
   activeListing = null;
   activeVinData = null;
+  showUnavailableElements("Vehicle details");
   vehicleModels.replaceChildren();
   resetResearch();
   resetDealBenchmark();
