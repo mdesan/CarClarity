@@ -50,138 +50,53 @@ function mercedesVariant(vehicle, vinData) {
   return { compact: base + match[1], spaced: base + " " + match[1], fourMatic: Boolean(match[2]) };
 }
 
-function fuelKind(value) {
-  if (!value) return null;
-  if (/plug[- ]in hybrid|\bphev\b/i.test(value)) return "plug-in hybrid";
-  if (/hybrid/i.test(value)) return "hybrid";
-  if (/electric/i.test(value)) return "electric";
-  if (/gasoline|\bgas\b/i.test(value)) return "gas";
-  if (/diesel/i.test(value)) return "diesel";
-  return null;
-}
-
-function driveGroup(value) {
-  const drive = normalizeDrivetrain(value);
-  if (drive === "AWD" || drive === "4WD") return "four wheels";
-  return drive === "2WD" ? null : drive;
-}
-
-function transmissionKind(value) {
-  if (/manual/i.test(value || "") && !/auto/i.test(value)) return "manual";
-  if (/auto|cvt/i.test(value || "")) return "automatic";
-  return null;
-}
-
-function narrowFuelRecords(records, vehicle, vinData) {
-  const specs = vinData?.specs || {};
-  const seller = vehicle.sellerSpecs || {};
-  const liters = positiveNumber(specs.engine?.match(/([\d.]+) L\b/)?.[1]);
-  const cylinders = positiveNumber(specs.engine?.match(/(\d+) cylinders/)?.[1]) || positiveNumber(seller.cylinders);
-  const drive = driveGroup(specs.drivetrain) || driveGroup(vehicle.drivetrain);
-  const identity = [vehicle.model, vehicle.trim].filter(Boolean).join(" ");
-  const listedFuel = fuelKind(identity) || fuelKind(seller.fuelType);
-  const fuel = fuelKind(specs.fuelType);
-  const hybrid = ["hybrid", "plug-in hybrid"].includes(listedFuel) ? listedFuel : null;
-  const transmission = transmissionKind(specs.transmission || seller.transmission);
-  const matches = (expected, actual) => !expected || !actual || expected === actual;
-  return records.filter((record) => {
-    const recordFuel = fuelKind(record.fuelType1);
-    const recordHybrid = fuelKind([record.atvType, record.model].filter(Boolean).join(" ")) ||
-      (recordFuel ? "conventional" : null);
-    const fleet = /\b(?:taxi|special service|police interceptor)\b/i;
-    return (!fleet.test(record.model) || fleet.test(identity)) &&
-      matches(liters, positiveNumber(record.displ)) &&
-      matches(cylinders, positiveNumber(record.cylinders)) &&
-      matches(drive, driveGroup(record.drive)) &&
-      matches(fuel || (hybrid ? null : listedFuel), recordFuel) &&
-      matches(hybrid, recordHybrid) &&
-      matches(transmission, transmissionKind(record.trany));
-  });
-}
-
-function fuelOption(record, id) {
-  return {
-    id,
-    label: [record.model, engineLabel(record.displ, record.cylinders), record.drive, record.trany, record.fuelType1].filter(Boolean).join(" · "),
-    ...fuelRatings(record, id)
-  };
-}
-
-function sharedFuelSpecs(records) {
-  const specs = fuelSpecs(records[0], true);
-  for (const record of records.slice(1)) {
-    const next = fuelSpecs(record, true);
-    for (const field of Object.keys(specs)) {
-      if (specs[field] !== next[field]) specs[field] = null;
-    }
-  }
-  return specs;
-}
-
-async function lookUpFuelEconomy(vehicle, variant, signal, vinData) {
+async function lookUpFuelEconomy(vehicle, variant, signal) {
   const params = new URLSearchParams({ year: vehicle.year, make: vehicle.make });
   const menu = await researchJson(fuelEconomyBase + "/menu/model?" + params, signal);
   const base = identityKey(vehicle.model.replace(/-class$/i, ""));
   const exactVariant = variant?.fourMatic ? identityKey(variant.compact + " 4matic") : null;
   const candidates = [...new Set(menuValues(menu))].filter((name) => {
     const key = identityKey(name);
-    if (exactVariant) return key === exactVariant;
-    let prefix = "";
-    for (const word of name.match(/[a-z0-9]+/gi) || []) {
-      prefix += word.toLowerCase();
-      if (prefix === base) return true;
-      if (!base.startsWith(prefix)) return false;
-    }
-    return false;
+    return exactVariant ? key === exactVariant : key.startsWith(base);
   });
   if (!candidates.length) return { status: "unavailable", reason: "No matching fuel economy entry was found." };
   const ambiguous = { status: "ambiguous", reason: "Unavailable · exact configuration unclear." };
   // Limit the number of lookups for models with many configurations.
-  if (candidates.length > 12) return ambiguous;
-  const exactModel = Boolean(exactVariant || candidates.some((name) => identityKey(name) === base));
+  if (candidates.length > 8) return ambiguous;
+  const exactModel = candidates.length === 1 && (exactVariant || identityKey(candidates[0]) === base);
+  if (candidates.length === 1 && !exactModel) return ambiguous;
   try {
-    const modelOptions = await Promise.all(candidates.map(async (model) => {
+    const options = await Promise.all(candidates.map(async (model) => {
       const query = new URLSearchParams(params);
       query.set("model", model);
       const menu = await researchJson(fuelEconomyBase + "/menu/options?" + query, signal);
       return [...new Set(menuValues(menu))].map((id) => ({ id, model }));
     }));
-    const entries = modelOptions.flat();
-    if (!entries.length || modelOptions.some((group) => !group.length)) {
+    const entries = options.flat();
+    if (!entries.length || options.some((group) => !group.length)) {
       return { status: "unavailable", reason: "No complete fuel economy data was found." };
     }
-    if (entries.length > 24) return ambiguous;
+    if (entries.length > 12) return ambiguous;
     const records = await Promise.all(entries.map(async ({ id, model }) => {
       const record = await researchJson(fuelEconomyBase + "/" + encodeURIComponent(id), signal);
       if (Number(record.year) !== vehicle.year || identityKey(record.make) !== identityKey(vehicle.make) ||
           identityKey(record.model) !== identityKey(model)) throw new Error("Fuel economy record mismatch");
       return record;
     }));
-    let narrowed = narrowFuelRecords(records, vehicle, vinData);
-    // A named trim is useful only when the EPA names the trims on all remaining records.
-    const trim = (vehicle.trim || "").trim().toUpperCase();
-    const trimWords = /\b(?:LE|XLE|SE|XSE|SEL|SLE|SLT|LT|LTZ|XLT|EX|EX-L|LX|LARIAT|LIMITED|TOURING|PLATINUM|PREMIUM)\b/g;
-    const trimTags = (record) => record.model.toUpperCase().match(trimWords) || [];
-    const trimMatches = trim && narrowed.filter((record) => trimTags(record).includes(trim));
-    if (trimMatches.length && narrowed.every((record) => trimTags(record).length)) narrowed = trimMatches;
-    const compatible = narrowed.length > 0;
-    const plausible = compatible ? narrowed : records;
-    const options = plausible.map((record) => fuelOption(record, entries[records.indexOf(record)].id))
-      .filter((option) => option.status === "available");
-    const signature = (option) => [option.cityMpg, option.highwayMpg, option.combinedMpg, option.unit].join("/");
-    const sharedRating = options.length === plausible.length && new Set(options.map(signature)).size === 1;
-    const source = { name: "FuelEconomy.gov (model configurations)", url: "https://www.fueleconomy.gov/feg/findacar.shtml" };
-    if (compatible && (exactModel || records.length > 1) && sharedRating) {
-      if (plausible.length === 1) return options[0];
-      return { ...options[0], id: null, specs: sharedFuelSpecs(plausible), source };
+    if (!exactModel || records.length > 1) {
+      const specs = fuelSpecs(records[0], true);
+      for (const record of records.slice(1)) {
+        const next = fuelSpecs(record, true);
+        for (const field of Object.keys(specs)) {
+          if (specs[field] !== next[field]) specs[field] = null;
+        }
+      }
+      return {
+        ...ambiguous, specs,
+        source: { name: "FuelEconomy.gov (shared model specs)", url: "https://www.fueleconomy.gov/feg/findacar.shtml" }
+      };
     }
-    return {
-      ...ambiguous,
-      reason: options.length ? "Choose the configuration that matches this car." : ambiguous.reason,
-      options,
-      specs: compatible ? sharedFuelSpecs(plausible) : null,
-      source
-    };
+    return fuelRatings(records[0], entries[0].id);
   } catch (error) {
     if (!exactModel) return ambiguous;
     throw error;
@@ -258,7 +173,7 @@ async function researchVehicle(vehicle, vinData) {
   const variant = mercedesVariant(vehicle, vinData);
   const names = [...new Set([vehicle.model, variant?.compact, variant?.spaced].filter(Boolean))];
   const [fuel, complaints, recalls] = await Promise.all([
-    lookUpFuelEconomy(vehicle, variant, signal, vinData).catch(() => ({ status: "unavailable", reason: "FuelEconomy.gov could not be reached or returned unusable data." })),
+    lookUpFuelEconomy(vehicle, variant, signal).catch(() => ({ status: "unavailable", reason: "FuelEconomy.gov could not be reached or returned unusable data." })),
     lookUpSafety("complaints", vehicle, names, signal),
     lookUpSafety("recalls", vehicle, names, signal)
   ]);
@@ -281,8 +196,6 @@ async function researchVehicle(vehicle, vinData) {
     cityMpg: fuel.cityMpg ?? null, highwayMpg: fuel.highwayMpg ?? null, combinedMpg: fuel.combinedMpg ?? null,
     fuelEconomyUnit: fuel.unit || "MPG", fuelEconomyStatus: fuel.status,
     fuelEconomyNote: fuel.status === "available" ? null : fuel.reason,
-    fuelEconomyOptions: fuel.options || [],
-    fuelEconomyVehicleId: fuel.id ?? null,
     configurationUncertain: fuel.status === "ambiguous",
     complaintStatus: complaints.status, complaintCount: complaints.rows.length,
     complaints: complaintGroups(complaints.rows),
