@@ -192,7 +192,10 @@ async function showDealBenchmark(vehicle) {
       ...(rating ? [
         "Mileage adjustment: " + mileageDiscountPer10k * 100 + "% per 10,000 excess miles, capped at " +
           maxMileageDiscount * 100 + "% (CarClarity heuristic).",
-        "Adjusted comparison midpoint: " + usd.format(rating.comparisonPrice)
+        "Adjusted comparison midpoint: " + usd.format(rating.comparisonPrice),
+        "Asking price vs. adjusted midpoint: " + ((ask - rating.comparisonPrice) / rating.comparisonPrice)
+          .toLocaleString("en-US", { style: "percent", maximumFractionDigits: 1, signDisplay: "exceptZero" }),
+        "Red zone starts above: " + usd.format(rating.highPriceCutoff)
       ] : []),
       "Comparison band: " + (rating ? usd.format(rating.estimatedRange.min) + "–" + usd.format(rating.estimatedRange.max) : "Unavailable"),
       ...warnings
