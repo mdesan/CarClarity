@@ -247,7 +247,7 @@ async function lookUpSafety(kind, vehicle, modelNames, signal) {
 function complaintGroups(rows) {
   const counts = new Map();
   for (const row of rows) {
-    const components = new Set((row.components || "Unspecified").split(/[,;]/).map((part) => part.trim()).filter(Boolean));
+    const components = new Set((row.components || "Unspecified").split(/[,;]/).map((part) => part.trim().toUpperCase()).filter(Boolean));
     for (const component of components) counts.set(component, (counts.get(component) || 0) + 1);
   }
   return [...counts].map(([component, count]) => ({ component, count })).sort((a, b) => b.count - a.count);
