@@ -1,0 +1,7 @@
+name = "carclarity-worker"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+# Gemini model to use. Change this line and redeploy to switch models.
+GEMINI_MODEL = "gemini-3.1-flash-lite"
