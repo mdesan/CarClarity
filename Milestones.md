@@ -37,8 +37,8 @@ Change `[ ]` to `[x]` after completing a task. If a check needs context, just ad
 
 ## M5 · ForCar pricing data
 
-- [ ] Clean the CSV and format it into JSON.
-- [ ] Match by exact year, make, and model. Show the benchmark, count, and source when available.
+- [x] Clean the ForCar model-year CSV and bundle it as offline JSON.
+- [x] Match by exact year, make, and model. Show the benchmark, count, and source when available.
 - [ ] Make sure lookup handles missing matches and small sample size well.
 
 ## M6 · Deal analysis
