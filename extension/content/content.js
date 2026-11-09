@@ -1,15 +1,20 @@
-function readCraigslistListing(tabId) {
+function readCraigslistListing(tabId, page = document, listingUrl = location.href) {
+  const url = new URL(listingUrl);
   // Shared links leave the category out of the URL. Read it from the breadcrumb.
-  if (location.pathname.startsWith("/view/d/")) {
-    const categoryLink = document.querySelector(".breadcrumbs .category a");
+  if (url.pathname.startsWith("/view/d/")) {
+    const categoryLink = page.querySelector(".breadcrumbs .category a");
     if (!categoryLink) return null;
 
-    const category = new URL(categoryLink.href).searchParams.get("cat");
+    const category = new URL(categoryLink.getAttribute("href") || categoryLink.href, url).searchParams.get("cat");
     if (category !== "cta" && category !== "cto" && category !== "ctd") return null;
   }
 
+  function nodeText(node) {
+    return (node?.innerText ?? node?.textContent ?? "").trim();
+  }
+
   function text(selector) {
-    return document.querySelector(selector)?.innerText.trim();
+    return nodeText(page.querySelector(selector));
   }
 
   const title = text("#titletextonly");
@@ -84,37 +89,9 @@ function readCraigslistListing(tabId) {
   const modelValue = makeText ? vehicle.slice(makeText.length).trim() : "";
   const ambiguousModel = /\s(?:or|\/)\s|[|*]|^(?:unknown|other|n\/?a)$/i.test(modelValue);
   const modelText = ambiguousModel ? "" : modelValue;
-  let trimMatch = modelText.match(/(?:^|\s+)["“]?(EX-L|XLE|XLS|XLT|LTZ|SEL|TRD Pro)["”]?(?:\s+(?:AWD|FWD|RWD|4WD|hybrid))*$/i);
-  if (!trimMatch && make === "toyota") {
-    trimMatch = modelText.match(/\s+["“]?(LE)["”]?(?:\s+(?:AWD|FWD|RWD|4WD|hybrid))*$/i);
-  }
-  let trim = trimMatch?.[1].toUpperCase() ?? null;
-  const model = (trimMatch ? modelText.slice(0, trimMatch.index) : modelText) || null;
-
   const titleParts = title?.split(/\s+[|*•]\s*/) ?? [];
   const headline = titleParts[0]?.replace(/^[^\p{L}\p{N}]+/u, "").trim();
-  let vehicleTitle = make && model ? [year, vehicle].filter(Boolean).join(" ") : null;
-  const expectedHeadline = [year, makeText, model].join(" ").toLowerCase();
-  const lowerHeadline = headline?.toLowerCase();
-  const headlineMatches = lowerHeadline === expectedHeadline || lowerHeadline?.startsWith(expectedHeadline + " ");
-  if (titleParts.length > 1 && year && make && model && headlineMatches) {
-    vehicleTitle = headline;
-  }
-
-  // Mercedes listings can put the class in the specs and the variant in the title.
-  if (make === "mercedes-benz" && year && model && /-class$/i.test(model)) {
-    const shortModel = model.replace(/-class$/i, "");
-    const firstPart = headline?.split("/")[0].trim() || "";
-    const prefix = (year + " mercedes benz " + shortModel + " ").toLowerCase();
-    const normalizedTitle = firstPart.toLowerCase().replace("mercedes-benz", "mercedes benz");
-    if (normalizedTitle.startsWith(prefix)) {
-      const variant = normalizedTitle.slice(prefix.length).match(/^(\d{3})(?: (4matic))?$/);
-      if (variant) {
-        trim = variant[1];
-        vehicleTitle = [year, "Mercedes-Benz", shortModel, trim, variant[2]?.toUpperCase()].filter(Boolean).join(" ");
-      }
-    }
-  }
+  const expectedHeadline = [year, makeText, modelText].join(" ").toLowerCase();
 
   const details = [];
   const price = text(".postingtitletext .price");
@@ -145,11 +122,11 @@ function readCraigslistListing(tabId) {
   if (title) details.push(title);
   if (price) details.push("Price: " + price);
 
-  const specs = document.querySelectorAll(".attrgroup .attr, p.attrgroup > span");
+  const specs = page.querySelectorAll(".attrgroup .attr, p.attrgroup > span");
   for (const spec of specs) {
-    const line = spec.innerText.trim().replace(/\s+/g, " ");
+    const line = nodeText(spec).replace(/\s+/g, " ");
     if (/^(?:vin\s*:|show vin data\b)/i.test(line)) {
-      const value = spec.querySelector(".valu")?.innerText.trim() || line;
+      const value = nodeText(spec.querySelector(".valu")) || line;
       const foundVin = value.match(/\b[A-HJ-NPR-Z0-9]{17}\b/i);
       if (foundVin) vin = foundVin[0].toUpperCase();
       continue;
@@ -172,7 +149,7 @@ function readCraigslistListing(tabId) {
   const commercialBody = /\b(?:box truck|dump truck|tow truck|flatbed truck|semi[- ]truck|tractor[- ]trailer|commercial truck|cargo van|chassis cab|cab and chassis|motorhome|school bus)\b/i;
   const commercialMake = /^(?:freightliner|kenworth|peterbilt|mack|western star)\b/i;
   const advertisedVehicle = headline?.split(/\b(?:trade for|trades? welcome|will trade|swap for)\b/i)[0] || "";
-  if (!sellerSpecs.drivetrain && year && makeText && model) {
+  if (!sellerSpecs.drivetrain && year && makeText && modelText) {
     const titleKey = advertisedVehicle.toLowerCase().replace(/[^a-z0-9]/g, "");
     const vehicleKey = expectedHeadline.replace(/[^a-z0-9]/g, "");
     if (titleKey.startsWith(vehicleKey)) {
@@ -190,28 +167,28 @@ function readCraigslistListing(tabId) {
   details.push("VIN: " + (vin || "Unavailable"));
 
   let postId = null;
-  for (const info of document.querySelectorAll(".postinginfo, .postinginfos")) {
-    const match = info.innerText.match(/\bpost\s+id\s*:\s*(\d+)/i);
+  for (const info of page.querySelectorAll(".postinginfo, .postinginfos")) {
+    const match = nodeText(info).match(/\bpost\s+id\s*:\s*(\d+)/i);
     if (match) {
       postId = match[1];
       break;
     }
   }
   // Classic listing URLs end in the numeric post ID. Shared links use a different ID.
-  if (!postId) postId = location.pathname.match(/\/(\d+)\.html$/)?.[1] ?? null;
+  if (!postId) postId = url.pathname.match(/\/(\d+)\.html$/)?.[1] ?? null;
   if (postId) details.push("Post ID: " + postId);
 
   const listingData = {
     tabId,
-    listingUrl: location.href,
+    listingUrl,
     postId,
     sourceSite: "Craigslist",
-    vehicleTitle,
+    vehicleTitle: null,
     postTitle: title || "",
     year,
     make,
-    model,
-    trim,
+    model: null,
+    trim: null,
     askingPriceUsd,
     mileageMiles,
     vin,
@@ -219,5 +196,5 @@ function readCraigslistListing(tabId) {
     sellerDescription: description || "",
     userVerified: false
   };
-  return { listingData, details };
+  return { listingData, details, listedModel: modelText };
 }

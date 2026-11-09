@@ -16,6 +16,14 @@ If `python` is unavailable, try `python3` or `py` on Windows. No pip packages re
 
 ## Files produced
 
+To refresh the offline benchmark shipped with the extension, run this from the repository root using the local ForCar model-year CSV:
+
+```bash
+python data-cleaning/build_forcar_bundle.py datasets/ForCar/used-car-prices-by-model-year.csv extension/data/forcar-market.json
+```
+
+The bundle uses asking-price averages, sample counts, and average mileage. Source: [ForCar Open Data](https://forcar.org/open-data/) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
+
 - `output/forcar_cleaned.json` or `output/craigslist_cleaned.json`: normalized rows.
 - `output/forcar_quality_report.json` or `output/craigslist_quality_report.json`: row counts, exact duplicates removed, and up to 100 rejection examples.
 

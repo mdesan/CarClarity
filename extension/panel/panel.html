@@ -18,6 +18,11 @@
     </header>
     <p id="urlCheck">Loading website...</p>
     <p id="description" role="status"></p>
+    <p id="previewTimer" role="status" hidden>
+      <span id="previewSpinner" aria-hidden="true" hidden></span>
+      <span id="previewTimerText"></span>
+    </p>
+    <a id="previewLink" target="_blank" rel="noopener noreferrer" hidden>Open original listing</a>
     <form id="vehicleForm" class="review-card" hidden novalidate>
       <h2>Vehicle details</h2>
       <p id="identitySource"></p>
@@ -25,15 +30,19 @@
         <dt>Year</dt><dd id="previewYear"></dd>
         <dt>Make</dt><dd id="previewMake"></dd>
         <dt>Model</dt><dd id="previewModel"></dd>
+        <dt>Trim</dt><dd id="previewTrim"></dd>
         <dt>Mileage</dt><dd id="previewMileage"></dd>
       </dl>
-      <fieldset id="vehicleFields" aria-label="Year, make, model, and mileage" hidden>
+      <fieldset id="vehicleFields" aria-label="Year, make, model, trim, and mileage" hidden>
         <label for="year">Year</label>
         <input id="year" inputmode="numeric" maxlength="4" required>
         <label for="make">Make</label>
         <input id="make" required>
         <label for="model">Model</label>
-        <input id="model" required>
+        <input id="model" list="vehicleModels" required>
+        <datalist id="vehicleModels"></datalist>
+        <label for="trim">Trim</label>
+        <input id="trim" placeholder="Optional – e.g. XLE">
         <label for="mileage">Mileage</label>
         <input id="mileage" inputmode="numeric" placeholder="Optional – e.g. 85,000">
       </fieldset>
@@ -46,7 +55,7 @@
 
     <!-- Report sections. Shown only after the buyer confirms the vehicle (panel.js toggles #reportSections). -->
     <div id="reportSections" hidden>
-      <section class="review-card">
+      <section id="researchOverview" class="review-card" hidden>
         <h2>Vehicle overview</h2>
         <p id="researchStatus" role="status"></p>
         <dl id="researchSpecs" class="vehicle-preview"></dl>
@@ -54,19 +63,24 @@
           <summary>What do these specs mean?</summary>
           <p>Drivetrain tells you which wheels get power. Engine size in liters describes the volume inside the cylinders. MPG means miles per gallon. MPGe is the energy-equivalent rating for electric driving.</p>
         </details>
-        <details>
+        <details id="researchSourcesDetails" hidden>
           <summary>Research sources</summary>
           <ul id="researchSources"></ul>
         </details>
       </section>
       <section class="review-card">
         <h2>Vehicle issues</h2>
-        <h3>Owner complaints for this model</h3>
-        <p>Reports cover the model year. They don’t diagnose this car.</p>
-        <div id="researchComplaints"></div>
-        <h3>Model recall campaigns</h3>
-        <p>These campaigns apply to the model, not necessarily this car.</p>
-        <div id="researchRecalls"></div>
+        <section id="researchComplaintsSection" hidden>
+          <h3>Owner complaints for this model</h3>
+          <p>Reports cover the model year. They don’t diagnose this car.</p>
+          <div id="researchComplaints"></div>
+        </section>
+        <section id="researchRecallsSection" hidden>
+          <h3>Model recall campaigns</h3>
+          <p>These campaigns apply to the model, not necessarily this car.</p>
+          <div id="researchRecalls"></div>
+        </section>
+        <p id="vinRecallCheck"></p>
       </section>
       <section class="review-card">
         <h2>Repair costs</h2>
@@ -99,8 +113,13 @@
           <p id="userIssueStatus" role="status"></p>
         </section>
       </section>
-      <section class="review-card">
-        <h2>Clarity report</h2>
+      <section id="dealAnalysis" class="review-card" hidden>
+        <h2>Deal analysis</h2>
+        <div>
+          <p id="dealBenchmarkStatus" role="status"></p>
+          <dl id="dealBenchmarkRows" class="vehicle-preview"></dl>
+          <p>Source: <a href="https://forcar.org/open-data/" target="_blank" rel="noopener noreferrer">ForCar Open Data</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> · Adapted for CarClarity</p>
+        </div>
       </section>
       <section class="review-card">
         <h2>Similar listings</h2>
@@ -124,19 +143,26 @@
       <pre id="listingJson"></pre>
     </details>
     <details id="researchDebug" hidden>
-      <summary>Vehicle research JSON</summary>
+      <summary>Vehicle research</summary>
+      <ul id="researchDiagnostics"></ul>
       <pre id="researchJson"></pre>
+    </details>
+    <details id="forcarDebug" hidden>
+      <summary>ForCar calculation</summary>
+      <pre id="forcarCalculation"></pre>
     </details>
     </div>
     <script src="panel-settings.js"></script>
-    <script src="content.js"></script>
+    <script src="../content/content.js"></script>
     <script src="seller-issues.js"></script>
-    <script src="nhtsa.js"></script>
+    <script src="../research/nhtsa.js"></script>
     <script src="issue-review.js"></script>
     <script src="similar-listings.js"></script>
-    <script src="vehicle-research.js"></script>
-    <script src="deal-evaluation.js"></script>
+    <script src="../research/vehicle-research.js"></script>
+    <script src="../deal-evaluation.js"></script>
     <script src="research-panel.js"></script>
+    <script src="deal-benchmark.js"></script>
+    <script src="right-click-panel.js"></script>
     <script src="panel.js"></script>
   </body>
 </html>

@@ -2,12 +2,6 @@ body {
   overflow-wrap: anywhere;
 }
 
-.unsupported-popup {
-  width: 260px;
-  margin: 12px;
-  font: 14px system-ui, sans-serif;
-}
-
 #details {
   padding-left: 20px;
 }
@@ -23,6 +17,22 @@ body {
 .listing-panel h1 {
   margin: 0;
   font-size: 1.4rem;
+}
+
+.listing-panel.unsupported-popup {
+  width: 260px;
+  color-scheme: dark;
+  background: black;
+  color: white;
+}
+
+.unsupported-popup .review-card {
+  margin-bottom: 0;
+  border-color: #666;
+}
+
+.unsupported-popup .review-card p:last-child {
+  margin-bottom: 0;
 }
 
 .panel-header {
@@ -96,6 +106,12 @@ body {
 #researchSpecs small {
   display: block;
   color: GrayText;
+}
+
+#researchSpecs select {
+  width: 100%;
+  margin-top: 6px;
+  font: inherit;
 }
 
 #researchStatus:empty {
@@ -191,8 +207,39 @@ details {
   margin-top: 8px;
 }
 
+#previewSpinner:not([hidden]) {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 4px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  vertical-align: -0.15em;
+}
+
+#previewSpinner[data-state="ready"] {
+  background: #16a34a;
+}
+
+#previewSpinner[data-state="waiting"] {
+  border: 2px solid transparent;
+  border-top-color: #f5be1e;
+  border-right-color: #f5be1e;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #previewSpinner[data-state="waiting"]:not([hidden]) {
+    animation: preview-spin 0.85s linear infinite;
+  }
+}
+
+@keyframes preview-spin {
+  to { transform: rotate(360deg); }
+}
+
 #listingJson,
-#researchJson {
+#researchJson,
+#forcarCalculation {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
