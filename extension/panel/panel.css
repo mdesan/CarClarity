@@ -6,6 +6,13 @@ body {
   padding-left: 20px;
 }
 
+#debugSections {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border: 1px solid GrayText;
+  border-radius: 8px;
+}
+
 .listing-panel {
   margin: 16px;
   font: 14px system-ui, sans-serif;

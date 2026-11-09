@@ -13,6 +13,7 @@ const researchSources = document.getElementById("researchSources");
 const researchSourcesDetails = document.getElementById("researchSourcesDetails");
 const researchDebug = document.getElementById("researchDebug");
 const researchJsonPreview = document.getElementById("researchJson");
+const fuelComparisonDebug = document.getElementById("fuelComparisonDebug");
 const researchOverview = document.getElementById("researchOverview");
 const researchComplaintsSection = document.getElementById("researchComplaintsSection");
 const researchRecallsSection = document.getElementById("researchRecallsSection");
@@ -35,6 +36,7 @@ function resetResearch() {
   researchRecallsSection.open = false;
   researchSourcesDetails.hidden = true;
   researchJsonPreview.textContent = "";
+  fuelComparisonDebug.textContent = "";
   showUnavailableElements("Vehicle research");
   for (const section of [researchSpecs, researchFuelEconomy, researchExtraSpecs, researchComplaints,
     complaintDebugRows, researchRecalls, researchSources, vinRecallCheck]) {
@@ -95,16 +97,32 @@ function fuelUseComparison(combined, referenceMpg) {
   return { label, impact };
 }
 
-async function showFuelClassComparison(row, combined, unit, { year, vehicleClass, fuelType, electrification }) {
+async function showFuelClassComparison(row, combined, unit, { id, year, vehicleClass, fuelType, electrification }) {
   const fuel = fuelType?.trim().toLowerCase();
+  const key = JSON.stringify([year, vehicleClass ?? null, fuel ?? null]);
+  const lookup = "EPA configuration ID: " + (id ?? "No single configuration ID") + "\nClass lookup key: " + key;
   if (unit !== "MPG" || !Number.isFinite(combined) || combined <= 0 ||
-      !vehicleClass || !fuel || fuelKind(electrification) === "plug-in hybrid") return;
+      fuelKind(electrification) === "plug-in hybrid") {
+    fuelComparisonDebug.textContent = lookup + "\nNo eligible combined MPG for this comparison.";
+    return;
+  }
+  if (!vehicleClass || !fuel) {
+    fuelComparisonDebug.textContent = lookup + "\nEPA class or eligible fuel grade unavailable.";
+    return;
+  }
+  fuelComparisonDebug.textContent = lookup + "\nLooking up the class benchmark…";
   try {
     fuelBenchmarksRequest ??= loadFuelBenchmarks();
     const benchmarks = await fuelBenchmarksRequest;
-    const match = benchmarks.get(JSON.stringify([year, vehicleClass, fuel]));
-    if (!row.isConnected || !match) return;
+    if (!row.isConnected) return;
+    const match = benchmarks.get(key);
+    if (!match) {
+      fuelComparisonDebug.textContent = lookup + "\nNo benchmark for this group in the bundle (at least five configurations required).";
+      return;
+    }
     const { label, impact } = fuelUseComparison(combined, match.mpg);
+    fuelComparisonDebug.textContent = lookup + "\nMedian combined MPG: " + match.mpg +
+      "\nConfigurations in sample: " + match.count;
     researchText(row, "strong", label);
     researchText(row, "span", " · " + match.mpg + " MPG median for this model year and EPA class." + impact);
     researchLink(researchText(row, "small", ""), "FuelEconomy.gov class data (" + match.count + " configurations)",
@@ -112,6 +130,7 @@ async function showFuelClassComparison(row, combined, unit, { year, vehicleClass
     row.hidden = false;
   } catch {
     fuelBenchmarksRequest = null;
+    if (row.isConnected) fuelComparisonDebug.textContent = lookup + "\nCould not load the class benchmark bundle.";
   }
 }
 
@@ -141,12 +160,13 @@ function renderFuelEconomy(data) {
   const row = researchText(researchFuelEconomy, "div", "");
   if (data.fuelEconomyStatus === "available") {
     showFuelEstimate(row, data.cityMpg, data.highwayMpg, data.combinedMpg,
-      data.fuelEconomyUnit, { year: data.year, vehicleClass: data.fuelEconomyClass,
+      data.fuelEconomyUnit, { id: data.fuelEconomyVehicleId, year: data.year, vehicleClass: data.fuelEconomyClass,
         fuelType: data.fuelEconomyFuelType, electrification: data.fuelEconomyElectrification },
       data.fiveYearFuelSavingsUsd);
     return;
   }
   const select = researchText(row, "select", "");
+  fuelComparisonDebug.textContent = "Choose an EPA configuration to see the class lookup.";
   select.setAttribute("aria-label", "Fuel economy configuration");
   researchText(select, "option", "Choose a configuration").value = "";
   for (const option of data.fuelEconomyOptions) {
@@ -159,11 +179,12 @@ function renderFuelEconomy(data) {
     activeResearch.selectedFuelOption = option || null;
     selected.replaceChildren();
     if (!option) {
+      fuelComparisonDebug.textContent = "Choose an EPA configuration to see the class lookup.";
       researchJsonPreview.textContent = JSON.stringify(data, null, 2);
       return;
     }
     showFuelEstimate(selected, option.cityMpg, option.highwayMpg, option.combinedMpg,
-      option.unit, { year: data.year, vehicleClass: option.specs?.epaClass,
+      option.unit, { id: option.id, year: data.year, vehicleClass: option.specs?.epaClass,
         fuelType: option.specs?.comparisonFuel, electrification: option.specs?.electrification },
       option.fiveYearFuelSavingsUsd);
     researchLink(selected, "FuelEconomy.gov", option.source.url);
