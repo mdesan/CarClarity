@@ -247,6 +247,51 @@ body {
   color: light-dark(#a52222, #ffaaaa);
 }
 
+.issue-cards {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.issue-card {
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid GrayText;
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+
+.issue-card[data-severity="serious"] {
+  border-left-color: light-dark(#a52222, #ffaaaa);
+}
+
+.issue-card[data-severity="check"] {
+  border-left-color: light-dark(#9a6700, #f5be1e);
+}
+
+.issue-card[data-severity="good"] {
+  border-left-color: #16a34a;
+}
+
+.issue-card p {
+  margin: 6px 0 0;
+}
+
+.issue-card .issue-name {
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.issue-card .issue-severity {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.issue-card .issue-quote {
+  font-style: italic;
+}
+
 details {
   margin-top: 8px;
 }

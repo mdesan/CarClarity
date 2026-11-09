@@ -77,9 +77,11 @@ function showListingJson(listing) {
     const researchInput = activeVinData && !matchingVin ? { ...output, vin: null } : output;
     showVehicleResearch(researchInput, matchingVin ? activeVinData : null);
     showDealBenchmark(output);
+    showListingIssues(output);
   } else {
     resetResearch();
     resetDealBenchmark();
+    resetListingIssues();
   }
   if (post) {
     output.sellerIssues = post.issuesVerified
@@ -215,6 +217,7 @@ async function showListing() {
   vehicleModels.replaceChildren();
   resetResearch();
   resetDealBenchmark();
+  resetListingIssues();
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
