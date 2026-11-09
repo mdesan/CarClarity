@@ -1,6 +1,9 @@
 let activeResearch = null;
 const researchStatus = document.getElementById("researchStatus");
 const researchSpecs = document.getElementById("researchSpecs");
+const researchFuelEconomy = document.getElementById("researchFuelEconomy");
+const researchSpecGuide = document.getElementById("researchSpecGuide");
+const researchExtraSpecs = document.getElementById("researchExtraSpecs");
 const researchComplaints = document.getElementById("researchComplaints");
 const complaintDebug = document.getElementById("complaintDebug");
 const complaintDebugStatus = document.getElementById("complaintDebugStatus");
@@ -21,6 +24,10 @@ function resetResearch() {
   researchStatus.textContent = "";
   researchDebug.hidden = true;
   researchOverview.hidden = true;
+  researchSpecs.hidden = true;
+  researchFuelEconomy.hidden = true;
+  researchSpecGuide.hidden = true;
+  researchSpecGuide.open = false;
   researchComplaintsSection.hidden = true;
   complaintDebug.hidden = true;
   complaintDebugStatus.textContent = "";
@@ -29,7 +36,8 @@ function resetResearch() {
   researchSourcesDetails.hidden = true;
   researchJsonPreview.textContent = "";
   showUnavailableElements("Vehicle research");
-  for (const section of [researchSpecs, researchComplaints, complaintDebugRows, researchRecalls, researchSources, vinRecallCheck]) {
+  for (const section of [researchSpecs, researchFuelEconomy, researchExtraSpecs, researchComplaints,
+    complaintDebugRows, researchRecalls, researchSources, vinRecallCheck]) {
     section.replaceChildren();
   }
 }
@@ -61,27 +69,90 @@ function safetyLabel(component) {
 }
 
 function fuelRatingText(city, highway, combined, unit) {
-  return [["city", city], ["highway", highway], ["combined", combined]]
-    .filter(([, value]) => value !== null)
-    .map(([label, value]) => value + " " + label)
-    .join(", ") + " " + unit;
+  return [["combined", combined], ["city", city], ["highway", highway]]
+    .filter(([, value]) => Number.isFinite(value))
+    .map(([label, value]) => value + " " + unit + " " + label)
+    .join(" · ");
+}
+
+let fuelBenchmarksRequest;
+
+async function loadFuelBenchmarks() {
+  const response = await fetch(chrome.runtime.getURL("data/fuel-class-benchmarks.json"));
+  if (!response.ok) throw new Error("Fuel class benchmarks could not be loaded.");
+  const records = await response.json();
+  return new Map(records.map(([year, vehicleClass, fuel, mpg, count]) =>
+    [JSON.stringify([year, vehicleClass, fuel]), { mpg, count }]));
+}
+
+function fuelUseComparison(combined, referenceMpg) {
+  const label = combined <= referenceMpg * 0.8 ? "Below typical for its class" :
+    combined >= referenceMpg * 1.2 ? "Above typical for its class" : "Typical for its class";
+  const difference = Math.round(1000 / combined - 1000 / referenceMpg);
+  const gallons = Math.abs(difference);
+  const impact = difference ? " About " + gallons + (gallons === 1 ? " gallon " : " gallons ") +
+    (difference > 0 ? "more" : "fewer") + " per 1,000 miles." : "";
+  return { label, impact };
+}
+
+async function showFuelClassComparison(row, combined, unit, { year, vehicleClass, fuelType, electrification }) {
+  const fuel = fuelType?.trim().toLowerCase();
+  if (unit !== "MPG" || !Number.isFinite(combined) || combined <= 0 ||
+      !vehicleClass || !fuel || fuelKind(electrification) === "plug-in hybrid") return;
+  try {
+    fuelBenchmarksRequest ??= loadFuelBenchmarks();
+    const benchmarks = await fuelBenchmarksRequest;
+    const match = benchmarks.get(JSON.stringify([year, vehicleClass, fuel]));
+    if (!row.isConnected || !match) return;
+    const { label, impact } = fuelUseComparison(combined, match.mpg);
+    researchText(row, "strong", label);
+    researchText(row, "span", " · " + match.mpg + " MPG median for this model year and EPA class." + impact);
+    researchLink(researchText(row, "small", ""), "FuelEconomy.gov class data (" + match.count + " configurations)",
+      "https://www.fueleconomy.gov/feg/download.shtml");
+    row.hidden = false;
+  } catch {
+    fuelBenchmarksRequest = null;
+  }
+}
+
+function showFuelEstimate(parent, city, highway, combined, unit, comparisonSpecs, fiveYearFuelSavingsUsd) {
+  researchText(parent, "strong", fuelRatingText(null, null, combined, unit) ||
+    fuelRatingText(city, highway, null, unit));
+  const breakdown = fuelRatingText(city, highway, null, unit);
+  if (Number.isFinite(combined) && breakdown) researchText(parent, "span", " · " + breakdown);
+  researchText(parent, "small", "EPA estimate for this configuration");
+  const comparison = researchText(parent, "p", "");
+  comparison.hidden = true;
+  showFuelClassComparison(comparison, combined, unit, comparisonSpecs);
+  if (Number.isFinite(fiveYearFuelSavingsUsd) && fiveYearFuelSavingsUsd !== 0) {
+    const saves = fiveYearFuelSavingsUsd > 0;
+    const amount = Math.abs(fiveYearFuelSavingsUsd).toLocaleString("en-US", {
+      style: "currency", currency: "USD", maximumFractionDigits: 0
+    });
+    const estimate = researchText(parent, "p", "EPA estimates " + amount +
+      (saves ? " less" : " more") + " in fuel costs over 5 years compared with its average vehicle.");
+    estimate.className = saves ? "fuel-cost-savings" : "fuel-cost-extra";
+  }
 }
 
 function renderFuelEconomy(data) {
-  researchText(researchSpecs, "dt", "Fuel economy");
-  const row = researchText(researchSpecs, "dd", "");
+  researchFuelEconomy.hidden = false;
+  researchText(researchFuelEconomy, "h3", "Fuel economy");
+  const row = researchText(researchFuelEconomy, "div", "");
   if (data.fuelEconomyStatus === "available") {
-    row.textContent = fuelRatingText(data.cityMpg, data.highwayMpg, data.combinedMpg, data.fuelEconomyUnit) + " · FuelEconomy.gov";
+    showFuelEstimate(row, data.cityMpg, data.highwayMpg, data.combinedMpg,
+      data.fuelEconomyUnit, { year: data.year, vehicleClass: data.fuelEconomyClass,
+        fuelType: data.fuelEconomyFuelType, electrification: data.fuelEconomyElectrification },
+      data.fiveYearFuelSavingsUsd);
     return;
   }
   const select = researchText(row, "select", "");
   select.setAttribute("aria-label", "Fuel economy configuration");
-  researchText(select, "option", "Select configuration").value = "";
+  researchText(select, "option", "Choose a configuration").value = "";
   for (const option of data.fuelEconomyOptions) {
-    const rating = fuelRatingText(option.cityMpg, option.highwayMpg, option.combinedMpg, option.unit);
-    researchText(select, "option", option.label + " · " + rating).value = option.id;
+    researchText(select, "option", option.label).value = option.id;
   }
-  const selected = researchText(row, "p", "");
+  const selected = researchText(row, "div", "");
   select.addEventListener("change", () => {
     if (activeResearch?.data !== data) return;
     const option = data.fuelEconomyOptions.find((item) => String(item.id) === select.value);
@@ -91,13 +162,19 @@ function renderFuelEconomy(data) {
       researchJsonPreview.textContent = JSON.stringify(data, null, 2);
       return;
     }
-    const rating = fuelRatingText(option.cityMpg, option.highwayMpg, option.combinedMpg, option.unit);
-    researchText(selected, "span", rating + " · ");
+    showFuelEstimate(selected, option.cityMpg, option.highwayMpg, option.combinedMpg,
+      option.unit, { year: data.year, vehicleClass: option.specs?.epaClass,
+        fuelType: option.specs?.comparisonFuel, electrification: option.specs?.electrification },
+      option.fiveYearFuelSavingsUsd);
     researchLink(selected, "FuelEconomy.gov", option.source.url);
     researchJsonPreview.textContent = JSON.stringify({
       ...data,
       cityMpg: option.cityMpg, highwayMpg: option.highwayMpg, combinedMpg: option.combinedMpg,
       fuelEconomyUnit: option.unit, fuelEconomyStatus: "available",
+      fiveYearFuelSavingsUsd: option.fiveYearFuelSavingsUsd,
+      fuelEconomyClass: option.specs?.epaClass ?? null,
+      fuelEconomyFuelType: option.specs?.comparisonFuel ?? null,
+      fuelEconomyElectrification: option.specs?.electrification ?? null,
       fuelEconomyVehicleId: option.id, fuelEconomySelection: "buyer-selected",
       fuelEconomyNote: null, configurationUncertain: false,
       sources: [...data.sources, option.source]
@@ -122,12 +199,44 @@ function renderOwnerComplaints(data) {
     : "NHTSA returned no complaints for this model year.";
 }
 
+function vehicleSynopsis(data, specs) {
+  const name = [data.year, data.make, data.model].filter(Boolean).join(" ") || "vehicle";
+  const { bodyStyle, transmission, drivetrain, seats } = specs;
+  const features = [transmission, drivetrain].filter(Boolean);
+  const sentences = [];
+  if (bodyStyle) {
+    const article = /^(SUV\b|[aeiou])/i.test(bodyStyle) ? "an" : "a";
+    sentences.push("This " + name + " is " + article + " " + bodyStyle +
+      (features.length ? " with " + features.join(" and ") : "") + ".");
+  } else if (features.length) {
+    sentences.push("This " + name + " has " + features.join(" and ") + ".");
+  }
+  if (seats) sentences.push((sentences.length ? "It" : "This " + name) + " seats " + seats + ".");
+  const listedType = fuelKind([data.model, data.trim].filter(Boolean).join(" "));
+  const fuel = fuelKind(data.electrification) ||
+    (listedType === "hybrid" || listedType === "plug-in hybrid" ? listedType : null) ||
+    fuelKind(data.fuelType || specs.fuelType);
+  const fuelNotes = {
+    electric: "An all-electric car skips gas stops. Check battery health and where you can charge.",
+    gas: "A gas car is quick to refuel. Use the MPG rating to compare fuel costs when available.",
+    hybrid: "A hybrid can use less gas, especially around town. Ask about the battery’s condition.",
+    "plug-in hybrid": "A plug-in hybrid can use less gas if you charge it regularly. Check its electric range and battery condition."
+  };
+  if (fuelNotes[fuel]) sentences.push(fuelNotes[fuel]);
+  return sentences.join(" ");
+}
+
 function renderResearch(data, sellerSpecs) {
   researchStatus.textContent = "";
   const missing = [];
   const fields = {
     bodyStyle: "Body style", engine: "Engine", transmission: "Transmission",
-    drivetrain: "Drivetrain", fuelType: "Fuel type"
+    drivetrain: "Drivetrain", fuelType: "Fuel type", seats: "Seating"
+  };
+  const synopsisSpecs = {};
+  const driveLabels = {
+    AWD: "All-wheel drive", FWD: "Front-wheel drive", RWD: "Rear-wheel drive",
+    "4WD": "Four-wheel drive", "2WD": "Two-wheel drive"
   };
   for (const [field, name] of Object.entries(fields)) {
     const sellerValue = field === "engine"
@@ -138,19 +247,41 @@ function renderResearch(data, sellerSpecs) {
       missing.push(name + " was not returned by research or listed by the seller.");
       continue;
     }
-    researchText(researchSpecs, "dt", name);
-    const row = researchText(researchSpecs, "dd", value);
-    if (source) researchText(row, "small", source);
+    if (field === "seats") {
+      synopsisSpecs.seats = value;
+      continue;
+    }
+    const label = (field === "drivetrain" && driveLabels[normalizeDrivetrain(value)]) ||
+      value.charAt(0).toUpperCase() + value.slice(1);
+    if (field === "engine" || field === "fuelType") {
+      if (field === "fuelType") synopsisSpecs.fuelType = value;
+      researchText(researchExtraSpecs, "dt", name);
+      const row = researchText(researchExtraSpecs, "dd", label);
+      if (source) researchText(row, "small", source);
+    } else {
+      let phrase = /^(SUV|MPV)\b/.test(label) ? label : label.toLowerCase();
+      if (field === "bodyStyle" && /sport utility/i.test(phrase)) phrase = "SUV";
+      if (field === "transmission") {
+        if (/^auto/i.test(phrase)) phrase = "an automatic transmission";
+        else if (/^manual/i.test(phrase)) phrase = "a manual transmission";
+        else if (/\bcvt\b|continuously variable/.test(phrase)) phrase = "a continuously variable transmission (CVT)";
+        else phrase = "a " + (phrase.includes("transmission") ? phrase : phrase + " transmission");
+      }
+      synopsisSpecs[field] = phrase + (source === "Seller-reported" ? " (seller-reported)" : "");
+    }
   }
   if (data.fuelEconomyStatus === "available" || data.fuelEconomyOptions?.length) {
     renderFuelEconomy(data);
   } else {
     missing.push("Fuel economy — " + (data.fuelEconomyNote || "No rating was returned."));
   }
-  researchOverview.hidden = !researchSpecs.childElementCount;
+  researchSpecs.textContent = vehicleSynopsis(data, synopsisSpecs);
+  researchSpecs.hidden = !researchSpecs.textContent;
+  researchOverview.hidden = researchSpecs.hidden && researchFuelEconomy.hidden && !researchExtraSpecs.childElementCount;
+  researchSpecGuide.hidden = researchOverview.hidden;
   if (researchOverview.hidden) missing.push("Vehicle overview — no specs to display.");
   researchRecallsSection.hidden = data.recallStatus !== "available";
-  researchRecallsSummary.textContent = "Model recall campaigns" +
+  researchRecallsSummary.textContent = "Possible model recall campaigns" +
     (data.recallStatus === "available" ? " (" + data.recalls.length + ")" : "");
 
   if (data.complaintStatus !== "available") {
@@ -160,7 +291,7 @@ function renderResearch(data, sellerSpecs) {
   }
 
   if (data.recallStatus !== "available") {
-    missing.push("Model recall campaigns — NHTSA data unavailable.");
+    missing.push("Possible model recall campaigns — NHTSA data unavailable.");
   } else if (!data.recalls.length) {
     researchText(researchRecalls, "p", "NHTSA returned no campaigns for the model name checked.");
   } else {

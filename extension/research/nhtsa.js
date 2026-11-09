@@ -98,9 +98,11 @@ async function decodeVin(vin) {
       vehicleTitle: [year, make, model, trim].filter(Boolean).join(" "),
       specs: {
         bodyStyle: decoded.BodyClass?.trim() || null,
+        seats: positiveNumber(decoded.Seats),
         engine: engineLabel(decoded.DisplacementL, decoded.EngineCylinders),
         transmission: decoded.TransmissionStyle?.trim() || null,
         drivetrain: decoded.DriveType?.trim() || null,
+        electrification: decoded.ElectrificationLevel?.trim() || null,
         fuelType: decoded.FuelTypePrimary?.trim() || null
       }
     };

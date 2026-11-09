@@ -7,6 +7,9 @@ const dealRating = document.getElementById("dealRating");
 const showDealRating = document.getElementById("showDealRating");
 const dealRatingLabel = document.getElementById("dealRatingLabel");
 const dealScale = document.getElementById("dealScale");
+const dealNeedle = document.getElementById("dealNeedle");
+const dealGaugePrice = document.getElementById("dealGaugePrice");
+const dealConfidence = document.getElementById("dealConfidence");
 const dealRange = document.getElementById("dealRange");
 let marketIndexRequest;
 let dealRequest = 0;
@@ -54,15 +57,28 @@ function findMarketMatch(index, vehicle) {
   return null;
 }
 
-function renderDealRating(result, usd, lowConfidence, mileageNote) {
-  const { rating, askingPrice, marketAvgPrice, estimatedRange, explanation } = result;
-  const position = Math.max(0, Math.min(100, 50 + 250 * (askingPrice / marketAvgPrice - 1)));
-  dealScale.style.setProperty("--asking-position", position + "%");
-  dealScale.setAttribute("aria-label", usd.format(askingPrice) + " asking price. " + explanation);
-  dealRatingLabel.textContent = rating + (lowConfidence ? " · Low confidence" : "");
+function renderDealRating(result, usd, lowConfidence) {
+  const { rating, askingPrice, comparisonPrice, estimatedRange, highPriceCutoff, explanation, mileageDiscount, mileageGap } = result;
+  const { min, max } = estimatedRange;
+  const edges = [min - comparisonPrice * 0.1, min, max, highPriceCutoff, highPriceCutoff + comparisonPrice * 0.1];
+  const zone = ["Below band", "Within band", "Above band", "Well above band"].indexOf(rating);
+  const width = edges[zone + 1] - edges[zone];
+  const progress = width > 0 ? (askingPrice - edges[zone]) / width : 0.5;
+  const angle = -90 + 45 * (zone + Math.max(0.02, Math.min(0.98, progress)));
+  dealNeedle.setAttribute("transform", "rotate(" + angle + " 110 104)");
+  dealGaugePrice.textContent = usd.format(askingPrice);
+  dealScale.setAttribute("aria-label", dealGaugePrice.textContent + " asking price. " + rating + ".");
+  dealRatingLabel.textContent = rating;
+  dealConfidence.hidden = !lowConfidence;
   dealRange.textContent = explanation + " Comparison band: " +
     usd.format(estimatedRange.min) + "–" + usd.format(estimatedRange.max) +
-    " (10% either side of the ForCar average)." + (mileageNote ? " " + mileageNote : "");
+    (mileageDiscount ? " (10% either side of the mileage-adjusted benchmark)." :
+      " (10% either side of the ForCar average).");
+  if (mileageDiscount) {
+    dealRange.textContent += " The listing has " + Math.round(mileageGap).toLocaleString("en-US") +
+      " more miles than average, so the benchmark was lowered by " +
+      (mileageDiscount * 100).toLocaleString("en-US", { maximumFractionDigits: 1 }) + "%.";
+  }
   showDealRating.hidden = !lowConfidence;
   setDealRatingVisible(!lowConfidence);
 }
@@ -134,38 +150,25 @@ async function showDealBenchmark(vehicle) {
     if (difference === null) missing.push("Asking price and comparison — no asking price was captured.");
     if (match.listingCount == null) missing.push("Listings in sample — ForCar did not provide a count.");
     if (match.averageMileageMiles == null) missing.push("Average mileage — ForCar did not provide mileage.");
-    if (difference !== null) {
-      addBenchmarkRow("Compared with average", difference === 0
-        ? "Same as average" : usd.format(Math.abs(difference)) + (difference < 0 ? " below" : " above"));
-    }
     const warnings = [];
-    let mileageGap = 0;
     if (match.year !== vehicle.year) warnings.push("benchmark uses model year " + match.year);
     if (!(match.listingCount >= 20)) warnings.push("fewer than 20 listings or unknown sample size");
-    if (vehicle.mileageMiles == null || match.averageMileageMiles == null) {
-      warnings.push("mileage comparison unavailable");
-    } else {
-      mileageGap = vehicle.mileageMiles - match.averageMileageMiles;
-      if (Math.abs(mileageGap) >= Math.max(20000, match.averageMileageMiles * 0.4)) {
-        warnings.push("mileage differs substantially from the sample average");
-      } else {
-        mileageGap = 0;
-      }
-    }
     const title = vehicle.sellerSpecs?.titleStatus;
     if (title && title.toLowerCase() !== "clean") warnings.push("seller reports a " + title + " title");
     const ratio = ask / match.averagePriceUsd;
     const rating = hasAsk && ratio >= 0.1 && ratio <= 5
-      ? calculateDealRating(ask, match.averagePriceUsd) : null;
+      ? calculateDealRating(ask, match.averagePriceUsd, vehicle.mileageMiles, match.averageMileageMiles) : null;
     const unavailable = hasAsk
       ? "The asking price is outside the usable comparison limits."
       : "A positive asking price is needed.";
     if (rating) {
-      const mileageNote = mileageGap > 0 && ask > rating.estimatedRange.max
-        ? "It also has " + Math.round(mileageGap).toLocaleString("en-US") +
-          " more miles than the sample average, which supports the overpriced rating."
-        : "";
-      renderDealRating(rating, usd, warnings.length > 0, mileageNote);
+      const adjustedDifference = Math.round(ask - rating.comparisonPrice);
+      addBenchmarkRow(rating.mileageDiscount ? "Compared with adjusted benchmark" : "Compared with average",
+        adjustedDifference === 0 ? "About the same" :
+          usd.format(Math.abs(adjustedDifference)) + (adjustedDifference < 0 ? " below" : " above"));
+      if (rating.mileageGap === null) warnings.push("mileage comparison unavailable");
+      else if (rating.substantialGap) warnings.push("mileage differs substantially from the sample average");
+      renderDealRating(rating, usd, warnings.length > 0);
       dealBenchmarkStatus.textContent = warnings.length ? "Insufficient data for a confident rating: " + warnings.join("; ") + "." : "";
     } else {
       missing.push("Deal rating — " + unavailable);
@@ -186,6 +189,11 @@ async function showDealBenchmark(vehicle) {
       formula,
       "",
       "Deal rating: " + (rating ? rating.rating + (warnings.length ? " (low confidence)" : "") : unavailable),
+      ...(rating ? [
+        "Mileage adjustment: " + mileageDiscountPer10k * 100 + "% per 10,000 excess miles, capped at " +
+          maxMileageDiscount * 100 + "% (CarClarity heuristic).",
+        "Adjusted comparison midpoint: " + usd.format(rating.comparisonPrice)
+      ] : []),
       "Comparison band: " + (rating ? usd.format(rating.estimatedRange.min) + "–" + usd.format(rating.estimatedRange.max) : "Unavailable"),
       ...warnings
     ].join("\n");
