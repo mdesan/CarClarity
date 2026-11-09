@@ -80,15 +80,15 @@
           <p id="listingIssuesNote" hidden>Based on what the seller wrote. Always have a mechanic inspect the car.</p>
         </section>
         <section id="researchComplaintsSection" hidden>
-          <h3>Owner complaints for this model</h3>
-          <p>Reports cover the model year. They don’t diagnose this car.</p>
-          <div id="researchComplaints"></div>
+          <h3>Worth checking</h3>
+          <p>These components stood out in NHTSA complaints for this model year. One report can mention several components.</p>
+          <ul id="researchComplaints"></ul>
         </section>
-        <section id="researchRecallsSection" hidden>
-          <h3>Model recall campaigns</h3>
+        <details id="researchRecallsSection" hidden>
+          <summary id="researchRecallsSummary">Model recall campaigns</summary>
           <p>These campaigns apply to the model, not necessarily this car.</p>
           <div id="researchRecalls"></div>
-        </section>
+        </details>
         <p id="vinRecallCheck"></p>
       </section>
       <section class="review-card">
@@ -126,6 +126,14 @@
         <h2>Deal analysis</h2>
         <div>
           <p id="dealBenchmarkStatus" role="status"></p>
+          <button id="showDealRating" type="button" aria-controls="dealRating" aria-expanded="false" hidden>Show me anyway</button>
+          <div id="dealRating" hidden>
+            <p id="dealRatingLabel" class="deal-rating-label"></p>
+            <div id="dealScale" class="deal-scale" role="img">
+              <span class="deal-marker" aria-hidden="true"></span>
+            </div>
+            <p id="dealRange"></p>
+          </div>
           <dl id="dealBenchmarkRows" class="vehicle-preview"></dl>
           <p>Source: <a href="https://forcar.org/open-data/" target="_blank" rel="noopener noreferrer">ForCar Open Data</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> · Adapted for CarClarity</p>
         </div>
@@ -163,6 +171,11 @@
     <details id="researchDebug" hidden>
       <summary>Vehicle research</summary>
       <pre id="researchJson"></pre>
+    </details>
+    <details id="complaintDebug" hidden>
+      <summary>Owner complaints not highlighted</summary>
+      <p id="complaintDebugStatus"></p>
+      <ul id="complaintDebugRows"></ul>
     </details>
     <details id="forcarDebug" hidden>
       <summary>ForCar calculation</summary>

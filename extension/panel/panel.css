@@ -118,6 +118,50 @@ body {
   display: none;
 }
 
+#dealBenchmarkStatus:empty {
+  display: none;
+}
+
+#showDealRating {
+  margin-bottom: 12px;
+}
+
+#researchRecallsSection {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 1px solid GrayText;
+  border-radius: 8px;
+}
+
+#researchRecallsSummary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.deal-rating-label {
+  font-weight: 700;
+}
+
+.deal-scale {
+  position: relative;
+  height: 10px;
+  margin: 12px 6px;
+  border-radius: 6px;
+  background: linear-gradient(to right, #30834b 25%, #bd891f 25% 75%, #c34848 75%);
+}
+
+.deal-marker {
+  position: absolute;
+  left: var(--asking-position);
+  top: 50%;
+  width: 12px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  border: 2px solid Canvas;
+  border-radius: 5px;
+  background: CanvasText;
+}
+
 .post-description {
   white-space: pre-wrap;
   max-height: 180px;

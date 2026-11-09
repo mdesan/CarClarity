@@ -5,11 +5,11 @@
  * Evaluates the listing deal rating based on asking price and market range
  * @param {number} askingPrice 
  * @param {number} marketAvgPrice
- * @param {number} mileage
  * @returns {Object} 
  */
-function calculateDealRating(askingPrice, marketAvgPrice, mileage = null) {
-  if (!askingPrice || !marketAvgPrice || askingPrice <= 0 || marketAvgPrice <= 0) {
+function calculateDealRating(askingPrice, marketAvgPrice) {
+  if (!Number.isFinite(askingPrice) || !Number.isFinite(marketAvgPrice) ||
+      askingPrice <= 0 || marketAvgPrice <= 0) {
     return {
       rating: "Unavailable",
       color: "gray",
@@ -17,7 +17,7 @@ function calculateDealRating(askingPrice, marketAvgPrice, mileage = null) {
       estimatedRange: null
     };
   }
-  // Define market value range (+/- 10% of market average)
+  // A comparison band around the asking-price average, not a measured market range.
   const lowerBound = Math.round(marketAvgPrice * 0.90);
   const upperBound = Math.round(marketAvgPrice * 1.10);
   let rating = "Fair Deal";
@@ -26,15 +26,15 @@ function calculateDealRating(askingPrice, marketAvgPrice, mileage = null) {
   if (askingPrice < lowerBound) {
     rating = "Good Deal";
     color = "green";
-    explanation = `Asking price ($${askingPrice.toLocaleString()}) is below the market range ($${lowerBound.toLocaleString()} - $${upperBound.toLocaleString()}).`;
+    explanation = "The asking price is below the comparison band.";
   } else if (askingPrice > upperBound) {
     rating = "Overpriced";
     color = "red";
-    explanation = `Asking price ($${askingPrice.toLocaleString()}) is above the market range ($${lowerBound.toLocaleString()} - $${upperBound.toLocaleString()}).`;
+    explanation = "The asking price is above the comparison band.";
   } else {
     rating = "Fair Deal";
     color = "yellow";
-    explanation = `Asking price ($${askingPrice.toLocaleString()}) is within expected market range ($${lowerBound.toLocaleString()} - $${upperBound.toLocaleString()}).`;
+    explanation = "The asking price is within the comparison band.";
   }
   return {
     rating,

@@ -2,6 +2,9 @@ let activeResearch = null;
 const researchStatus = document.getElementById("researchStatus");
 const researchSpecs = document.getElementById("researchSpecs");
 const researchComplaints = document.getElementById("researchComplaints");
+const complaintDebug = document.getElementById("complaintDebug");
+const complaintDebugStatus = document.getElementById("complaintDebugStatus");
+const complaintDebugRows = document.getElementById("complaintDebugRows");
 const researchRecalls = document.getElementById("researchRecalls");
 const researchSources = document.getElementById("researchSources");
 const researchSourcesDetails = document.getElementById("researchSourcesDetails");
@@ -10,6 +13,7 @@ const researchJsonPreview = document.getElementById("researchJson");
 const researchOverview = document.getElementById("researchOverview");
 const researchComplaintsSection = document.getElementById("researchComplaintsSection");
 const researchRecallsSection = document.getElementById("researchRecallsSection");
+const researchRecallsSummary = document.getElementById("researchRecallsSummary");
 const vinRecallCheck = document.getElementById("vinRecallCheck");
 
 function resetResearch() {
@@ -18,11 +22,14 @@ function resetResearch() {
   researchDebug.hidden = true;
   researchOverview.hidden = true;
   researchComplaintsSection.hidden = true;
+  complaintDebug.hidden = true;
+  complaintDebugStatus.textContent = "";
   researchRecallsSection.hidden = true;
+  researchRecallsSection.open = false;
   researchSourcesDetails.hidden = true;
   researchJsonPreview.textContent = "";
   showUnavailableElements("Vehicle research");
-  for (const section of [researchSpecs, researchComplaints, researchRecalls, researchSources, vinRecallCheck]) {
+  for (const section of [researchSpecs, researchComplaints, complaintDebugRows, researchRecalls, researchSources, vinRecallCheck]) {
     section.replaceChildren();
   }
 }
@@ -98,6 +105,23 @@ function renderFuelEconomy(data) {
   });
 }
 
+function renderOwnerComplaints(data) {
+  const total = data.complaintCount;
+  complaintDebug.hidden = false;
+  for (const { component, count } of data.complaints) {
+    const named = !/^(unknown or other|unspecified)$/i.test(component);
+    const worthChecking = named && count >= 10 && count * 100 >= total * 15;
+    const list = worthChecking ? researchComplaints : complaintDebugRows;
+    researchText(list, "li", safetyLabel(component) + " — " + count + " of " + total + " reports");
+  }
+  researchComplaintsSection.hidden = !researchComplaints.childElementCount;
+  const rule = "Highlights require at least 10 reports and at least 15% of reports for this model year.";
+  complaintDebugStatus.textContent = total
+    ? total + " distinct reports. " + rule +
+      (complaintDebugRows.childElementCount ? "" : " All component counts qualified.")
+    : "NHTSA returned no complaints for this model year.";
+}
+
 function renderResearch(data, sellerSpecs) {
   researchStatus.textContent = "";
   const missing = [];
@@ -125,21 +149,14 @@ function renderResearch(data, sellerSpecs) {
   }
   researchOverview.hidden = !researchSpecs.childElementCount;
   if (researchOverview.hidden) missing.push("Vehicle overview — no specs to display.");
-  researchComplaintsSection.hidden = data.complaintStatus !== "available";
   researchRecallsSection.hidden = data.recallStatus !== "available";
+  researchRecallsSummary.textContent = "Model recall campaigns" +
+    (data.recallStatus === "available" ? " (" + data.recalls.length + ")" : "");
 
   if (data.complaintStatus !== "available") {
     missing.push("Owner complaints for this model — NHTSA data unavailable.");
-  } else if (!data.complaintCount) {
-    researchText(researchComplaints, "p", "NHTSA returned no complaints for the model name checked.");
   } else {
-    researchText(researchComplaints, "p", data.complaintCount + " NHTSA owner reports. Counts can overlap.");
-    const list = document.createElement("ul");
-    const named = data.complaints.filter(({ component }) => !/^(unknown or other|unspecified)$/i.test(component));
-    for (const { component, count } of named.slice(0, 5)) {
-      researchText(list, "li", safetyLabel(component) + " (" + count + ")");
-    }
-    if (named.length) researchComplaints.append(list);
+    renderOwnerComplaints(data);
   }
 
   if (data.recallStatus !== "available") {
