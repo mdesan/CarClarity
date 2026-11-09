@@ -1,5 +1,3 @@
-import { calculateDealRating } from './deal-evaluation.js';
-
 let activeResearch = null;
 const researchStatus = document.getElementById("researchStatus");
 const researchSpecs = document.getElementById("researchSpecs");
@@ -8,14 +6,13 @@ const researchRecalls = document.getElementById("researchRecalls");
 const researchSources = document.getElementById("researchSources");
 const researchDebug = document.getElementById("researchDebug");
 const researchJsonPreview = document.getElementById("researchJson");
-const researchDeal = document.getElementById("researchDeal");
 
 function resetResearch() {
   activeResearch = null;
   researchStatus.textContent = "";
   researchDebug.hidden = true;
   researchJsonPreview.textContent = "";
-  for (const section of [researchSpecs, researchComplaints, researchRecalls, researchSources, researchDeal]) {
+  for (const section of [researchSpecs, researchComplaints, researchRecalls, researchSources]) {
     section.replaceChildren();
   }
 }
@@ -48,25 +45,6 @@ function safetyLabel(component) {
 
 function renderResearch(data, sellerSpecs) {
   researchStatus.textContent = data.status === "unavailable" ? "External research unavailable." : "";
-
-  // --- ADD THE DEAL VALUATION RATING BLOCK HERE ---
-  if (researchDeal) {
-    researchDeal.replaceChildren();
-    const askingPrice = sellerSpecs?.askingPrice || data?.askingPrice;
-    const marketAvgPrice = data?.marketAvgPrice; 
-    const mileage = sellerSpecs?.mileage || data?.mileage;
-    const dealInfo = calculateDealRating(askingPrice, marketAvgPrice, mileage);
-    const dealContainer = document.createElement("div");
-    dealContainer.className = `deal-badge-${dealInfo.color}`;
-    researchText(dealContainer, "h3", `Deal Rating: ${dealInfo.rating}`);
-    researchText(dealContainer, "p", dealInfo.explanation);
-    
-    if (dealInfo.estimatedRange) {
-      researchText(dealContainer, "small", `Expected Market Range: $${dealInfo.estimatedRange.min.toLocaleString()} – $${dealInfo.estimatedRange.max.toLocaleString()}`);
-    }
-    researchDeal.append(dealContainer);
-  }
-
   const fields = {
     bodyStyle: "Body style", engine: "Engine", transmission: "Transmission",
     drivetrain: "Drivetrain", fuelType: "Fuel type"
