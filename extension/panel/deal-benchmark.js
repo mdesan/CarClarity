@@ -34,6 +34,7 @@ function addBenchmarkRow(label, value) {
 
 function resetDealBenchmark() {
   dealRequest++;
+  showUnavailableElements("Deal analysis");
   dealBenchmark.hidden = true;
   forcarDebug.hidden = true;
   forcarCalculation.textContent = "";
@@ -67,7 +68,9 @@ async function showDealBenchmark(vehicle) {
     const match = index.get(key);
     if (!match) {
       dealBenchmark.hidden = true;
-      forcarCalculation.textContent = lookup + "\nNo unambiguous ForCar benchmark for this year, make, and model.";
+      const reason = "No unambiguous ForCar benchmark for this year, make, and model.";
+      showUnavailableElements("Deal analysis", [reason]);
+      forcarCalculation.textContent = lookup + "\n" + reason;
       return;
     }
     if (Number.isFinite(ask)) addBenchmarkRow("Asking price", usd.format(ask));
@@ -75,6 +78,11 @@ async function showDealBenchmark(vehicle) {
     if (match.listingCount != null) addBenchmarkRow("Listings in sample", match.listingCount.toLocaleString("en-US"));
     if (match.averageMileageMiles != null) addBenchmarkRow("Average mileage", match.averageMileageMiles.toLocaleString("en-US") + " mi");
     const difference = Number.isFinite(ask) ? ask - match.averagePriceUsd : null;
+    const missing = ["Deal rating — this benchmark does not calculate a comparable price range."];
+    if (difference === null) missing.push("Asking price and comparison — no asking price was captured.");
+    if (match.listingCount == null) missing.push("Listings in sample — ForCar did not provide a count.");
+    if (match.averageMileageMiles == null) missing.push("Average mileage — ForCar did not provide mileage.");
+    showUnavailableElements("Deal analysis", missing);
     if (difference !== null) {
       addBenchmarkRow("Compared with average", difference === 0
         ? "Same as average" : usd.format(Math.abs(difference)) + (difference < 0 ? " below" : " above"));
@@ -98,6 +106,8 @@ async function showDealBenchmark(vehicle) {
   } catch {
     if (request !== dealRequest) return;
     dealBenchmark.hidden = true;
-    forcarCalculation.textContent = lookup + "\nThe bundled ForCar data could not be read.";
+    const reason = "The bundled ForCar data could not be read.";
+    showUnavailableElements("Deal analysis", [reason]);
+    forcarCalculation.textContent = lookup + "\n" + reason;
   }
 }
