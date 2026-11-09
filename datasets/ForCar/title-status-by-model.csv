@@ -1,0 +1,1600 @@
+﻿make,model,title_status,listings,avg_price_usd,avg_mileage,avg_model_year
+Acura,ADX,clean,6,32123,5999,2025.0
+Acura,CL,clean,40,4171,158720,2000.9
+Acura,ILX,clean,203,12434,111503,2016.2
+Acura,ILX,rebuilt,28,12560,75115,2017.7
+Acura,ILX,salvage,6,7858,72898,2017.2
+Acura,Integra,clean,124,20414,90865,2010.9
+Acura,Integra,rebuilt,14,23000,25295,2024.1
+Acura,Legend,clean,23,4982,139211,1993.2
+Acura,MDX,clean,1692,10567,151135,2011.7
+Acura,MDX,rebuilt,101,17240,94636,2017.0
+Acura,MDX,salvage,34,9914,134252,2013.9
+Acura,NSX,clean,6,110926,64766,2002.8
+Acura,RDX,clean,722,13815,119435,2014.7
+Acura,RDX,rebuilt,54,14811,83563,2016.6
+Acura,RDX,salvage,17,10035,122659,2015.5
+Acura,RL,clean,93,4492,168906,2005.3
+Acura,RLX,clean,20,12756,125725,2015.0
+Acura,RSX,clean,85,6706,159132,2004.1
+Acura,TL,clean,711,5597,164912,2007.4
+Acura,TL,rebuilt,28,6239,136108,2009.7
+Acura,TL,salvage,18,4203,147866,2006.1
+Acura,TLX,clean,271,17705,102781,2017.8
+Acura,TLX,rebuilt,57,16849,78050,2018.9
+Acura,TLX,salvage,22,12008,114435,2017.1
+Acura,TSX,clean,316,6576,161523,2009.0
+Acura,TSX,rebuilt,27,6048,160002,2010.6
+Acura,TSX,salvage,25,4830,158422,2009.1
+"Alfa Romeo",Giulia,clean,90,15760,72440,2018.8
+"Alfa Romeo",Spider,clean,10,13384,58916,1991.6
+"Alfa Romeo",Stelvio,clean,77,16204,75752,2019.2
+"Alfa Romeo",Tonale,clean,24,24211,20979,2024.0
+"AM General",Humvee,clean,25,26291,12249,2002.2
+"Aston Martin",DB9,clean,7,40606,35303,2006.1
+"Aston Martin",Vantage,clean,38,65289,15827,2020.6
+Audi,A3,clean,434,10011,99415,2014.7
+Audi,A3,rebuilt,11,9821,84198,2016.1
+Audi,A3,salvage,10,6960,93776,2014.2
+Audi,A4,clean,1030,8010,117983,2012.0
+Audi,A4,rebuilt,26,5702,118448,2011.9
+Audi,A4,salvage,18,4697,137701,2010.4
+Audi,A4,lien,5,6620,146692,2011.8
+Audi,"A4 allroad",clean,39,17006,104243,2016.9
+Audi,"A4 allroad",rebuilt,5,16773,54730,2018.8
+Audi,A5,clean,368,14617,90779,2015.5
+Audi,A5,salvage,14,13779,80153,2016.6
+Audi,A5,rebuilt,12,15798,65492,2017.4
+Audi,A6,clean,512,11431,119307,2013.2
+Audi,A6,rebuilt,11,7500,120329,2011.1
+Audi,"A6 allroad",clean,9,40890,60685,2020.1
+Audi,A7,clean,116,15562,111170,2015.3
+Audi,A8,clean,63,11457,128587,2011.9
+Audi,"A8 L",clean,79,16222,104041,2014.2
+Audi,allroad,clean,96,9815,116690,2011.9
+Audi,e-tron,clean,30,26437,53549,2020.4
+Audi,"e-tron Sportback",clean,7,32093,28229,2022.1
+Audi,Q3,clean,337,15057,88833,2018.4
+Audi,Q4,clean,56,30097,28493,2023.1
+Audi,Q5,clean,1369,12736,102141,2015.9
+Audi,Q5,rebuilt,24,10554,138755,2014.9
+Audi,Q5,salvage,17,5682,136893,2013.6
+Audi,"Q5 e",clean,6,22226,66539,2020.7
+Audi,Q6,clean,14,52449,5072,2025.0
+Audi,Q7,clean,793,15169,105755,2016.5
+Audi,Q7,rebuilt,21,8853,113178,2014.1
+Audi,Q7,salvage,11,9145,109566,2013.9
+Audi,Q8,clean,125,39023,44688,2022.3
+Audi,R8,clean,26,116487,34589,2014.0
+Audi,"RS 3",clean,10,55032,30397,2021.9
+Audi,"RS 5",clean,21,41162,65188,2018.0
+Audi,"RS 6 Avant",clean,16,90935,51440,2020.4
+Audi,"RS 7",clean,8,55780,71365,2018.8
+Audi,"RS e-tron GT",clean,10,67819,27728,2022.8
+Audi,"RS Q8",clean,13,82925,43244,2021.7
+Audi,S3,clean,47,20250,87786,2016.8
+Audi,S4,clean,189,15217,115716,2012.0
+Audi,S5,clean,189,18621,93255,2014.7
+Audi,S5,rebuilt,8,13199,64878,2014.8
+Audi,S6,clean,27,20879,108882,2013.4
+Audi,S7,clean,22,24040,88393,2015.6
+Audi,S7,salvage,9,21546,90876,2016.9
+Audi,S8,clean,15,32549,79037,2013.9
+Audi,SQ5,clean,135,21334,86544,2018.3
+Audi,SQ7,clean,5,41059,63304,2020.4
+Audi,SQ8,clean,11,48954,57054,2021.9
+Audi,TT,clean,207,9219,110521,2005.9
+Audi,TTS,clean,15,26940,83831,2015.7
+Bentley,Arnage,clean,13,29406,44688,2001.2
+Bentley,Bentayga,clean,25,79262,41804,2018.6
+Bentley,Continental,clean,100,53045,46226,2011.1
+Bentley,Continental,rebuilt,5,31778,64315,2010.4
+Bentley,"Flying Spur",clean,15,55488,52520,2014.2
+Bentley,Turbo,clean,41,12046,124738,2005.0
+BMW,128i,clean,79,8405,107958,2010.5
+BMW,135i,clean,34,11748,93770,2010.7
+BMW,228,clean,5,13350,65113,2015.0
+BMW,228i,clean,81,16579,76840,2018.0
+BMW,228i,salvage,9,12761,75529,2017.8
+BMW,228i,rebuilt,6,14746,53107,2018.3
+BMW,230i,clean,26,22432,57515,2019.7
+BMW,318i,clean,21,8503,177392,1992.8
+BMW,318ti,clean,7,4514,149443,1996.6
+BMW,320i,clean,254,8507,124044,2014.9
+BMW,320i,rebuilt,20,8455,85939,2015.7
+BMW,320i,salvage,5,4845,101039,2014.8
+BMW,325Ci,clean,98,5705,133083,2003.3
+BMW,325i,clean,182,4552,146933,2003.0
+BMW,325i,salvage,8,3980,142064,1999.4
+BMW,325i,rebuilt,6,4690,170000,1999.7
+BMW,325iC,clean,6,8033,151907,1993.8
+BMW,325iS,clean,17,4445,163899,2001.7
+BMW,325ix,clean,8,15813,144700,1996.3
+BMW,325xi,clean,62,4477,145899,2003.8
+BMW,328d,clean,55,11090,129035,2015.1
+BMW,328d,rebuilt,5,6338,127651,2012.6
+BMW,328i,clean,1311,6854,125924,2011.4
+BMW,328i,rebuilt,45,5138,124339,2010.3
+BMW,328i,salvage,44,5603,105515,2011.6
+BMW,328iC,clean,25,8378,112247,2009.4
+BMW,328iS,clean,60,8494,107756,2011.4
+BMW,328xi,clean,131,5875,134459,2010.7
+BMW,328xi,rebuilt,9,4125,149833,2009.3
+BMW,330Ci,clean,86,7007,120187,2003.5
+BMW,330Ci,salvage,8,3294,147875,2002.5
+BMW,330Ci,rebuilt,5,2800,149000,2002.8
+BMW,330e,clean,37,20889,66164,2019.5
+BMW,330i,clean,351,15415,97952,2015.7
+BMW,330i,rebuilt,7,19534,46251,2019.4
+BMW,330i,salvage,6,19725,32533,2019.8
+BMW,330xi,clean,37,8001,131281,2008.8
+BMW,335d,clean,7,10199,138152,2010.4
+BMW,335i,clean,331,9857,109687,2010.8
+BMW,335i,rebuilt,8,10911,104290,2011.5
+BMW,335i,salvage,6,5892,114600,2010.0
+BMW,335is,clean,28,14252,108067,2012.4
+BMW,335xi,clean,38,8197,117560,2008.9
+BMW,335xi,salvage,5,5200,115731,2008.8
+BMW,340i,clean,30,27596,79020,2017.1
+BMW,428i,clean,173,12043,99208,2015.1
+BMW,430i,clean,171,20609,77222,2019.3
+BMW,435i,clean,80,14778,101728,2015.0
+BMW,440i,clean,16,28131,72775,2018.8
+BMW,525i,clean,76,4207,158134,2002.1
+BMW,525xi,clean,8,4677,137480,2007.4
+BMW,528i,clean,470,7702,125791,2011.9
+BMW,528i,rebuilt,14,7821,105461,2011.7
+BMW,528xi,clean,35,5716,136589,2011.2
+BMW,530e,clean,33,18814,86272,2019.2
+BMW,530i,clean,190,14527,102780,2013.7
+BMW,530xi,clean,28,5240,161705,2007.5
+BMW,535d,clean,21,10654,136959,2014.2
+BMW,535i,clean,350,8568,127921,2012.3
+BMW,535i,rebuilt,7,7099,110560,2013.9
+BMW,535xi,clean,50,7250,133372,2010.4
+BMW,540i,clean,95,16314,128907,2010.7
+BMW,540i,rebuilt,5,15980,101461,2010.2
+BMW,545i,clean,9,4072,116779,2004.3
+BMW,550i,clean,116,10269,111031,2011.9
+BMW,640i,clean,62,15337,97910,2014.9
+BMW,645Ci,clean,29,7489,105124,2004.8
+BMW,650i,clean,123,12246,174005,2010.7
+BMW,650i,rebuilt,8,9088,126125,2014.0
+BMW,740i,clean,136,18029,101153,2014.3
+BMW,740iL,clean,44,8020,143287,2000.5
+BMW,740Li,clean,35,9504,125392,2013.2
+BMW,745i,clean,7,5171,110642,2003.6
+BMW,745Li,clean,17,4749,122512,2002.9
+BMW,750i,clean,105,12869,109502,2013.1
+BMW,750iL,clean,12,8796,101442,2005.8
+BMW,750Li,clean,139,8352,113543,2011.1
+BMW,750Li,rebuilt,5,7060,106600,2010.0
+BMW,750Li,salvage,5,8960,99240,2010.4
+BMW,760i,clean,8,55991,39170,2021.1
+BMW,840Ci,clean,6,21388,101472,1995.3
+BMW,840i,clean,7,50121,30699,2022.7
+BMW,"ActiveHybrid 7",clean,5,11779,81926,2012.6
+BMW,Alpina,clean,30,39419,77960,2015.0
+BMW,i3,clean,122,10363,71650,2016.0
+BMW,i4,clean,63,37300,29126,2023.5
+BMW,i7,clean,10,64046,32163,2023.4
+BMW,i8,clean,18,46006,58613,2016.0
+BMW,iX,clean,55,49052,33044,2023.8
+BMW,M2,clean,24,52063,38340,2020.0
+BMW,M235i,clean,34,18292,88439,2016.0
+BMW,M240i,clean,20,39509,41745,2020.8
+BMW,M3,clean,201,37960,90789,2008.9
+BMW,M340i,clean,27,45214,48500,2022.0
+BMW,M4,clean,101,54896,49401,2018.2
+BMW,M4,rebuilt,12,41125,82926,2019.2
+BMW,M440i,clean,20,48554,37692,2022.5
+BMW,M5,clean,69,45170,86115,2013.2
+BMW,M550i,clean,33,33846,68213,2020.2
+BMW,M6,clean,41,27012,69056,2012.1
+BMW,M8,clean,15,72724,29804,2021.7
+BMW,M850i,clean,14,51750,43843,2020.4
+BMW,X1,clean,540,11920,99022,2016.7
+BMW,X1,rebuilt,18,9929,86291,2016.8
+BMW,X1,salvage,13,10230,80689,2016.5
+BMW,X2,clean,71,18013,73524,2019.6
+BMW,X3,clean,1339,13199,104673,2015.1
+BMW,X3,rebuilt,23,10638,88460,2016.0
+BMW,X3,salvage,11,9187,127633,2011.3
+BMW,X3,lien,9,10650,103696,2013.7
+BMW,X4,clean,126,22026,87134,2018.3
+BMW,X5,clean,1577,14562,113066,2014.1
+BMW,X5,salvage,19,7092,126458,2010.1
+BMW,X5,rebuilt,18,14061,96488,2013.0
+BMW,X5,lien,7,31607,79690,2019.0
+BMW,X6,clean,165,25482,87953,2016.9
+BMW,X7,clean,136,43973,57665,2021.7
+BMW,Z3,clean,190,9898,97460,1999.4
+BMW,Z3,rebuilt,6,6023,273988,2000.0
+BMW,Z4,clean,251,13121,89932,2007.4
+BMW,Z4,rebuilt,12,10419,77856,2009.4
+Buick,Cascada,clean,31,10459,90297,2017.4
+Buick,Century,clean,139,2971,196020,2001.5
+Buick,Enclave,clean,929,8541,140532,2014.3
+Buick,Enclave,rebuilt,58,17388,70697,2019.5
+Buick,Enclave,salvage,21,11885,106968,2016.7
+Buick,Encore,clean,648,8740,105654,2016.7
+Buick,Encore,rebuilt,47,8149,74163,2018.0
+Buick,Encore,salvage,14,6563,99815,2017.6
+Buick,"Encore GX",clean,107,18877,50716,2022.8
+Buick,"Encore GX",rebuilt,28,14704,26938,2023.2
+Buick,Envision,clean,137,18366,78946,2019.8
+Buick,Envision,rebuilt,30,16407,66273,2020.9
+Buick,Envision,salvage,9,10422,80931,2018.7
+Buick,Envista,clean,28,22500,28933,2024.6
+Buick,Envista,rebuilt,11,16215,24257,2024.5
+Buick,LaCrosse,clean,561,6535,123903,2011.1
+Buick,LaCrosse,rebuilt,26,7634,96912,2013.0
+Buick,LaCrosse,salvage,19,5421,132270,2011.4
+Buick,LeSabre,clean,248,3667,128565,2002.0
+Buick,LeSabre,rebuilt,7,3663,116641,2003.0
+Buick,LeSabre,salvage,6,2733,165775,2002.2
+Buick,Lucerne,clean,292,4877,127430,2008.3
+Buick,Lucerne,rebuilt,10,3719,158433,2007.3
+Buick,"Park Avenue",clean,82,4097,149844,2000.7
+Buick,Rainier,clean,20,4615,138867,2005.3
+Buick,Reatta,clean,14,7414,83391,1990.1
+Buick,Regal,clean,244,6263,122885,2010.4
+Buick,Regal,rebuilt,24,8379,68530,2016.1
+Buick,"Regal TourX",clean,11,15339,114044,2018.2
+Buick,"Regal TourX",rebuilt,7,18264,42180,2019.0
+Buick,Rendezvous,clean,67,3413,130401,2005.2
+Buick,Riviera,clean,16,3509,150202,1995.1
+Buick,Roadmaster,clean,47,8384,127107,1994.0
+Buick,Terraza,clean,16,8801,121892,2006.3
+Buick,Verano,clean,203,5747,120813,2013.8
+Buick,Verano,salvage,16,6199,107428,2013.7
+Buick,Verano,rebuilt,9,5222,98082,2014.3
+Cadillac,"60 Special",clean,5,4591,144372,2010.0
+Cadillac,Allante,clean,47,11434,72265,1991.5
+Cadillac,ATS,clean,219,9304,109759,2014.7
+Cadillac,ATS,rebuilt,14,10463,88110,2015.6
+Cadillac,ATS,salvage,10,7510,90650,2015.5
+Cadillac,Brougham,clean,11,12845,90929,1991.0
+Cadillac,Catera,clean,5,2160,63719,1999.4
+Cadillac,CT4,clean,19,35050,38831,2022.5
+Cadillac,CT4,rebuilt,6,29305,40342,2022.7
+Cadillac,CT5,clean,42,37991,54067,2022.5
+Cadillac,CT5,rebuilt,5,19968,52253,2021.2
+Cadillac,CT6,clean,38,22107,86611,2017.3
+Cadillac,CT6,rebuilt,7,17774,75624,2017.7
+Cadillac,CTS,clean,509,8436,117956,2011.3
+Cadillac,CTS,rebuilt,26,7499,108246,2013.2
+Cadillac,CTS,salvage,18,6233,121345,2009.7
+Cadillac,Deville,clean,248,5477,99070,1999.6
+Cadillac,DTS,clean,264,6629,107892,2007.9
+Cadillac,Eldorado,clean,81,7412,84370,1998.7
+Cadillac,ELR,clean,6,15132,72854,2014.3
+Cadillac,Escalade,clean,889,19641,137674,2012.3
+Cadillac,Escalade,rebuilt,24,27099,93702,2015.7
+Cadillac,Escalade,salvage,16,7183,236120,2008.5
+Cadillac,"Escalade ESV",clean,404,21486,134111,2014.9
+Cadillac,"Escalade ESV",rebuilt,13,22307,116721,2016.6
+Cadillac,Fleetwood,clean,33,14265,437294,1996.2
+Cadillac,Hearse,clean,5,19960,49769,2008.4
+Cadillac,Lyriq,clean,27,38601,26917,2023.9
+Cadillac,Seville,clean,36,5947,90628,1998.3
+Cadillac,SRX,clean,666,6490,131946,2012.0
+Cadillac,SRX,rebuilt,28,6099,117731,2014.1
+Cadillac,SRX,salvage,23,5041,119158,2013.0
+Cadillac,STS,clean,75,5050,108131,2007.1
+Cadillac,XLR,clean,35,16162,68292,2005.2
+Cadillac,XT4,clean,77,20284,72276,2020.9
+Cadillac,XT4,rebuilt,10,16135,59822,2020.2
+Cadillac,XT5,clean,254,17000,92491,2018.5
+Cadillac,XT5,rebuilt,34,17344,62134,2019.9
+Cadillac,XT5,salvage,5,15840,60638,2019.4
+Cadillac,XT6,clean,58,26256,72199,2021.7
+Cadillac,XT6,rebuilt,18,23317,50516,2021.4
+Cadillac,XTS,clean,231,10945,115729,2015.2
+Cadillac,XTS,rebuilt,30,13845,72517,2015.8
+Cadillac,XTS,salvage,10,9475,102276,2015.7
+Chevrolet,3500,clean,286,15588,182989,2008.4
+Chevrolet,4500,clean,24,28659,100894,2018.0
+Chevrolet,"Astro Van",clean,189,5153,152407,2001.0
+Chevrolet,Avalanche,clean,579,7602,174645,2007.0
+Chevrolet,Avalanche,rebuilt,14,6239,203659,2008.8
+Chevrolet,Avalanche,salvage,12,6790,171997,2008.7
+Chevrolet,Aveo,clean,122,3111,113687,2008.7
+Chevrolet,Blazer,clean,413,16082,97180,2012.6
+Chevrolet,Blazer,rebuilt,40,18382,53517,2021.2
+Chevrolet,Blazer,salvage,7,13543,85534,2016.0
+Chevrolet,"Bolt EV",clean,133,15990,63121,2020.1
+Chevrolet,BrightDrop,clean,40,36593,4805,2024.1
+Chevrolet,Camaro,clean,1215,17323,93956,2010.7
+Chevrolet,Camaro,rebuilt,68,16391,82888,2014.5
+Chevrolet,Camaro,salvage,28,11951,98712,2012.2
+Chevrolet,Camaro,lien,10,24922,84561,2015.5
+Chevrolet,Caprice,clean,80,7365,152675,2001.6
+Chevrolet,"Captiva Sport",clean,162,5530,136135,2013.3
+Chevrolet,"Captiva Sport",salvage,7,3386,129379,2013.6
+Chevrolet,Cavalier,clean,51,3066,113744,2001.2
+Chevrolet,"City Express",clean,54,9679,120367,2015.9
+Chevrolet,Cobalt,clean,230,3325,140279,2008.2
+Chevrolet,Colorado,clean,1601,16775,103972,2016.2
+Chevrolet,Colorado,rebuilt,95,18250,78305,2018.8
+Chevrolet,Colorado,salvage,36,16263,75546,2017.9
+Chevrolet,Colorado,lien,9,20239,107654,2017.1
+Chevrolet,Corvette,clean,1574,36368,55425,2007.7
+Chevrolet,Corvette,rebuilt,39,31785,57043,2011.0
+Chevrolet,Corvette,lien,15,52299,39345,2015.2
+Chevrolet,Corvette,salvage,14,21139,65766,2006.6
+Chevrolet,Cruze,clean,1737,5329,129240,2014.5
+Chevrolet,Cruze,rebuilt,106,5713,97436,2016.0
+Chevrolet,Cruze,salvage,46,4372,122473,2015.6
+Chevrolet,Cruze,lien,9,4864,102955,2014.2
+Chevrolet,"Cruze Limited",clean,109,6667,106506,2015.9
+Chevrolet,"Cruze Limited",rebuilt,7,4956,106193,2016.0
+Chevrolet,Equinox,clean,3697,9556,118931,2016.3
+Chevrolet,Equinox,rebuilt,222,10422,77942,2018.7
+Chevrolet,Equinox,salvage,75,8456,90909,2017.5
+Chevrolet,Equinox,lien,15,15282,84501,2019.7
+Chevrolet,Express,clean,2934,14672,135161,2014.4
+Chevrolet,Express,rebuilt,49,14593,108277,2014.5
+Chevrolet,Express,salvage,18,11535,107913,2016.0
+Chevrolet,GMT-400,clean,12,8451,162967,1994.4
+Chevrolet,HHR,clean,273,3547,143520,2008.7
+Chevrolet,HHR,salvage,14,3225,133531,2008.9
+Chevrolet,HHR,rebuilt,11,2913,158960,2009.9
+Chevrolet,Impala,clean,1494,5589,141549,2011.3
+Chevrolet,Impala,rebuilt,68,7126,101984,2014.2
+Chevrolet,Impala,salvage,35,4601,136620,2012.2
+Chevrolet,"Impala Limited",clean,122,6332,126663,2014.8
+Chevrolet,"Impala Limited",rebuilt,7,2941,153947,2014.0
+Chevrolet,Lumina,clean,20,2637,133625,1996.9
+Chevrolet,Malibu,clean,2438,7328,126739,2015.2
+Chevrolet,Malibu,rebuilt,202,8988,85979,2018.8
+Chevrolet,Malibu,salvage,63,6130,107763,2015.0
+Chevrolet,Malibu,lien,7,7086,111871,2014.4
+Chevrolet,"Malibu Classic",clean,21,7983,123842,2002.4
+Chevrolet,"Malibu Limited",clean,33,5395,139327,2015.7
+Chevrolet,"Monte Carlo",clean,113,6531,123182,2003.6
+Chevrolet,"P - Series",clean,18,19764,142049,1999.4
+Chevrolet,"S-10 Blazer",clean,21,3847,170426,1998.7
+Chevrolet,"S-10 Pickup",clean,417,5735,161085,1999.7
+Chevrolet,"S-10 Pickup",rebuilt,13,7967,146426,2000.7
+Chevrolet,"S-10 Pickup",salvage,8,4406,174118,2001.6
+Chevrolet,Silverado,clean,12444,20130,134923,2013.9
+Chevrolet,Silverado,rebuilt,410,23063,95108,2017.2
+Chevrolet,Silverado,salvage,187,17996,114218,2015.0
+Chevrolet,Silverado,lien,72,24277,121166,2015.8
+Chevrolet,Silverado,missing,12,2292,205750,2002.0
+Chevrolet,Sonic,clean,602,4939,120637,2014.9
+Chevrolet,Sonic,rebuilt,51,4572,109270,2015.6
+Chevrolet,Sonic,salvage,14,4439,126580,2015.8
+Chevrolet,Spark,clean,361,5650,94620,2016.2
+Chevrolet,Spark,salvage,15,4103,92224,2015.7
+Chevrolet,Spark,rebuilt,14,5809,80417,2017.5
+Chevrolet,SS,clean,25,36170,71736,2012.4
+Chevrolet,SSR,clean,56,23548,50664,2004.4
+Chevrolet,Suburban,clean,1913,14033,176277,2011.4
+Chevrolet,Suburban,rebuilt,48,23106,101090,2017.4
+Chevrolet,Suburban,salvage,17,14251,123056,2012.4
+Chevrolet,Suburban,lien,7,10912,182779,2013.4
+Chevrolet,Tahoe,clean,2774,15645,154943,2012.1
+Chevrolet,Tahoe,rebuilt,66,19661,114568,2014.4
+Chevrolet,Tahoe,salvage,39,14505,132027,2012.0
+Chevrolet,Tahoe,lien,15,21493,142140,2014.7
+Chevrolet,Tracker,clean,82,4602,141702,2001.6
+Chevrolet,Trailblazer,clean,686,8957,128194,2010.9
+Chevrolet,Trailblazer,rebuilt,42,11739,72882,2018.9
+Chevrolet,Trailblazer,salvage,17,5958,167825,2009.1
+Chevrolet,Traverse,clean,1875,11863,131204,2016.2
+Chevrolet,Traverse,rebuilt,121,16339,85042,2019.8
+Chevrolet,Traverse,salvage,38,9791,104106,2017.4
+Chevrolet,Traverse,lien,6,6675,125267,2014.0
+Chevrolet,Trax,clean,779,10647,89264,2019.1
+Chevrolet,Trax,rebuilt,86,13334,33296,2022.8
+Chevrolet,Trax,salvage,7,9693,57758,2019.4
+Chevrolet,Uplander,clean,86,4367,139393,2007.3
+Chevrolet,Venture,clean,22,4263,147108,2003.1
+Chevrolet,Volt,clean,286,7496,114086,2014.8
+Chevrolet,Volt,rebuilt,5,5380,122000,2014.6
+Chrysler,200,clean,717,5309,129190,2013.8
+Chrysler,200,rebuilt,44,5538,112398,2014.7
+Chrysler,200,salvage,18,3697,118494,2014.0
+Chrysler,300,clean,614,8711,136413,2012.8
+Chrysler,300,rebuilt,44,11051,91859,2016.6
+Chrysler,300,salvage,23,6207,119559,2013.8
+Chrysler,300C,clean,114,7610,136058,2009.8
+Chrysler,300C,rebuilt,5,5999,121136,2011.4
+Chrysler,Aspen,clean,45,3929,171003,2007.7
+Chrysler,Concorde,clean,17,2560,137672,2001.6
+Chrysler,Crossfire,clean,107,9156,84087,2005.0
+Chrysler,Crossfire,rebuilt,5,7380,84112,2006.8
+Chrysler,"Grand Voyager",clean,5,3940,150657,2006.6
+Chrysler,Imperial,clean,6,3983,93006,1991.2
+Chrysler,LeBaron,clean,13,3242,96207,1992.5
+Chrysler,LHS,clean,7,3226,100682,1997.6
+Chrysler,"New Yorker",clean,13,5934,128314,2011.3
+Chrysler,Pacifica,clean,1276,19178,94040,2019.4
+Chrysler,Pacifica,rebuilt,44,21268,77101,2019.2
+Chrysler,Pacifica,salvage,14,14356,73005,2017.9
+Chrysler,Pacifica,lien,13,15988,107222,2018.8
+Chrysler,Prowler,clean,12,28858,33471,2000.5
+Chrysler,"PT Cruiser",clean,456,3196,114355,2005.4
+Chrysler,"PT Cruiser",rebuilt,9,3976,103174,2006.2
+Chrysler,"PT Cruiser",salvage,6,3350,62070,2003.2
+Chrysler,Sebring,clean,304,3696,112116,2005.5
+Chrysler,Sebring,rebuilt,6,2365,99899,2005.8
+Chrysler,TC,clean,10,7267,60630,1990.4
+Chrysler,"Town and Country",clean,1415,5561,150029,2011.3
+Chrysler,"Town and Country",rebuilt,32,4774,139585,2012.6
+Chrysler,"Town and Country",salvage,15,5764,138864,2012.4
+Chrysler,Voyager,clean,272,28683,68118,2021.9
+Chrysler,Voyager,rebuilt,6,23058,55379,2021.5
+Daihatsu,"Hijet Kei",clean,41,10147,39933,1998.0
+Dodge,Avenger,clean,300,3897,140769,2011.8
+Dodge,Avenger,rebuilt,14,3875,123179,2012.1
+Dodge,Avenger,salvage,7,2857,158283,2009.7
+Dodge,Caliber,clean,164,3224,138800,2008.9
+Dodge,Caliber,salvage,5,2710,151467,2010.2
+Dodge,Caravan,clean,485,6300,142789,2010.5
+Dodge,Caravan,rebuilt,21,7546,120282,2014.2
+Dodge,Caravan,salvage,9,3743,115636,2012.2
+Dodge,Challenger,clean,965,21601,85637,2016.3
+Dodge,Challenger,rebuilt,90,18980,71097,2017.3
+Dodge,Challenger,salvage,20,15701,83022,2016.8
+Dodge,Challenger,lien,11,26277,68324,2019.3
+Dodge,Charger,clean,1477,14534,117646,2015.6
+Dodge,Charger,rebuilt,136,21256,70498,2019.2
+Dodge,Charger,salvage,32,13167,103454,2016.6
+Dodge,Charger,lien,9,26833,53544,2019.7
+Dodge,Dakota,clean,839,5197,150714,2003.1
+Dodge,Dakota,rebuilt,20,6210,147823,2003.4
+Dodge,Dakota,salvage,12,3991,136752,2001.3
+Dodge,Dart,clean,377,4760,129954,2014.4
+Dodge,Dart,rebuilt,25,4392,110173,2014.2
+Dodge,Dart,salvage,10,3224,139950,2014.0
+Dodge,Durango,clean,1400,13687,129186,2014.2
+Dodge,Durango,rebuilt,31,26200,76739,2018.5
+Dodge,Durango,salvage,20,13386,95931,2015.8
+Dodge,Durango,lien,7,26071,106443,2015.0
+Dodge,"Grand Caravan",clean,2146,8450,130330,2014.3
+Dodge,"Grand Caravan",rebuilt,66,9912,108240,2014.2
+Dodge,"Grand Caravan",salvage,32,6516,108593,2014.7
+Dodge,"Grand Caravan",lien,5,16900,98896,2013.8
+Dodge,Hornet,clean,17,23092,25788,2024.0
+Dodge,Hornet,rebuilt,5,14387,14968,2024.2
+Dodge,Intrepid,clean,20,2740,110191,2001.7
+Dodge,Journey,clean,1202,6021,132509,2015.4
+Dodge,Journey,salvage,33,5154,108522,2015.2
+Dodge,Journey,rebuilt,32,5893,120612,2016.4
+Dodge,Journey,lien,5,8080,119605,2019.4
+Dodge,Magnum,clean,84,8709,156865,2005.4
+Dodge,"Mini Ram",clean,5,7779,104778,2016.0
+Dodge,Neon,clean,48,3721,135337,2003.8
+Dodge,Nitro,clean,151,3970,151250,2009.0
+Dodge,Ram,clean,25,11240,153948,2006.3
+Dodge,Sprinter,clean,88,11549,213839,2006.2
+Dodge,Stealth,clean,20,5470,149464,1993.1
+Dodge,Stratus,clean,24,2631,101906,2004.1
+Dodge,Viper,clean,34,64627,32539,2003.0
+Entegra,Coach,clean,7,46927,59677,2008.1
+Ferrari,"California T",clean,7,140831,15323,2016.7
+Fiat,"124 Spider",clean,23,17246,56574,2018.0
+Fiat,500,clean,349,5901,96759,2013.6
+Fiat,500,rebuilt,22,4475,75094,2015.0
+Fiat,500,salvage,6,4349,105550,2014.2
+Fiat,500e,clean,36,6442,58603,2015.8
+Fiat,500L,clean,78,5721,99171,2014.4
+Fiat,500X,clean,74,7252,96492,2016.7
+Fisker,Karma,clean,8,25772,51550,2015.8
+Fisker,Ocean,clean,11,20369,10682,2023.0
+Ford,Aerostar,clean,7,2707,148925,1995.0
+Ford,Bronco,clean,556,36969,62147,2015.0
+Ford,Bronco,rebuilt,30,32382,32766,2022.2
+Ford,Bronco,salvage,17,28661,39773,2021.2
+Ford,Bronco,lien,5,44358,27053,2021.8
+Ford,"Bronco II",clean,5,5760,82646,1990.0
+Ford,"Bronco Sport",clean,337,24421,44840,2022.8
+Ford,"Bronco Sport",rebuilt,72,19372,26600,2023.3
+Ford,"Bronco Sport",salvage,10,15643,35741,2022.2
+Ford,C-Max,clean,258,6305,132624,2014.1
+Ford,C-Max,salvage,10,3575,167359,2013.4
+Ford,C-Max,rebuilt,8,6505,107404,2014.6
+Ford,Contour,clean,8,2512,122088,1998.5
+Ford,"Crown Victoria",clean,291,4678,134645,2006.0
+Ford,E-150,clean,455,7545,145028,2006.5
+Ford,E-150,salvage,6,3967,139062,2003.5
+Ford,E-350,clean,1446,13010,145179,2009.9
+Ford,E-350,rebuilt,17,18136,128473,2011.1
+Ford,E-350,salvage,5,6910,109658,2002.2
+Ford,E-450,clean,560,23237,109976,2016.1
+Ford,Ecosport,clean,204,10043,88057,2019.3
+Ford,Ecosport,rebuilt,35,9413,50408,2019.5
+Ford,Ecosport,salvage,7,6498,64777,2019.3
+Ford,Edge,clean,2242,8714,131229,2014.7
+Ford,Edge,rebuilt,89,11629,81842,2017.8
+Ford,Edge,salvage,47,7093,117306,2014.8
+Ford,Edge,lien,6,10317,106337,2018.2
+Ford,Escape,clean,5435,7696,126210,2014.6
+Ford,Escape,rebuilt,181,9737,75947,2017.5
+Ford,Escape,salvage,70,7422,112859,2014.1
+Ford,Escape,lien,12,12720,97922,2017.5
+Ford,Escort,clean,51,2512,117531,2000.2
+Ford,Excursion,clean,290,13413,197582,2002.2
+Ford,Excursion,rebuilt,5,8574,229298,2001.6
+Ford,Expedition,clean,1501,11099,155451,2010.7
+Ford,Expedition,rebuilt,54,20058,95682,2017.9
+Ford,Expedition,salvage,18,7025,166252,2010.6
+Ford,"Expedition EL",clean,257,9004,165700,2013.2
+Ford,"Expedition EL",rebuilt,5,13277,142795,2014.0
+Ford,"Expedition MAX",clean,234,29975,101068,2020.3
+Ford,"Expedition MAX",rebuilt,14,28123,85314,2021.0
+Ford,Explorer,clean,3902,11718,127552,2014.4
+Ford,Explorer,rebuilt,159,14858,90516,2017.1
+Ford,Explorer,salvage,58,11835,94120,2016.1
+Ford,Explorer,lien,12,16972,106162,2016.4
+Ford,"Explorer Sport",clean,309,11084,127521,2013.6
+Ford,"Explorer Sport",rebuilt,14,11407,98487,2017.0
+Ford,"Explorer Sport",salvage,5,9640,110312,2014.6
+Ford,"Explorer Sport Trac",clean,242,6224,155308,2005.3
+Ford,"Explorer Sport Trac",rebuilt,5,6558,101505,2004.4
+Ford,F-150,clean,13702,16408,138657,2013.0
+Ford,F-150,rebuilt,421,19121,102677,2016.3
+Ford,F-150,salvage,185,15738,116553,2012.9
+Ford,F-150,lien,82,25416,112464,2017.6
+Ford,F-150,missing,14,3375,209126,2005.4
+Ford,"F-150 Heritage",clean,26,9707,166926,2005.4
+Ford,F-250,clean,5939,21430,152372,2011.7
+Ford,F-250,rebuilt,104,29067,110497,2016.0
+Ford,F-250,salvage,71,12402,167409,2007.5
+Ford,F-250,lien,42,31439,118276,2015.3
+Ford,F-250,missing,12,8378,197976,2001.7
+Ford,F-350,clean,4242,29351,142831,2012.8
+Ford,F-350,rebuilt,59,31462,110422,2015.2
+Ford,F-350,salvage,48,19023,176105,2010.3
+Ford,F-350,lien,37,28719,140372,2014.0
+Ford,F-350,missing,6,3450,191243,2003.5
+Ford,F-450,clean,954,32769,121984,2013.0
+Ford,F-450,rebuilt,10,51118,52903,2019.2
+Ford,F-450,salvage,8,27123,163892,2010.8
+Ford,F-550,clean,1721,37741,110728,2017.2
+Ford,F-550,rebuilt,7,31891,127462,2014.7
+Ford,F-550,salvage,5,20599,144781,2013.8
+Ford,F-650,clean,181,31552,109140,2011.8
+Ford,F-750,clean,74,44299,110529,2012.8
+Ford,Festiva,clean,7,5098,119621,2008.0
+Ford,Fiesta,clean,717,4965,113427,2014.7
+Ford,Fiesta,rebuilt,48,5230,86245,2016.4
+Ford,Fiesta,salvage,22,9613,76659,2016.0
+Ford,"Five Hundred",clean,68,3119,152227,2006.1
+Ford,Flex,clean,452,7041,151369,2013.8
+Ford,Flex,rebuilt,20,9696,100025,2016.1
+Ford,Flex,salvage,13,3742,151114,2012.9
+Ford,Focus,clean,2782,5022,125860,2012.5
+Ford,Focus,rebuilt,107,4291,113495,2013.2
+Ford,Focus,salvage,74,3855,125309,2012.9
+Ford,Focus,missing,5,2180,161339,2014.8
+Ford,Freestar,clean,46,3124,131087,2005.3
+Ford,Freestyle,clean,76,2765,166887,2005.9
+Ford,Fusion,clean,2861,6361,136275,2014.1
+Ford,Fusion,rebuilt,138,5968,119726,2014.8
+Ford,Fusion,salvage,83,4741,218874,2014.0
+Ford,GT,clean,5,4830,82525,2001.2
+Ford,Maverick,clean,258,27496,40739,2023.6
+Ford,Maverick,rebuilt,66,20890,29699,2023.7
+Ford,Maverick,salvage,15,20723,38715,2023.9
+Ford,Mustang,clean,2840,16264,101377,2009.5
+Ford,Mustang,rebuilt,115,20529,68196,2015.4
+Ford,Mustang,salvage,84,12546,95156,2010.2
+Ford,Mustang,lien,24,26224,76703,2016.8
+Ford,Mustang,missing,6,22284,123924,2002.7
+Ford,"Mustang Mach-E",clean,95,31320,36618,2023.0
+Ford,Probe,clean,7,5604,121727,1992.4
+Ford,Ranger,clean,2138,10238,132789,2006.0
+Ford,Ranger,rebuilt,50,13342,113312,2010.2
+Ford,Ranger,salvage,29,5169,153345,2003.2
+Ford,Ranger,lien,8,32300,59432,2021.1
+Ford,"Recreational Vehicle",clean,8,15664,120290,2010.4
+Ford,Taurus,clean,961,5464,133795,2010.6
+Ford,Taurus,rebuilt,47,6944,114679,2014.0
+Ford,Taurus,salvage,27,4040,129342,2010.4
+Ford,"Taurus X",clean,29,2929,164893,2008.0
+Ford,Thunderbird,clean,220,12132,73295,2002.0
+Ford,Transit,clean,2893,22941,108335,2019.0
+Ford,Transit,rebuilt,78,25052,69404,2020.6
+Ford,Transit,salvage,26,20787,92933,2019.1
+Ford,Transit,lien,15,32290,72911,2021.1
+Ford,"Transit Connect",clean,1023,12228,117326,2016.5
+Ford,"Transit Connect",rebuilt,32,13873,78375,2018.0
+Ford,"Transit Connect",salvage,12,12107,87485,2017.2
+Ford,Windstar,clean,46,3136,126371,2001.0
+Freightliner,Cascadia,clean,119,24696,648984,2016.3
+Freightliner,Columbia,clean,23,23165,653452,2008.0
+Freightliner,FL70,clean,15,11957,139609,1999.3
+Freightliner,FL80,clean,6,20290,74261,1999.2
+Freightliner,FLD120,clean,6,26667,708710,1998.3
+Freightliner,M2,clean,210,34519,193211,2015.0
+Freightliner,"Sport Chassis",clean,7,28552,134044,2012.7
+Freightliner,Sprinter,clean,68,18353,167127,2014.4
+Genesis,G70,clean,57,21163,68130,2021.0
+Genesis,G70,rebuilt,7,19728,37341,2021.4
+Genesis,G80,clean,57,17795,90259,2018.1
+Genesis,G80,rebuilt,7,19338,63003,2019.1
+Genesis,G90,clean,18,20493,89009,2018.1
+Genesis,GV70,clean,29,35354,34781,2023.9
+Genesis,GV80,clean,23,38208,42872,2022.9
+GMC,Acadia,clean,1555,10081,135366,2015.2
+GMC,Acadia,rebuilt,109,14592,82800,2018.1
+GMC,Acadia,salvage,32,9764,111204,2016.7
+GMC,Acadia,lien,6,13950,126234,2016.7
+GMC,Canyon,clean,439,18975,106214,2015.8
+GMC,Canyon,rebuilt,31,21243,57592,2019.1
+GMC,Canyon,salvage,9,17616,80961,2017.2
+GMC,Envoy,clean,338,3743,165938,2005.2
+GMC,Envoy,rebuilt,6,3608,143884,2005.5
+GMC,Envoy,salvage,5,2610,149580,2004.2
+GMC,"Hummer EV Pickup",clean,51,21236,140745,2006.1
+GMC,"Hummer EV SUV",clean,23,32905,94218,2018.0
+GMC,Jimmy,clean,33,4445,166609,1998.5
+GMC,Safari,clean,52,4446,179416,2000.8
+GMC,Savana,clean,984,19171,123890,2016.3
+GMC,Savana,salvage,6,11785,164512,2015.0
+GMC,Savana,rebuilt,6,9397,165456,2011.8
+GMC,Sierra,clean,5330,26200,128367,2014.5
+GMC,Sierra,rebuilt,156,24194,100056,2017.2
+GMC,Sierra,salvage,73,17200,127721,2011.6
+GMC,Sierra,lien,43,33800,106291,2018.3
+GMC,"Sierra HD",clean,12,33531,149825,2018.5
+GMC,"Sierra Limited",clean,5,36679,48764,2021.4
+GMC,Sonoma,clean,119,4982,143271,1999.7
+GMC,Suburban,clean,105,5385,184634,1996.5
+GMC,Terrain,clean,1250,9875,122376,2016.1
+GMC,Terrain,rebuilt,72,11792,72915,2018.4
+GMC,Terrain,salvage,23,8660,105419,2016.6
+GMC,Vandura,clean,12,5619,137524,1992.9
+GMC,Yukon,clean,1718,17017,152703,2012.1
+GMC,Yukon,rebuilt,50,22401,105178,2014.6
+GMC,Yukon,salvage,19,13491,162891,2009.6
+GMC,Yukon,lien,10,26170,124712,2019.2
+GMC,"Yukon XL",clean,782,17996,156019,2013.5
+GMC,"Yukon XL",rebuilt,28,14098,136766,2013.8
+GMC,"Yukon XL",salvage,13,19304,138029,2016.2
+GMC,"Yukon XL",lien,6,26414,128471,2018.5
+Harley-Davidson,"Electra Glide Ultra Classic",clean,7,7970,49199,2008.9
+Harley-Davidson,"Street Glide",clean,15,13507,19939,2012.5
+Heartland,Bighorn,clean,10,14020,96594,2019.4
+Hino,195,clean,15,26219,140073,2017.9
+Hino,268,clean,58,24687,243224,2016.0
+Hino,338,clean,16,25355,180182,2016.9
+Hino,Tractor,clean,25,23700,,2016.0
+Honda,Accord,clean,5993,8902,142913,2011.1
+Honda,Accord,rebuilt,466,10791,104702,2014.6
+Honda,Accord,salvage,292,9660,124422,2013.6
+Honda,Accord,lien,18,15947,91861,2016.3
+Honda,Accord,missing,10,8355,150675,1999.2
+Honda,"Accord Crosstour",clean,78,6701,157847,2010.6
+Honda,"Accord Crosstour",rebuilt,6,5313,160612,2010.2
+Honda,Civic,clean,5465,9109,132954,2011.9
+Honda,Civic,rebuilt,506,11630,84490,2016.5
+Honda,Civic,salvage,291,8747,110082,2013.8
+Honda,Civic,lien,11,8703,128655,2012.7
+Honda,Civic,missing,6,1800,182611,2004.0
+Honda,Civic,"parts only",5,3040,150200,2011.4
+Honda,"Civic Si",clean,277,14152,115649,2014.3
+Honda,"Civic Si",rebuilt,25,12785,88236,2016.4
+Honda,"Civic Type R",clean,61,38173,45277,2020.5
+Honda,"Civic Type R",salvage,5,26069,38683,2020.6
+Honda,"Civic Type R",rebuilt,5,31934,38479,2020.0
+Honda,Clarity,clean,47,16317,90174,2018.6
+Honda,CR-V,clean,5028,11576,137583,2012.1
+Honda,CR-V,rebuilt,300,13612,90568,2014.7
+Honda,CR-V,salvage,123,10228,115530,2013.1
+Honda,CR-V,lien,10,25037,62981,2020.0
+Honda,CR-Z,clean,46,8036,126200,2013.1
+Honda,Crosstour,clean,111,7927,148850,2012.4
+Honda,Crosstour,rebuilt,10,8625,119935,2013.5
+Honda,"del Sol",clean,14,5785,209449,1995.1
+Honda,Element,clean,505,7135,175061,2006.1
+Honda,Element,rebuilt,40,8672,142688,2006.5
+Honda,Element,salvage,13,4915,174254,2005.9
+Honda,Fit,clean,841,7926,134223,2012.3
+Honda,Fit,rebuilt,88,9560,80291,2015.7
+Honda,Fit,salvage,42,6293,113841,2013.0
+Honda,GOLDWING,clean,5,8700,60659,2008.8
+Honda,HR-V,clean,544,18448,70463,2020.5
+Honda,HR-V,rebuilt,109,15679,49526,2021.6
+Honda,HR-V,salvage,46,15446,37354,2022.6
+Honda,Insight,clean,153,7045,149236,2012.0
+Honda,Insight,salvage,13,11916,77621,2019.4
+Honda,Insight,rebuilt,9,5127,139940,2011.7
+Honda,Navi,clean,5,8210,121704,2010.8
+Honda,Odyssey,clean,3286,11046,145559,2011.7
+Honda,Odyssey,rebuilt,197,15784,97725,2017.0
+Honda,Odyssey,salvage,79,11031,134201,2013.8
+Honda,Odyssey,lien,6,16458,104980,2016.7
+Honda,Passport,clean,187,24609,75120,2019.0
+Honda,Passport,rebuilt,45,25759,36867,2022.8
+Honda,Passport,salvage,8,17823,48019,2021.0
+Honda,Pilot,clean,2893,10200,152658,2012.2
+Honda,Pilot,rebuilt,184,17041,96037,2017.3
+Honda,Pilot,salvage,70,11013,116210,2014.4
+Honda,Pilot,missing,6,2350,213733,2007.8
+Honda,Pilot,lien,6,27175,102650,2019.2
+Honda,Prelude,clean,37,8206,186512,1995.9
+Honda,Prologue,clean,21,30549,22244,2024.4
+Honda,Ridgeline,clean,629,15449,128244,2013.7
+Honda,Ridgeline,rebuilt,58,18973,71952,2018.5
+Honda,Ridgeline,salvage,22,15694,90930,2017.7
+Honda,S2000,clean,45,30931,90908,2003.4
+Honda,S2000,rebuilt,5,21600,101765,2002.8
+Honda,Shadow,clean,9,3743,13370,2003.3
+Hyundai,Accent,clean,622,4828,119392,2013.1
+Hyundai,Accent,rebuilt,34,5668,95872,2015.6
+Hyundai,Accent,salvage,18,4093,112677,2014.4
+Hyundai,Azera,clean,110,5715,124174,2011.0
+Hyundai,Elantra,clean,2248,7322,115623,2015.1
+Hyundai,Elantra,rebuilt,133,8371,93388,2017.7
+Hyundai,Elantra,salvage,70,6434,107330,2016.3
+Hyundai,Elantra,lien,15,8026,113881,2017.4
+Hyundai,"Elantra GT",clean,200,6370,120875,2014.7
+Hyundai,"Elantra GT",rebuilt,8,6518,102402,2016.1
+Hyundai,"Elantra N",clean,19,26606,29739,2023.4
+Hyundai,"Elantra Touring",clean,52,4211,137032,2010.8
+Hyundai,Entourage,clean,33,3153,160225,2007.2
+Hyundai,Equus,clean,41,8167,107941,2012.9
+Hyundai,Excel,clean,52,11648,109481,2012.6
+Hyundai,Genesis,clean,219,7540,128784,2012.9
+Hyundai,Genesis,rebuilt,13,6885,122087,2013.8
+Hyundai,Genesis,salvage,7,3979,121493,2012.0
+Hyundai,"Genesis Coupe",clean,56,8640,109268,2012.4
+Hyundai,"Genesis Coupe",rebuilt,8,8211,96765,2014.1
+Hyundai,"Genesis Coupe",salvage,5,3850,117243,2013.0
+Hyundai,Ioniq,clean,67,12087,96350,2018.9
+Hyundai,"Ioniq 5",clean,157,27329,23452,2023.9
+Hyundai,"Ioniq 6",clean,37,25090,27021,2023.6
+Hyundai,Kona,clean,276,14826,74764,2021.2
+Hyundai,Kona,rebuilt,20,14040,52535,2021.4
+Hyundai,Kona,salvage,6,8908,84021,2020.3
+Hyundai,"Kona N",clean,7,20323,59726,2022.6
+Hyundai,Palisade,clean,251,25089,78584,2021.9
+Hyundai,Palisade,rebuilt,22,24872,39987,2022.8
+Hyundai,"Santa Cruz",clean,47,24952,37409,2023.1
+Hyundai,"Santa Cruz",rebuilt,24,19157,29789,2023.5
+Hyundai,"Santa Cruz",salvage,5,18699,34443,2023.2
+Hyundai,"Santa Fe",clean,1252,9101,126803,2013.8
+Hyundai,"Santa Fe",rebuilt,27,17158,57335,2020.4
+Hyundai,"Santa Fe",salvage,11,14252,63044,2020.6
+Hyundai,"Santa Fe Sport",clean,395,8782,115068,2015.7
+Hyundai,"Santa Fe XL",clean,8,11453,113148,2016.8
+Hyundai,Sonata,clean,2419,6608,126374,2013.6
+Hyundai,Sonata,rebuilt,144,8440,91967,2016.7
+Hyundai,Sonata,salvage,58,6905,113349,2015.6
+Hyundai,Sonata,lien,6,16200,73343,2020.5
+Hyundai,Tiburon,clean,38,4265,131257,2005.8
+Hyundai,Tucson,clean,1168,11102,104018,2016.4
+Hyundai,Tucson,rebuilt,47,13098,58953,2019.0
+Hyundai,Tucson,salvage,26,7544,103002,2014.3
+Hyundai,Veloster,clean,371,6173,113742,2014.9
+Hyundai,Veloster,rebuilt,14,6705,99520,2015.6
+Hyundai,Veloster,salvage,13,4227,116336,2014.0
+Hyundai,"Veloster N",clean,5,20581,78778,2021.6
+Hyundai,Venue,clean,81,14392,55232,2022.2
+Hyundai,Venue,rebuilt,9,11611,45273,2022.7
+Hyundai,Veracruz,clean,82,4094,150637,2009.4
+Hyundai,XG350,clean,17,3022,151658,2004.2
+Infiniti,EX35,clean,90,5988,146480,2009.7
+Infiniti,FX35,clean,191,4831,167686,2008.0
+Infiniti,FX37,clean,17,8934,142763,2013.6
+Infiniti,FX45,clean,12,5187,151939,2005.1
+Infiniti,G20,clean,12,2628,182004,1998.2
+Infiniti,G25,clean,20,6088,147725,2011.5
+Infiniti,G35,clean,248,5483,144437,2005.6
+Infiniti,G35,salvage,12,3383,147236,2005.5
+Infiniti,G37,clean,226,8349,136241,2010.9
+Infiniti,G37,rebuilt,11,6314,130993,2010.9
+Infiniti,G37,salvage,5,6950,128341,2010.4
+Infiniti,I30,clean,26,2576,158693,2000.2
+Infiniti,I35,clean,23,3496,138684,2003.4
+Infiniti,J30,clean,7,6093,79801,1995.1
+Infiniti,JX35,clean,83,6601,137153,2013.0
+Infiniti,JX35,rebuilt,11,6600,115091,2013.1
+Infiniti,M35,clean,70,4708,165711,2007.5
+Infiniti,M35h,clean,9,7558,107781,2012.6
+Infiniti,M37,clean,36,7376,131975,2012.2
+Infiniti,M45,clean,12,6444,142590,2005.9
+Infiniti,Q40,clean,22,9003,124091,2015.0
+Infiniti,Q45,clean,13,4124,141493,2001.1
+Infiniti,Q50,clean,347,14950,98937,2017.2
+Infiniti,Q50,rebuilt,68,14603,70942,2018.4
+Infiniti,Q50,salvage,18,11884,78445,2019.0
+Infiniti,Q60,clean,80,15807,93553,2016.9
+Infiniti,Q60,rebuilt,22,20434,68600,2018.0
+Infiniti,Q60,salvage,7,12857,79446,2015.9
+Infiniti,Q70,clean,17,13557,95230,2015.8
+Infiniti,Q70L,clean,16,9446,154016,2015.8
+Infiniti,QX30,clean,36,11459,373559,2017.6
+Infiniti,QX30,rebuilt,5,12659,69353,2018.0
+Infiniti,QX4,clean,29,4342,158376,2000.3
+Infiniti,QX50,clean,167,13752,94987,2018.1
+Infiniti,QX50,rebuilt,29,14380,54131,2020.1
+Infiniti,QX50,salvage,11,13254,57933,2019.4
+Infiniti,QX55,clean,13,26339,48494,2022.6
+Infiniti,QX55,rebuilt,5,25940,20200,2023.0
+Infiniti,QX56,clean,192,6148,171336,2010.1
+Infiniti,QX56,rebuilt,5,7485,159456,2011.8
+Infiniti,QX60,clean,533,13239,111140,2017.3
+Infiniti,QX60,rebuilt,40,14404,77849,2018.2
+Infiniti,QX60,salvage,25,8080,135125,2016.4
+Infiniti,QX70,clean,63,9979,116446,2016.0
+Infiniti,QX80,clean,224,18993,126575,2017.4
+International,LT625,clean,14,30207,469550,2019.5
+International,Prostar,clean,23,15839,621196,2013.6
+Isuzu,Amigo,clean,7,6314,315514,1997.0
+Isuzu,Ascender,clean,8,3731,156246,2004.8
+Isuzu,FTR,clean,32,39226,134764,2015.9
+Isuzu,Hombre,clean,10,2850,149856,1998.3
+Isuzu,NPR,clean,395,23150,146581,2012.5
+Isuzu,NPR,rebuilt,7,35150,109095,2014.3
+Isuzu,NPR-HD,clean,53,34302,97078,2016.0
+Isuzu,NPR-XD,clean,6,40467,114077,2020.7
+Isuzu,NQR,clean,53,21701,163763,2014.0
+Isuzu,NRR,clean,88,36127,118719,2017.7
+Isuzu,REACH,clean,5,12053,56383,2012.8
+Isuzu,Rodeo,clean,49,3117,169491,1999.6
+Isuzu,Trooper,clean,45,3523,174885,1997.7
+Jaguar,E-PACE,clean,32,17399,71720,2019.8
+Jaguar,E-PACE,salvage,6,12000,62000,2018.0
+Jaguar,F-PACE,clean,159,16887,84503,2018.7
+Jaguar,F-TYPE,clean,46,33116,49003,2016.3
+Jaguar,I-PACE,clean,7,24319,52218,2020.7
+Jaguar,S-Type,clean,86,4580,101672,2004.3
+Jaguar,"Vanden Plas",clean,26,6742,99720,2000.3
+Jaguar,X-Type,clean,62,4553,107756,2004.4
+Jaguar,XE,clean,51,10793,87316,2017.6
+Jaguar,XF,clean,165,9422,91386,2014.0
+Jaguar,XF,salvage,7,13757,70660,2014.9
+Jaguar,XJ,clean,107,9866,97528,2008.9
+Jaguar,XJ6,clean,20,5505,104747,1994.9
+Jaguar,XJ8,clean,54,7096,108182,2002.9
+Jaguar,XJR,clean,17,6396,121392,2002.4
+Jaguar,XJS,clean,49,11190,89951,1993.7
+Jaguar,XK,clean,53,14004,81085,2008.2
+Jaguar,XK8,clean,113,8532,85644,2000.4
+Jayco,"Jay Flight",clean,7,16656,500,2019.7
+Jayco,"Super C",clean,45,19215,92049,2010.0
+Jeep,Cherokee,clean,2213,9481,130302,2013.4
+Jeep,Cherokee,rebuilt,86,10928,82227,2017.1
+Jeep,Cherokee,salvage,33,7495,146894,2011.1
+Jeep,Cherokee,lien,7,12289,98883,2017.7
+Jeep,Cherokee,missing,5,4200,161242,2005.6
+Jeep,Comanche,clean,7,12066,177488,1990.9
+Jeep,Commander,clean,188,4042,168555,2007.2
+Jeep,Commander,rebuilt,5,3770,171369,2007.4
+Jeep,Compass,clean,1337,10265,104157,2017.2
+Jeep,Compass,rebuilt,65,11698,68228,2019.3
+Jeep,Compass,salvage,20,6557,80880,2016.6
+Jeep,Compass,lien,6,12800,82042,2018.7
+Jeep,Gladiator,clean,505,34113,53940,2021.8
+Jeep,Gladiator,rebuilt,9,25115,44171,2021.0
+Jeep,Gladiator,lien,7,37879,38905,2022.1
+Jeep,"Grand Cherokee",clean,4168,11440,132172,2013.2
+Jeep,"Grand Cherokee",rebuilt,125,14115,91291,2016.2
+Jeep,"Grand Cherokee",salvage,43,9048,148204,2012.9
+Jeep,"Grand Cherokee",lien,18,16133,122720,2017.4
+Jeep,"Grand Cherokee L",clean,185,31401,48098,2022.9
+Jeep,"Grand Cherokee L",rebuilt,10,25177,37815,2022.9
+Jeep,"Grand Wagoneer",clean,42,57504,46511,2022.0
+Jeep,"Grand Wagoneer L",clean,7,44161,78496,2024.0
+Jeep,Liberty,clean,926,3986,148010,2007.9
+Jeep,Liberty,rebuilt,11,3282,164154,2006.5
+Jeep,Liberty,salvage,6,4117,128685,2009.2
+Jeep,Patriot,clean,942,5163,128138,2013.8
+Jeep,Patriot,rebuilt,31,5048,105037,2014.6
+Jeep,Patriot,salvage,24,4407,118032,2015.2
+Jeep,Renegade,clean,695,10190,101590,2017.6
+Jeep,Renegade,rebuilt,77,10097,69869,2017.8
+Jeep,Renegade,salvage,13,8452,97030,2017.6
+Jeep,Renegade,lien,5,13600,80965,2018.4
+Jeep,Wagoneer,clean,68,37538,60197,2022.4
+Jeep,Wagoneer,rebuilt,6,36049,37629,2022.5
+Jeep,"Wagoneer L",clean,35,36029,62285,2024.0
+Jeep,"Wagoneer S",clean,5,39383,13325,2024.6
+Jeep,Wrangler,clean,6608,17472,105147,2012.6
+Jeep,Wrangler,rebuilt,184,15236,92177,2013.0
+Jeep,Wrangler,salvage,67,15008,104560,2011.8
+Jeep,Wrangler,lien,49,21416,93743,2016.5
+Jeep,"Wrangler JK",clean,148,17639,100999,2015.5
+Kawasaki,Automatic,clean,16,9687,121220,2008.9
+Kawasaki,Sports,clean,9,12253,132359,2010.7
+Kawasaki,Sports,salvage,5,18900,22080,2024.4
+Kawasaki,Teryx,clean,6,12997,1182,2022.3
+Kenworth,T680,clean,32,34084,726286,2018.1
+Kenworth,T800,clean,33,48653,761199,2008.8
+Kenworth,T880,clean,7,63800,349156,2019.1
+Kenworth,W900,clean,11,46055,496609,2003.9
+Kenworth,W900,rebuilt,6,80583,294167,2019.8
+Keystone,Denali,clean,15,29693,128853,2014.2
+Keystone,Raptor,clean,5,40502,72226,2016.8
+Kia,Amanti,clean,25,2983,131432,2005.3
+Kia,Borrego,clean,24,3635,178968,2009.1
+Kia,Cadenza,clean,57,8430,116693,2015.8
+Kia,Carnival,clean,68,33532,41093,2024.1
+Kia,Carnival,rebuilt,9,25325,37278,2024.0
+Kia,EV6,clean,107,26478,30692,2023.5
+Kia,EV9,clean,23,44368,22682,2024.2
+Kia,Forte,clean,1044,7907,113726,2016.8
+Kia,Forte,rebuilt,65,8289,79462,2018.7
+Kia,Forte,salvage,28,5516,112629,2015.6
+Kia,"Forte Koup",clean,29,4738,134725,2012.6
+Kia,K4,clean,54,21267,17970,2025.1
+Kia,K4,salvage,6,15533,20242,2025.0
+Kia,K4,rebuilt,6,19546,4597,2025.2
+Kia,K5,clean,180,19794,63741,2022.6
+Kia,K5,rebuilt,29,18878,36272,2023.4
+Kia,K900,clean,13,11960,78109,2015.9
+Kia,Niro,clean,231,17089,70092,2021.4
+Kia,Optima,clean,1282,6509,128486,2014.9
+Kia,Optima,rebuilt,76,6609,106594,2016.1
+Kia,Optima,salvage,38,5184,110270,2014.8
+Kia,Optima,lien,6,3492,120103,2013.7
+Kia,Rio,clean,444,5453,114604,2014.1
+Kia,Rio,rebuilt,22,6661,58340,2017.4
+Kia,Rio,salvage,12,5729,80242,2015.8
+Kia,Rondo,clean,58,3257,137714,2008.2
+Kia,Sedona,clean,479,5661,143821,2013.1
+Kia,Sedona,rebuilt,6,7765,100668,2016.8
+Kia,Seltos,clean,120,19628,47552,2023.0
+Kia,Seltos,rebuilt,8,14666,44870,2022.8
+Kia,Seltos,salvage,6,10175,52007,2022.0
+Kia,Sorento,clean,1367,9067,126395,2015.3
+Kia,Sorento,rebuilt,33,8353,108503,2015.6
+Kia,Sorento,salvage,18,8092,98043,2015.3
+Kia,Soul,clean,1652,6998,114084,2015.9
+Kia,Soul,rebuilt,82,7218,85208,2017.6
+Kia,Soul,salvage,30,6036,101876,2016.2
+Kia,Soul,lien,5,37700,72194,2021.8
+Kia,Spectra,clean,110,2891,143633,2007.0
+Kia,Spectra,salvage,5,2390,139917,2007.8
+Kia,Sportage,clean,1008,11415,104156,2016.3
+Kia,Sportage,rebuilt,36,13231,61764,2019.7
+Kia,Sportage,salvage,23,9554,75587,2018.3
+Kia,Sportage,lien,6,15373,81644,2019.5
+Kia,Stinger,clean,71,20564,82057,2019.8
+Kia,Stinger,rebuilt,6,18516,54015,2019.0
+Kia,Telluride,clean,327,25915,80094,2021.8
+Kia,Telluride,rebuilt,42,25305,46421,2022.8
+Kia,Telluride,salvage,6,15867,71521,2021.2
+KTM,Trail,clean,10,11205,288069,2013.9
+Lamborghini,URUS,clean,16,173765,48920,2019.9
+"Land Rover",Defender,clean,225,67313,30832,2021.2
+"Land Rover",Discovery,clean,219,15285,121792,2012.6
+"Land Rover","Discovery Sport",clean,207,14532,83743,2018.2
+"Land Rover",Freelander,clean,6,2533,136560,2003.3
+"Land Rover",LR2,clean,95,5778,127882,2011.4
+"Land Rover",LR3,clean,75,5025,172483,2006.1
+"Land Rover",LR4,clean,184,12015,128903,2013.9
+"Land Rover","Range Rover",clean,498,32588,88867,2016.3
+"Land Rover","Range Rover",salvage,7,12393,93193,2013.7
+"Land Rover","Range Rover",rebuilt,6,12502,98684,2012.5
+"Land Rover","Range Rover Evoque",clean,284,14804,86134,2017.1
+"Land Rover","Range Rover Sport",clean,502,31263,82715,2017.5
+"Land Rover","Range Rover Sport",rebuilt,5,27578,58272,2015.8
+"Land Rover","Range Rover Velar",clean,180,29530,59196,2020.9
+Lexus,CT,clean,111,11867,131857,2013.4
+Lexus,ES,clean,1345,9245,147518,2008.6
+Lexus,ES,rebuilt,57,11093,122827,2012.2
+Lexus,ES,salvage,50,8051,132700,2009.4
+Lexus,ES,missing,6,5250,97333,1997.5
+Lexus,GS,clean,373,11340,146773,2008.5
+Lexus,GS,rebuilt,34,12481,110980,2011.9
+Lexus,GS,salvage,19,11660,122466,2011.7
+Lexus,GX,clean,628,22227,144802,2011.3
+Lexus,GX,rebuilt,12,20206,119663,2010.7
+Lexus,GX,salvage,5,13440,128380,2007.4
+Lexus,HS,clean,43,7949,140667,2010.2
+Lexus,IS,clean,816,13859,135426,2011.9
+Lexus,IS,rebuilt,84,16527,99704,2015.2
+Lexus,IS,salvage,38,8807,157635,2009.8
+Lexus,IS,lien,5,17140,131423,2013.2
+Lexus,LC,clean,8,80171,28578,2020.0
+Lexus,LS,clean,497,11883,158114,2007.1
+Lexus,LS,rebuilt,22,13465,109666,2009.9
+Lexus,LS,salvage,21,9185,135420,2007.0
+Lexus,LX,clean,231,26118,166749,2007.6
+Lexus,NX,clean,278,24745,80300,2018.8
+Lexus,NX,rebuilt,9,19283,74771,2018.4
+Lexus,NX,salvage,5,21740,61580,2020.6
+Lexus,RC,clean,82,27541,85854,2016.5
+Lexus,RC,rebuilt,11,24334,83678,2017.0
+Lexus,RX,clean,2424,12237,145411,2010.1
+Lexus,RX,rebuilt,53,15747,97836,2013.1
+Lexus,RX,salvage,40,8995,142401,2008.3
+Lexus,RZ,clean,9,33464,24504,2023.2
+Lexus,SC,clean,229,14578,114649,2002.8
+Lexus,SC,salvage,12,6466,162008,2000.3
+Lexus,SC,rebuilt,9,11797,99486,2003.4
+Lexus,TX,clean,17,55924,30450,2023.8
+Lexus,UX,clean,37,25534,57261,2020.5
+Lexus,UX,salvage,8,22701,34394,2022.8
+Lincoln,Aviator,clean,123,27482,84434,2017.7
+Lincoln,Aviator,rebuilt,10,31119,48593,2022.3
+Lincoln,Blackwood,clean,7,9400,129714,2002.0
+Lincoln,Continental,clean,80,9591,123371,2009.3
+Lincoln,Continental,rebuilt,6,13950,72167,2018.3
+Lincoln,Corsair,clean,73,26208,48512,2021.9
+Lincoln,Corsair,rebuilt,8,20787,41294,2021.5
+Lincoln,LS,clean,54,4467,110159,2003.4
+Lincoln,Mark,clean,34,5849,133664,1995.6
+Lincoln,"Mark LT",clean,29,7780,178728,2006.4
+Lincoln,MKC,clean,146,10990,101536,2016.9
+Lincoln,MKC,rebuilt,9,10480,84816,2017.2
+Lincoln,MKS,clean,125,6188,133705,2012.0
+Lincoln,MKS,rebuilt,6,6664,117065,2013.2
+Lincoln,MKT,clean,95,6987,151351,2014.0
+Lincoln,MKX,clean,365,7193,138840,2012.4
+Lincoln,MKX,rebuilt,13,8546,103767,2016.1
+Lincoln,MKX,salvage,7,7635,120918,2014.9
+Lincoln,MKZ,clean,389,7661,116278,2013.2
+Lincoln,MKZ,rebuilt,38,8766,89725,2015.0
+Lincoln,MKZ,salvage,12,6933,97416,2013.7
+Lincoln,Nautilus,clean,130,27296,63647,2021.1
+Lincoln,Nautilus,rebuilt,18,22674,44873,2021.2
+Lincoln,Nautilus,salvage,9,19089,62953,2020.4
+Lincoln,Navigator,clean,361,13903,143240,2011.6
+Lincoln,Navigator,rebuilt,9,17327,88714,2014.7
+Lincoln,Navigator,salvage,5,12060,158618,2012.0
+Lincoln,"Navigator L",clean,125,24392,137140,2017.2
+Lincoln,"Navigator L",rebuilt,8,37036,53060,2020.8
+Lincoln,"Town Car",clean,400,6260,128135,2003.3
+Lincoln,Zephyr,clean,11,4606,96181,2006.0
+Lotus,Elise,clean,6,53830,33163,2005.3
+Lotus,Emira,clean,7,95642,5671,2024.1
+Lotus,Evora,clean,10,73835,21229,2017.2
+Lucid,Air,clean,59,45690,17470,2023.8
+Mack,Granite,clean,22,38034,275247,2007.9
+Mack,Pinnacle,clean,9,40988,628954,2015.2
+Maserati,Ghibli,clean,146,15798,76901,2016.3
+Maserati,Ghibli,rebuilt,13,13233,74081,2015.7
+Maserati,Granturismo,clean,60,30295,44782,2012.6
+Maserati,Grecale,clean,19,43793,23029,2023.7
+Maserati,Levante,clean,70,23022,67375,2019.0
+Maserati,Quattroporte,clean,74,15197,67142,2012.6
+Maserati,Quattroporte,rebuilt,7,8906,46459,2010.9
+Maserati,Spyder,clean,6,22212,31352,2002.7
+Maybach,S550,clean,22,16918,111507,2011.3
+Mazda,626,clean,25,2490,111905,1998.6
+Mazda,B-Series,clean,11,5175,172217,1999.7
+Mazda,CX-3,clean,67,12992,97808,2017.4
+Mazda,CX-3,rebuilt,7,13991,53052,2018.4
+Mazda,CX-30,clean,183,20910,52907,2022.5
+Mazda,CX-30,rebuilt,23,18889,26687,2023.0
+Mazda,CX-5,clean,1051,15355,100483,2017.8
+Mazda,CX-5,rebuilt,85,15860,54714,2020.0
+Mazda,CX-5,salvage,16,9947,102590,2017.7
+Mazda,CX-5,lien,6,16225,90003,2018.3
+Mazda,CX-50,clean,106,29010,27815,2024.7
+Mazda,CX-50,rebuilt,14,22392,20782,2024.6
+Mazda,CX-7,clean,155,4349,142774,2009.7
+Mazda,CX-70,clean,11,33445,15922,2025.1
+Mazda,CX-9,clean,533,8705,137726,2013.5
+Mazda,CX-9,rebuilt,14,10135,117925,2015.6
+Mazda,CX-9,salvage,10,5578,137770,2012.4
+Mazda,CX-90,clean,75,32478,30070,2024.2
+Mazda,CX-90,rebuilt,8,29802,15551,2024.8
+Mazda,Mazda2,clean,25,6175,115733,2012.8
+Mazda,Mazda3,clean,593,10025,117816,2014.4
+Mazda,Mazda3,rebuilt,51,10132,84278,2016.4
+Mazda,Mazda3,salvage,11,10098,62397,2018.6
+Mazda,Mazda6,clean,197,9344,127219,2013.6
+Mazda,Mazda6,rebuilt,13,9484,86170,2015.5
+Mazda,MPV,clean,48,3233,146562,2003.0
+Mazda,MX-5,clean,596,11926,112572,2004.2
+Mazda,MX-5,rebuilt,26,11057,77564,2010.8
+Mazda,MX-5,salvage,22,10343,69477,2012.0
+Mazda,Protege,clean,52,3185,141261,2002.1
+Mazda,RX-7,clean,12,20791,79280,1992.2
+Mazda,RX-8,clean,38,7892,90563,2005.9
+Mazda,Tribute,clean,98,3486,155203,2005.0
+McLaren,570S,clean,7,139282,23283,2017.7
+McLaren,GT,clean,6,139803,12700,2022.3
+Mercedes-Benz,300,clean,21,8367,132165,1996.0
+Mercedes-Benz,350,clean,21,12254,117451,2008.5
+Mercedes-Benz,500,clean,17,7464,117577,1997.9
+Mercedes-Benz,560,clean,21,10048,34271,1992.8
+Mercedes-Benz,A-Class,clean,58,18686,68537,2019.4
+Mercedes-Benz,"AMG GT",clean,184,61567,58052,2018.5
+Mercedes-Benz,B-Class,clean,6,19836,67104,2016.5
+Mercedes-Benz,C-Class,clean,1876,11162,108064,2012.9
+Mercedes-Benz,C-Class,rebuilt,51,6878,126141,2011.5
+Mercedes-Benz,C-Class,salvage,40,6909,117885,2011.9
+Mercedes-Benz,C-Class,lien,11,8105,126481,2013.4
+Mercedes-Benz,CL-Class,clean,79,13471,114419,2005.5
+Mercedes-Benz,CLA-Class,clean,373,13730,87872,2016.9
+Mercedes-Benz,CLA-Class,rebuilt,11,11425,66439,2017.2
+Mercedes-Benz,CLK-Class,clean,300,6328,116718,2004.2
+Mercedes-Benz,CLK-Class,salvage,15,5687,123984,2002.9
+Mercedes-Benz,CLS-Class,clean,203,15591,98539,2012.0
+Mercedes-Benz,E-Class,clean,1738,11122,117957,2010.4
+Mercedes-Benz,E-Class,rebuilt,47,8891,106578,2011.8
+Mercedes-Benz,E-Class,salvage,39,6012,126706,2007.4
+Mercedes-Benz,EQB-Class,clean,10,30301,21574,2023.0
+Mercedes-Benz,G-Class,clean,152,80075,74946,2014.0
+Mercedes-Benz,GL-Class,clean,507,9231,127951,2012.2
+Mercedes-Benz,GL-Class,rebuilt,14,7763,126266,2010.6
+Mercedes-Benz,GL-Class,salvage,13,4623,150049,2010.5
+Mercedes-Benz,GLA-Class,clean,291,17326,77820,2018.5
+Mercedes-Benz,GLA-Class,rebuilt,5,13320,68570,2017.4
+Mercedes-Benz,GLB-Class,clean,109,29716,40965,2022.6
+Mercedes-Benz,GLC-Class,clean,499,22368,66686,2019.4
+Mercedes-Benz,GLE-Class,clean,421,26868,76353,2019.2
+Mercedes-Benz,GLE-Class,lien,5,45780,50668,2022.2
+Mercedes-Benz,GLK-Class,clean,352,8516,120691,2012.5
+Mercedes-Benz,GLK-Class,salvage,7,7243,119928,2013.1
+Mercedes-Benz,GLS-Class,clean,228,27843,88761,2018.9
+Mercedes-Benz,M-Class,clean,167,8292,130867,2010.2
+Mercedes-Benz,Metris,clean,128,21700,98955,2018.6
+Mercedes-Benz,ML-Class,clean,706,7274,140142,2009.6
+Mercedes-Benz,R-Class,clean,85,5920,142834,2008.4
+Mercedes-Benz,S-Class,clean,866,19324,108614,2010.3
+Mercedes-Benz,S-Class,rebuilt,22,18386,73363,2012.1
+Mercedes-Benz,S-Class,salvage,16,7359,120724,2008.5
+Mercedes-Benz,S-Class,lien,5,26540,84497,2017.8
+Mercedes-Benz,SL-Class,clean,407,20565,74863,2005.8
+Mercedes-Benz,SLC-Class,clean,13,25659,53411,2018.2
+Mercedes-Benz,SLK-Class,clean,257,10281,88816,2005.8
+Mercedes-Benz,SLK-Class,salvage,11,4922,113061,2004.1
+Mercedes-Benz,SLK-Class,rebuilt,8,7200,89372,2005.9
+Mercedes-Benz,Sprinter,clean,802,36212,110636,2018.1
+Mercedes-Benz,Sprinter,rebuilt,14,46510,49795,2019.9
+Mercedes-Benz,Sprinter,salvage,11,23951,108517,2015.5
+Mercedes-Benz,Sprinter,lien,10,65950,56969,2022.4
+Mini,Clubman,clean,220,7595,97598,2013.3
+Mini,Clubman,salvage,12,8617,83128,2015.5
+Mini,Cooper,clean,34,12044,93929,2014.6
+Mini,"Cooper Convertible",clean,153,9074,82977,2011.5
+Mini,"Cooper Convertible",rebuilt,7,4010,69020,2010.4
+Mini,"Cooper Roadster",clean,13,10000,88964,2013.8
+Mini,Countryman,clean,513,9124,100542,2014.9
+Mini,Countryman,rebuilt,12,8044,84526,2015.2
+Mini,Hardtop,clean,243,10343,85025,2014.6
+Mini,Hardtop,rebuilt,11,9713,62878,2016.7
+Mini,Paceman,clean,32,8099,90804,2013.6
+Mitsubishi,3000GT,clean,26,9919,136173,1995.9
+Mitsubishi,Eclipse,clean,160,5110,129783,2005.9
+Mitsubishi,Eclipse,salvage,10,3365,120406,2007.4
+Mitsubishi,"Eclipse Cross",clean,99,15843,64368,2021.1
+Mitsubishi,Endeavor,clean,53,3147,147435,2007.4
+Mitsubishi,Galant,clean,103,3199,153111,2007.9
+Mitsubishi,Galant,salvage,9,13243,157978,2007.6
+Mitsubishi,i-MiEV,clean,10,4533,49725,2012.2
+Mitsubishi,Lancer,clean,186,5334,139276,2010.4
+Mitsubishi,Lancer,rebuilt,5,3340,134400,2009.0
+Mitsubishi,"Lancer Evolution",clean,35,29358,99350,2009.5
+Mitsubishi,"Lancer SportBack",clean,5,3397,167429,2012.4
+Mitsubishi,Mirage,clean,191,8100,83725,2018.4
+Mitsubishi,Mirage,rebuilt,10,7133,48736,2020.8
+Mitsubishi,Mirage,salvage,9,3889,1257073,2016.2
+Mitsubishi,"Mirage G4",clean,70,7604,80175,2019.7
+Mitsubishi,"Mirage G4",rebuilt,9,6166,71387,2019.4
+Mitsubishi,Montero,clean,52,4642,187060,2001.2
+Mitsubishi,"Montero Sport",clean,35,2917,171323,2001.3
+Mitsubishi,Outlander,clean,504,11790,84050,2017.6
+Mitsubishi,Outlander,rebuilt,10,10105,73659,2017.1
+Mitsubishi,"Outlander Sport",clean,278,10122,102024,2017.7
+Mitsubishi,Raider,clean,21,5815,137841,2007.0
+Mitsubishi,"Space Wagon",clean,9,12697,131852,1996.6
+Nissan,200SX,clean,5,5129,112079,1997.0
+Nissan,240SX,clean,23,10715,167593,1993.8
+Nissan,300ZX,clean,64,15351,109242,1991.7
+Nissan,350Z,clean,170,9312,115068,2005.2
+Nissan,350Z,rebuilt,9,9116,94780,2005.7
+Nissan,350Z,salvage,7,7006,115121,2004.9
+Nissan,370Z,clean,112,17920,86017,2013.4
+Nissan,370Z,rebuilt,11,24236,71512,2014.6
+Nissan,370Z,salvage,6,17344,46396,2013.7
+Nissan,Altima,clean,3900,6893,130461,2014.3
+Nissan,Altima,rebuilt,318,7508,99359,2016.3
+Nissan,Altima,salvage,154,6019,126616,2014.9
+Nissan,Altima,lien,11,8806,123408,2016.5
+Nissan,Altima,missing,6,3317,102500,2015.0
+Nissan,ARIYA,clean,60,25149,25157,2023.7
+Nissan,Armada,clean,600,10910,148719,2014.1
+Nissan,Armada,rebuilt,16,9338,138611,2013.9
+Nissan,Armada,salvage,9,3772,182036,2009.7
+Nissan,Cube,clean,116,4076,151988,2010.9
+Nissan,Cube,salvage,6,3558,110068,2011.0
+Nissan,Frontier,clean,1584,12397,127444,2012.7
+Nissan,Frontier,rebuilt,97,16756,75311,2018.9
+Nissan,Frontier,salvage,45,11948,90418,2015.0
+Nissan,Frontier,lien,5,26650,69750,2020.4
+Nissan,GT-R,clean,29,100458,44658,2011.0
+Nissan,Juke,clean,440,5721,127779,2013.2
+Nissan,Juke,rebuilt,18,5749,105287,2013.8
+Nissan,Juke,salvage,16,4378,105028,2013.9
+Nissan,Kicks,clean,311,12965,68788,2021.2
+Nissan,Kicks,rebuilt,45,11881,39189,2023.1
+Nissan,Kicks,salvage,14,11044,35961,2023.4
+Nissan,"Kicks Play",clean,9,20914,7714,2025.0
+Nissan,Leaf,clean,533,8600,59252,2017.4
+Nissan,Leaf,rebuilt,5,4320,65323,2013.4
+Nissan,Leaf,salvage,5,6119,46398,2017.6
+Nissan,Maxima,clean,847,6733,139429,2011.7
+Nissan,Maxima,rebuilt,58,7695,112670,2015.6
+Nissan,Maxima,salvage,40,5545,132995,2013.4
+Nissan,Murano,clean,1345,7696,130893,2013.3
+Nissan,Murano,rebuilt,94,11261,86258,2017.6
+Nissan,Murano,salvage,27,7361,104847,2014.4
+Nissan,NV,clean,194,12774,139978,2017.2
+Nissan,NV,rebuilt,13,17069,79065,2017.6
+Nissan,NV200,clean,319,11464,127750,2018.1
+Nissan,NV200,rebuilt,17,10246,110287,2018.2
+Nissan,NV200,salvage,16,10796,110638,2017.5
+Nissan,Pathfinder,clean,1624,8254,137468,2013.7
+Nissan,Pathfinder,rebuilt,79,12843,101558,2017.3
+Nissan,Pathfinder,salvage,29,5955,135644,2011.7
+Nissan,Quest,clean,283,4570,138542,2010.6
+Nissan,Quest,rebuilt,5,3660,120541,2009.0
+Nissan,Rogue,clean,3071,9383,116286,2016.3
+Nissan,Rogue,rebuilt,260,11223,75354,2018.6
+Nissan,Rogue,salvage,84,8415,82843,2017.8
+Nissan,Rogue,lien,10,11434,105538,2017.5
+Nissan,"Rogue Select",clean,115,5424,135326,2014.4
+Nissan,"Rogue Select",salvage,5,3110,131249,2014.6
+Nissan,"Rogue Sport",clean,251,11363,98395,2018.6
+Nissan,"Rogue Sport",rebuilt,32,11253,56635,2019.4
+Nissan,"Rogue Sport",salvage,13,7308,88439,2018.6
+Nissan,Sentra,clean,2224,7133,111838,2015.3
+Nissan,Sentra,rebuilt,189,9259,71402,2019.6
+Nissan,Sentra,salvage,94,6916,90068,2017.6
+Nissan,Titan,clean,865,12569,138225,2012.4
+Nissan,Titan,rebuilt,39,13963,113561,2014.6
+Nissan,Titan,salvage,26,10521,128189,2014.0
+Nissan,Versa,clean,1250,5483,116603,2014.6
+Nissan,Versa,rebuilt,63,7219,71310,2018.5
+Nissan,Versa,salvage,27,4909,106533,2016.3
+Nissan,"Versa Note",clean,267,4933,113924,2015.2
+Nissan,"Versa Note",salvage,19,5249,67934,2015.9
+Nissan,"Versa Note",rebuilt,19,4397,95238,2014.9
+Nissan,Xterra,clean,652,5767,166336,2007.5
+Nissan,Xterra,rebuilt,26,5820,154023,2009.2
+Nissan,Xterra,salvage,10,3058,174084,2005.9
+Peterbilt,220,clean,8,26075,141269,2014.1
+Peterbilt,337,clean,17,53695,260480,2014.9
+Peterbilt,348,clean,7,90364,352280,2017.1
+Peterbilt,365,clean,5,70280,183439,2014.8
+Peterbilt,367,clean,5,37700,353422,2011.2
+Peterbilt,378,clean,6,42500,679054,2002.0
+Peterbilt,379,clean,19,37234,1134859,2000.5
+Peterbilt,389,clean,6,92733,463320,2019.2
+Peterbilt,579,clean,14,35396,529768,2017.6
+Polestar,2,clean,168,24202,25802,2023.5
+Polestar,3,clean,7,44951,9398,2025.0
+Pontiac,Aztek,clean,10,4177,120820,2002.8
+Pontiac,Bonneville,clean,31,4103,143052,2000.8
+Pontiac,Firebird,clean,83,13014,90424,1997.1
+Pontiac,G5,clean,20,2647,146394,2008.2
+Pontiac,G6,clean,225,4228,138520,2007.6
+Pontiac,G6,rebuilt,6,3192,127042,2007.2
+Pontiac,G6,salvage,6,2508,171250,2006.3
+Pontiac,G8,clean,23,10469,141601,2008.8
+Pontiac,"Grand Am",clean,44,3011,134210,2002.5
+Pontiac,"Grand Prix",clean,176,3615,154844,2004.8
+Pontiac,GTO,clean,63,18510,86023,2005.1
+Pontiac,Montana,clean,42,6106,128792,2004.9
+Pontiac,Solstice,clean,123,9522,68815,2007.0
+Pontiac,Solstice,rebuilt,6,6450,55803,2007.3
+Pontiac,Sunfire,clean,15,3131,116903,2002.5
+Pontiac,Torrent,clean,38,3031,176809,2007.3
+Pontiac,"Trans Sport",clean,54,19826,79697,1998.9
+Pontiac,Vibe,clean,207,3706,170382,2006.8
+Porsche,"718 Boxster",clean,11,73125,26287,2020.6
+Porsche,"718 Cayman",clean,20,67285,40084,2020.8
+Porsche,911,clean,322,73060,59684,2008.4
+Porsche,911,rebuilt,9,73808,42766,2013.3
+Porsche,911,salvage,6,37650,87096,2006.0
+Porsche,968,clean,6,17232,114719,1994.0
+Porsche,Boxster,clean,231,16633,80233,2002.6
+Porsche,Boxster,rebuilt,10,21477,72581,2009.5
+Porsche,Cayenne,clean,634,20037,106663,2014.3
+Porsche,Cayenne,rebuilt,21,13928,97878,2013.4
+Porsche,Cayenne,salvage,15,6207,118713,2010.5
+Porsche,Cayman,clean,64,34462,74679,2010.1
+Porsche,Macan,clean,399,25018,78834,2018.0
+Porsche,Macan,rebuilt,6,25267,63053,2018.5
+Porsche,Panamera,clean,221,29438,75946,2014.7
+Porsche,Panamera,rebuilt,8,19652,77687,2013.6
+Porsche,Taycan,clean,33,64543,26706,2021.5
+RAM,1500,clean,6335,16910,127277,2014.7
+RAM,1500,rebuilt,246,17850,100395,2017.7
+RAM,1500,salvage,91,12548,119285,2014.7
+RAM,1500,lien,30,24906,107638,2018.4
+RAM,1500,missing,6,5008,168851,2007.2
+RAM,2500,clean,3052,26660,136527,2013.4
+RAM,2500,rebuilt,94,29100,87935,2017.1
+RAM,2500,salvage,36,20077,131906,2011.7
+RAM,2500,lien,26,34561,101041,2017.8
+RAM,3500,clean,1379,32889,140180,2014.2
+RAM,3500,rebuilt,59,33770,121626,2015.5
+RAM,3500,lien,13,43184,121824,2018.5
+RAM,3500,salvage,11,25972,98334,2015.7
+RAM,4500,clean,83,33174,131663,2016.6
+RAM,5500,clean,212,41966,125717,2017.6
+RAM,5500,lien,6,51667,81913,2018.7
+RAM,"ProMaster 1500",clean,187,17753,117682,2018.9
+RAM,"ProMaster 2500",clean,538,32039,66713,2021.0
+RAM,"ProMaster 2500",rebuilt,12,20685,62610,2022.0
+RAM,"ProMaster 3500",clean,485,67234,93624,2022.1
+RAM,"ProMaster 3500",rebuilt,11,26891,59610,2021.2
+RAM,"Promaster City",clean,766,22390,92680,2020.2
+RAM,"Promaster City",rebuilt,55,18805,57869,2020.4
+RAM,"Promaster City",salvage,17,10514,99320,2018.3
+Rivian,R1S,clean,36,64474,22114,2023.9
+Rivian,R1T,clean,24,53018,43213,2022.4
+Rolls-Royce,Ghost,clean,6,109281,41420,2013.5
+Saab,9-2X,clean,8,5208,144233,2005.0
+Saab,9-3,clean,174,4205,131643,2006.0
+Saab,9-5,clean,42,3053,164456,2004.0
+Saab,9-7X,clean,11,3768,127478,2007.4
+Saab,900,clean,14,7377,116686,1994.7
+Saturn,Astra,clean,25,3270,114576,2008.3
+Saturn,Aura,clean,115,3153,126368,2007.9
+Saturn,Ion,clean,115,2916,151963,2005.7
+Saturn,L200,clean,17,3395,116278,2002.2
+Saturn,L300,clean,9,2611,116424,2003.6
+Saturn,Outlook,clean,46,3711,193859,2007.9
+Saturn,SKY,clean,87,10976,69564,2007.5
+Saturn,SL,clean,16,2188,176635,2000.0
+Saturn,Vue,clean,212,3164,157192,2006.6
+Saturn,Vue,rebuilt,5,3546,144312,2008.6
+Scion,FR-S,clean,64,12044,118228,2013.9
+Scion,FR-S,salvage,6,9467,79900,2014.2
+Scion,iA,clean,19,8356,101269,2016.0
+Scion,iM,clean,16,11558,129947,2016.0
+Scion,iQ,clean,25,7411,130049,2012.6
+Scion,tC,clean,184,5953,164177,2009.9
+Scion,tC,rebuilt,8,3775,152483,2008.0
+Scion,tC,salvage,7,3093,162813,2009.0
+Scion,xA,clean,54,3683,164416,2005.8
+Scion,xB,clean,205,5468,158208,2009.6
+Scion,xB,rebuilt,12,5345,131590,2010.0
+Scion,xB,salvage,7,3993,138467,2009.3
+Scion,xD,clean,80,5863,146852,2010.3
+Smart,Fortwo,clean,92,6124,72490,2011.8
+Subaru,Ascent,clean,369,22667,78020,2021.1
+Subaru,Ascent,rebuilt,70,21626,49387,2021.7
+Subaru,Ascent,salvage,13,19343,52605,2021.5
+Subaru,"B9 Tribeca",clean,105,4780,152713,2008.0
+Subaru,Baja,clean,59,8619,160865,2004.3
+Subaru,BRZ,clean,85,18474,76861,2016.7
+Subaru,BRZ,rebuilt,12,15623,50763,2019.1
+Subaru,BRZ,salvage,5,15649,65013,2020.2
+Subaru,Crosstrek,clean,1270,15866,94694,2018.7
+Subaru,Crosstrek,rebuilt,288,16288,50940,2021.1
+Subaru,Crosstrek,salvage,51,13317,67970,2020.2
+Subaru,Forester,clean,3982,10073,127969,2013.6
+Subaru,Forester,rebuilt,507,15062,68824,2018.7
+Subaru,Forester,salvage,121,7663,119891,2014.0
+Subaru,Forester,lien,5,21720,52764,2020.6
+Subaru,Impreza,clean,1919,9115,124185,2013.2
+Subaru,Impreza,rebuilt,214,10641,75214,2017.9
+Subaru,Impreza,salvage,60,7387,105813,2015.7
+Subaru,Impreza,lien,5,10580,98151,2015.2
+Subaru,Legacy,clean,1201,7637,143040,2011.5
+Subaru,Legacy,rebuilt,117,11204,83465,2017.1
+Subaru,Legacy,salvage,33,6192,104228,2012.3
+Subaru,Outback,clean,4590,9412,135508,2013.2
+Subaru,Outback,rebuilt,416,13326,84140,2017.5
+Subaru,Outback,salvage,116,8235,121321,2014.2
+Subaru,Outback,lien,10,15013,108632,2018.2
+Subaru,Solterra,clean,28,26529,27154,2023.6
+Subaru,WRX,clean,837,19038,103611,2016.3
+Subaru,WRX,rebuilt,84,16489,63520,2019.1
+Subaru,WRX,salvage,20,15715,63667,2017.7
+Subaru,"XV CrossTrek",clean,382,9490,133559,2014.1
+Subaru,"XV CrossTrek",rebuilt,12,9069,97163,2014.3
+Suzuki,Aerio,clean,9,2667,145723,2004.7
+Suzuki,Equator,clean,9,8387,136000,2010.8
+Suzuki,Forenza,clean,10,3010,87758,2006.5
+Suzuki,"Grand Vitara",clean,67,3917,129907,2005.7
+Suzuki,Kizashi,clean,18,4029,135572,2010.7
+Suzuki,Samurai,clean,5,10880,1841664,1993.8
+Suzuki,Sidekick,clean,16,3419,143230,1995.7
+Suzuki,SX4,clean,76,3982,126625,2009.7
+Suzuki,Vitara,clean,8,3797,142179,2000.5
+Suzuki,X-90,clean,5,5458,84828,1996.2
+Suzuki,XL7,clean,44,3843,144190,2005.6
+Tesla,Cybertruck,clean,30,71065,15364,2024.4
+Tesla,"Model 3",clean,960,22644,75535,2020.7
+Tesla,"Model 3",rebuilt,69,18682,54446,2021.2
+Tesla,"Model 3",salvage,40,15569,69673,2020.7
+Tesla,"Model 3",lien,7,27714,49374,2022.9
+Tesla,"Model S",clean,435,24339,101002,2016.8
+Tesla,"Model S",salvage,19,17569,124465,2015.9
+Tesla,"Model S",rebuilt,15,18468,82260,2016.5
+Tesla,"Model X",clean,270,38027,81590,2019.3
+Tesla,"Model X",rebuilt,14,32136,81819,2018.9
+Tesla,"Model Y",clean,621,30924,61183,2022.4
+Tesla,"Model Y",rebuilt,42,24829,49369,2022.5
+Tesla,"Model Y",salvage,28,23627,42970,2023.1
+Tesla,"Model Y",lien,8,29838,45873,2022.5
+Thor,Summit,clean,5,2795,,2018.0
+Toyota,4-Runner,clean,2934,18267,165891,2009.2
+Toyota,4-Runner,rebuilt,109,21578,114595,2013.2
+Toyota,4-Runner,salvage,66,13532,165142,2008.6
+Toyota,4-Runner,lien,18,34021,83307,2019.2
+Toyota,86,clean,22,17337,80503,2017.7
+Toyota,86,salvage,5,12280,85400,2017.4
+Toyota,Avalon,clean,951,7455,159132,2007.9
+Toyota,Avalon,salvage,39,5904,147444,2007.8
+Toyota,Avalon,rebuilt,39,9426,119471,2010.4
+Toyota,bZ4X,clean,53,25537,26511,2023.6
+Toyota,C-HR,clean,130,14435,92534,2019.1
+Toyota,C-HR,rebuilt,6,13348,66398,2019.2
+Toyota,Camry,clean,6734,9649,140386,2011.2
+Toyota,Camry,rebuilt,316,11115,105346,2014.3
+Toyota,Camry,salvage,258,8393,141293,2011.8
+Toyota,Camry,lien,16,14615,127124,2017.3
+Toyota,"Camry Solara",clean,366,4948,160969,2005.0
+Toyota,"Camry Solara",rebuilt,12,3520,165992,2005.9
+Toyota,"Camry Solara",salvage,9,3566,156648,2004.4
+Toyota,Celica,clean,95,5367,166262,1998.3
+Toyota,Celica,rebuilt,6,5492,132019,2000.7
+Toyota,Celica,salvage,5,5500,128241,2002.8
+Toyota,Corolla,clean,4662,9928,123279,2013.3
+Toyota,Corolla,rebuilt,244,11534,74247,2017.8
+Toyota,Corolla,salvage,183,8937,102362,2015.0
+Toyota,Corolla,lien,16,12529,80199,2017.1
+Toyota,Corolla,missing,6,3216,176307,2009.0
+Toyota,"Corolla Cross",clean,110,28358,29427,2024.3
+Toyota,"Corolla Cross",salvage,18,18995,24759,2023.6
+Toyota,"Corolla Cross",rebuilt,12,20133,22104,2023.8
+Toyota,"COROLLA iM",clean,29,13280,110926,2017.3
+Toyota,"COROLLA iM",rebuilt,5,11516,85157,2017.6
+Toyota,Crown,clean,72,19028,67321,2008.7
+Toyota,"Crown Signia",clean,13,45336,16799,2025.3
+Toyota,Echo,clean,45,3278,162424,2001.7
+Toyota,"FJ Cruiser",clean,414,17490,164572,2009.0
+Toyota,"FJ Cruiser",rebuilt,23,18422,146135,2008.3
+Toyota,"FJ Cruiser",salvage,5,12654,148000,2007.4
+Toyota,"GR Corolla",clean,14,41083,18449,2024.4
+Toyota,GR86,clean,32,29028,34045,2022.6
+Toyota,GR86,rebuilt,8,23475,17502,2024.0
+Toyota,"Grand Highlander",clean,95,44336,37730,2022.2
+Toyota,"Grand Highlander",rebuilt,7,39484,23435,2024.3
+Toyota,Highlander,clean,3090,14292,143621,2012.3
+Toyota,Highlander,rebuilt,89,17697,102755,2015.1
+Toyota,Highlander,salvage,42,12415,130724,2012.1
+Toyota,Highlander,lien,7,26856,91405,2019.7
+Toyota,"Land Cruiser",clean,387,23903,183904,2003.3
+Toyota,Mirai,clean,37,8634,42825,2020.4
+Toyota,MR2,clean,48,11064,113185,1998.9
+Toyota,Previa,clean,47,4743,202912,1994.3
+Toyota,Prius,clean,2851,8405,148540,2011.5
+Toyota,Prius,salvage,159,7472,136922,2012.1
+Toyota,Prius,rebuilt,114,10383,111238,2013.8
+Toyota,Prius,lien,6,16250,109255,2018.2
+Toyota,"Prius C",clean,258,9241,130654,2014.0
+Toyota,"Prius C",salvage,14,6842,124312,2014.8
+Toyota,"Prius C",rebuilt,12,9638,82655,2015.8
+Toyota,"Prius Prime",clean,86,20806,81493,2019.6
+Toyota,"Prius Prime",rebuilt,14,18755,57341,2021.4
+Toyota,"Prius Prime",salvage,6,18133,48825,2021.3
+Toyota,"Prius V",clean,329,9698,152201,2013.3
+Toyota,"Prius V",rebuilt,13,8139,136232,2013.8
+Toyota,"Prius V",salvage,12,6529,181661,2014.1
+Toyota,RAV4,clean,4268,15545,121496,2014.5
+Toyota,RAV4,rebuilt,211,17129,81244,2016.7
+Toyota,RAV4,salvage,105,15158,89287,2016.7
+Toyota,RAV4,lien,11,27509,69389,2019.2
+Toyota,"Scion FR-S",clean,113,6759,129674,2010.4
+Toyota,"Scion FR-S",salvage,14,7007,132825,2009.9
+Toyota,"Scion tC",clean,114,5348,150530,2009.4
+Toyota,"Scion tC",rebuilt,13,4569,151177,2009.4
+Toyota,"Scion tC",salvage,7,4400,136408,2010.0
+Toyota,"Scion xB",clean,144,4636,163403,2009.5
+Toyota,"Scion xB",rebuilt,13,5271,142829,2009.3
+Toyota,Sequoia,clean,841,16632,173735,2009.0
+Toyota,Sequoia,rebuilt,18,16771,145437,2010.5
+Toyota,Sequoia,salvage,10,6884,231666,2004.2
+Toyota,Sequoia,lien,5,62080,69800,2022.8
+Toyota,Sienna,clean,3248,16438,140431,2011.9
+Toyota,Sienna,rebuilt,125,16968,103814,2015.5
+Toyota,Sienna,salvage,55,13146,130118,2012.7
+Toyota,Sienna,lien,7,20214,113486,2013.9
+Toyota,Supra,clean,53,49354,46176,2016.3
+Toyota,T100,clean,91,7612,215428,1995.8
+Toyota,T100,rebuilt,7,4521,217943,1996.4
+Toyota,Tacoma,clean,5236,20599,134494,2012.4
+Toyota,Tacoma,rebuilt,305,23316,82933,2016.0
+Toyota,Tacoma,salvage,179,18813,125083,2014.9
+Toyota,Tacoma,lien,25,30435,84003,2017.8
+Toyota,Tercel,clean,15,2953,168248,1995.5
+Toyota,Tundra,clean,3232,20684,148132,2012.0
+Toyota,Tundra,rebuilt,117,23129,103177,2014.0
+Toyota,Tundra,salvage,78,17778,149625,2011.5
+Toyota,Tundra,lien,18,28383,124147,2017.8
+Toyota,Tundra,missing,6,2083,200333,2007.5
+Toyota,Venza,clean,338,12941,131300,2013.6
+Toyota,Venza,rebuilt,15,16169,90592,2017.0
+Toyota,Venza,salvage,7,8842,95832,2011.7
+Toyota,Yaris,clean,428,6847,147161,2011.7
+Toyota,Yaris,rebuilt,18,5501,131912,2012.8
+Toyota,Yaris,salvage,12,3952,170124,2010.4
+Triumph,Sprint,clean,84,34879,122418,2013.3
+Triumph,"Street Twin",clean,5,7696,277,2021.2
+Vespa,"Primavera / Sprint 50",clean,7,3386,270,2022.0
+Volkswagen,Arteon,clean,11,20115,55918,2021.0
+Volkswagen,Atlas,clean,404,19218,89770,2020.4
+Volkswagen,Atlas,rebuilt,39,18296,55892,2020.9
+Volkswagen,Atlas,salvage,11,16764,64239,2021.4
+Volkswagen,"Atlas Cross Sport",clean,61,23709,67218,2022.0
+Volkswagen,"Atlas Cross Sport",rebuilt,8,19530,58167,2021.8
+Volkswagen,Beetle,clean,540,7876,109716,2009.2
+Volkswagen,Beetle,rebuilt,26,8469,83227,2011.5
+Volkswagen,Beetle,salvage,12,8590,90618,2012.0
+Volkswagen,CC,clean,185,5200,123981,2012.5
+Volkswagen,CC,rebuilt,6,5050,134200,2014.2
+Volkswagen,CC,salvage,6,4500,121225,2013.3
+Volkswagen,e-Golf,clean,48,8770,65501,2016.1
+Volkswagen,EuroVan,clean,216,14716,174674,1999.9
+Volkswagen,EuroVan,salvage,9,9139,191400,2001.0
+Volkswagen,GLI,clean,8,7432,142296,2013.5
+Volkswagen,Golf,clean,432,8536,112881,2013.6
+Volkswagen,Golf,rebuilt,18,7394,113038,2013.3
+Volkswagen,Golf,salvage,8,7843,81413,2016.4
+Volkswagen,"Golf Alltrack",clean,54,12642,110694,2017.3
+Volkswagen,"Golf Alltrack",rebuilt,8,10837,83305,2017.5
+Volkswagen,"Golf GTI",clean,171,14572,97609,2016.0
+Volkswagen,"Golf GTI",rebuilt,5,14457,64887,2018.8
+Volkswagen,"Golf R",clean,90,25562,77923,2017.2
+Volkswagen,"Golf SportWagen",clean,103,9889,119601,2015.7
+Volkswagen,GTI,clean,306,8331,123303,2011.6
+Volkswagen,GTI,rebuilt,9,9521,89569,2013.6
+Volkswagen,Jetta,clean,2012,6738,126005,2013.4
+Volkswagen,Jetta,rebuilt,49,8061,98703,2016.2
+Volkswagen,Jetta,salvage,40,5366,127306,2012.5
+Volkswagen,Jetta,missing,5,2300,160200,2005.0
+Volkswagen,Jetta,lien,5,7586,141462,2015.6
+Volkswagen,"Jetta GLI",clean,73,10082,125025,2015.2
+Volkswagen,"Jetta SportWagen",clean,94,6916,133606,2012.4
+Volkswagen,"Jetta Wagon",clean,22,5749,138214,2010.0
+Volkswagen,Passat,clean,1148,6343,131605,2012.9
+Volkswagen,Passat,rebuilt,34,6314,114235,2014.8
+Volkswagen,Passat,salvage,23,4815,123468,2013.7
+Volkswagen,R32,clean,11,14054,148313,2006.9
+Volkswagen,Rabbit,clean,80,3598,141013,2007.7
+Volkswagen,Routan,clean,71,4422,145328,2010.8
+Volkswagen,Taos,clean,107,19330,49383,2023.3
+Volkswagen,Tiguan,clean,1290,10605,101003,2016.7
+Volkswagen,Tiguan,rebuilt,34,9232,89487,2017.3
+Volkswagen,Tiguan,salvage,16,9066,72029,2016.1
+Volkswagen,Tiguan,lien,5,23659,75820,2022.2
+Volkswagen,"Tiguan Limited",clean,24,8535,101674,2017.0
+Volkswagen,Touareg,clean,199,7674,135341,2010.9
+Volkswagen,Touareg,rebuilt,8,7784,134873,2012.8
+Volkswagen,Vanagon,clean,48,17025,170353,1990.4
+Volvo,C30,clean,84,7272,142436,2010.2
+Volvo,C40,clean,36,28012,27312,2023.0
+Volvo,C70,clean,135,6691,111803,2008.7
+Volvo,EX30,clean,8,45552,907,2025.8
+Volvo,"NEW VNL",clean,17,7113,149561,2010.8
+Volvo,S40,clean,7,3936,129427,2005.6
+Volvo,S60,clean,9,8069,89173,2012.1
+Volvo,"S60 Cross Country",clean,16,9639,152482,2014.9
+Volvo,V40,clean,5,2480,140271,2003.8
+Volvo,V50,clean,41,4120,152695,2008.2
+Volvo,V60,clean,105,16847,93515,2017.2
+Volvo,V70,clean,116,3387,167614,2003.5
+Volvo,V90,clean,11,21621,114575,2017.4
+Volvo,VHD,clean,6,59642,220498,2013.5
+Volvo,VNL,clean,31,21957,866938,2014.0
+Volvo,XC40,clean,148,28281,42888,2022.5
+Volvo,XC60,clean,783,16650,108290,2016.5
+Volvo,XC60,rebuilt,10,7599,117378,2014.2
+Volvo,XC60,salvage,9,5233,133510,2012.0
+Volvo,XC70,clean,280,6128,154982,2008.8
+Volvo,XC70,rebuilt,11,6976,115172,2009.5
+Volvo,XC70,salvage,5,4220,161924,2010.0
+Volvo,XC90,clean,942,17265,119984,2014.9
+Volvo,XC90,rebuilt,23,5304,144696,2010.7
+Volvo,XC90,salvage,12,6034,130059,2011.9
+Winnebago,One,clean,44,10719,128063,2008.5
+Yamaha,Venture,clean,6,3358,25858,2014.7
+Yamaha,"XV1600 Road Star",clean,13,4127,15703,2005.1
