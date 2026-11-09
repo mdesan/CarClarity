@@ -3,7 +3,7 @@
   "description": "Base Level Extension",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["activeTab", "scripting", "sidePanel", "contextMenus", "storage"],
+  "permissions": ["activeTab", "scripting", "sidePanel"],
   "host_permissions": [
     "*://*.craigslist.org/*",
     "https://vpic.nhtsa.dot.gov/*",
@@ -11,17 +11,17 @@
     "https://www.fueleconomy.gov/*"
   ],
   "background": {
-    "service_worker": "background/background.js"
+    "service_worker": "background.js"
   },
   "icons": {
-    "32": "assets/icons/car-blue.png",
-    "48": "assets/icons/car-blue-48.png",
-    "96": "assets/icons/car-blue-96.png",
-    "128": "assets/icons/car-blue-128.png"
+    "32": "car-blue.png",
+    "48": "car-blue-48.png",
+    "96": "car-blue-96.png",
+    "128": "car-blue-128.png"
   },
   "action": {
     "default_title": "Open CarClarity",
-    "default_popup": "popup/unsupported.html",
-    "default_icon": "assets/icons/car-gray-offline.png"
+    "default_popup": "unsupported.html",
+    "default_icon": "car-gray.png"
   }
 }

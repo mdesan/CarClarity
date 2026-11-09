@@ -1,6 +1,4 @@
 let latestRequest = 0;
-let displayedTabId;
-let displayedSearchUrl;
 let lastVin;
 let lastDecode;
 let activeListing = null;
@@ -13,8 +11,6 @@ const editVehicle = document.getElementById("editVehicle");
 const yearInput = document.getElementById("year");
 const makeInput = document.getElementById("make");
 const modelInput = document.getElementById("model");
-const trimInput = document.getElementById("trim");
-const vehicleModels = document.getElementById("vehicleModels");
 const mileageInput = document.getElementById("mileage");
 const verificationStatus = document.getElementById("verificationStatus");
 const sellerPost = document.getElementById("sellerPost");
@@ -54,11 +50,11 @@ function showListingJson(listing) {
     output.year = confirmed.year;
     output.make = confirmed.make;
     output.model = confirmed.model;
-    output.trim = confirmed.trim ?? null;
     output.mileageMiles = confirmed.mileageMiles;
     output.userVerified = true;
-    if (identityChanged || output.trim !== listing.trim) {
-      output.vehicleTitle = [output.year, output.make, output.model, output.trim].filter(Boolean).join(" ");
+    if (identityChanged) {
+      output.trim = null;
+      output.vehicleTitle = [output.year, output.make, output.model].join(" ");
     }
   }
   const matchingVin = activeVinData && activeVinData.year === output.year &&
@@ -76,10 +72,8 @@ function showListingJson(listing) {
     // A VIN that decodes to a different car cannot supply this report's specs.
     const researchInput = activeVinData && !matchingVin ? { ...output, vin: null } : output;
     showVehicleResearch(researchInput, matchingVin ? activeVinData : null);
-    showDealBenchmark(output);
   } else {
     resetResearch();
-    resetDealBenchmark();
   }
   if (post) {
     output.sellerIssues = post.issuesVerified
@@ -122,20 +116,13 @@ function vehicleConfirmedMessage(vehicle) {
 
 function showVehicleMode(editing, confirmed = false) {
   document.getElementById("vehiclePreview").hidden = editing;
+  document.getElementById("previewYear").textContent = yearInput.value || "Unavailable";
+  document.getElementById("previewMake").textContent = makeInput.value || "Unavailable";
+  document.getElementById("previewModel").textContent = modelInput.value || "Unavailable";
   const miles = parseMileage(mileageInput.value);
-  const preview = {
-    previewYear: yearInput.value,
-    previewMake: makeInput.value,
-    previewModel: modelInput.value,
-    previewTrim: trimInput.value,
-    previewMileage: Number.isFinite(miles) ? miles.toLocaleString("en-US") + " mi" : mileageInput.value.trim()
-  };
-  for (const [id, value] of Object.entries(preview)) {
-    const detail = document.getElementById(id);
-    detail.textContent = value;
-    detail.hidden = !value;
-    detail.previousElementSibling.hidden = !value;
-  }
+  document.getElementById("previewMileage").textContent = miles === null
+    ? "Not listed"
+    : Number.isNaN(miles) ? mileageInput.value.trim() : miles.toLocaleString("en-US") + " mi";
   vehicleFields.hidden = !editing;
   vehicleFields.disabled = !editing;
   confirmVehicle.hidden = confirmed;
@@ -152,8 +139,6 @@ vehicleForm.addEventListener("submit", async (event) => {
   const year = Number(yearInput.value);
   const make = makeInput.value.trim();
   const model = modelInput.value.trim();
-  const trimText = trimInput.value.trim();
-  const trim = !trimText || /^n\/a$/i.test(trimText) ? null : trimText;
   if (!/^\d{4}$/.test(yearInput.value.trim()) || year < 1984 || year > new Date().getFullYear() + 1) {
     setStatus(verificationStatus, "Enter a four-digit model year from 1984 through next year.", true);
     return;
@@ -182,9 +167,8 @@ vehicleForm.addEventListener("submit", async (event) => {
     }
     makeInput.value = result.make;
     modelInput.value = result.model;
-    trimInput.value = trim || "";
     mileageInput.value = mileageMiles === null ? "" : String(mileageMiles);
-    const confirmed = { ...result, trim, mileageMiles };
+    const confirmed = { ...result, mileageMiles };
     saveConfirmation("vehicle", confirmed);
     showVehicleMode(false, true);
     setStatus(verificationStatus, vehicleConfirmedMessage(confirmed));
@@ -205,12 +189,9 @@ editVehicle.addEventListener("click", () => {
 
 async function showListing() {
   const request = ++latestRequest;
-  displayedSearchUrl = null;
   activeListing = null;
   activeVinData = null;
-  vehicleModels.replaceChildren();
   resetResearch();
-  resetDealBenchmark();
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
@@ -219,7 +200,6 @@ async function showListing() {
   setStatus(verificationStatus, "");
   const urlCheck = document.getElementById("urlCheck");
   const description = document.getElementById("description");
-  const previewLink = document.getElementById("previewLink");
   const details = document.getElementById("details");
   const scrapedDetails = document.getElementById("scrapedDetails");
   const formatted = document.getElementById("formatted");
@@ -228,8 +208,6 @@ async function showListing() {
   formatted.hidden = true;
   listingJson.textContent = "";
   description.textContent = "";
-  previewLink.hidden = true;
-  showPreviewTimer(false);
   urlCheck.textContent = "Checking current tab...";
 
   let tab;
@@ -237,7 +215,6 @@ async function showListing() {
   try {
     [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (request !== latestRequest) return;
-    displayedTabId = tab?.id;
     if (!tab?.url) {
       urlCheck.textContent = "Open a Craigslist Cars & Trucks listing.";
       return;
@@ -251,47 +228,27 @@ async function showListing() {
   }
 
   const isCraigslist = url.hostname === "craigslist.org" || url.hostname.endsWith(".craigslist.org");
-  const isSearch = url.pathname.includes("/search/");
   const isCarListing = /\/(cto|ctd)\/d\/.+\/\d+\.html$/.test(url.pathname);
   const isViewListing = /^\/view\/d\/[^/]+\/[\w-]+\/?$/.test(url.pathname);
   if (!isCraigslist) {
     description.textContent = "CarClarity currently supports Craigslist only.";
     return;
   }
-  if (!isSearch && !isCarListing && !isViewListing) {
+  if (url.pathname.includes("/search/")) {
+    description.textContent = "Open a Cars & Trucks listing from the search results.";
+    return;
+  }
+  if (!isCarListing && !isViewListing) {
     description.textContent = "Open a Craigslist Cars & Trucks listing.";
     return;
   }
 
   try {
-    let listing;
-    if (isSearch) {
-      displayedSearchUrl = tab.url;
-      showPreviewTimer(true);
-      const selection = await getPreviewSelection(tab);
-      if (request !== latestRequest) return;
-      if (!selection) {
-        description.textContent = "Right-click a car listing and choose Analyze with CarClarity, or open the listing normally.";
-        return;
-      }
-      previewLink.href = selection.listingUrl;
-      previewLink.hidden = false;
-      description.textContent = "Reading selected listing…";
-      const preview = await readPreviewListing(tab.id, selection);
-      if (request !== latestRequest) return;
-      if (preview.error) {
-        description.textContent = preview.error;
-        return;
-      }
-      listing = preview.listing;
-    } else {
-      const [result] = await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        func: readCraigslistListing,
-        args: [tab.id]
-      });
-      listing = result.result;
-    }
+    const [{ result: listing }] = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: readCraigslistListing,
+      args: [tab.id]
+    });
     if (request !== latestRequest) return;
 
     if (!listing) {
@@ -336,35 +293,14 @@ async function showListing() {
     const identitySource = document.getElementById("identitySource");
     if (decoded) {
       identitySource.textContent = "Vehicle identity from NHTSA VIN decode.";
+    } else if (vin) {
+      identitySource.textContent = "VIN could not be validated. Vehicle identity from Craigslist.";
     } else {
-      identitySource.textContent = "Check the vehicle details from Craigslist.";
-      if (listingData.year && listingData.make) {
-        description.textContent = "Checking the NHTSA model list…";
-        try {
-          const models = await getVehicleModels(listingData.year, listingData.make);
-          if (request !== latestRequest) return;
-          for (const name of new Set(models.map((item) => item.Model_Name))) {
-            const option = document.createElement("option");
-            option.value = name;
-            vehicleModels.append(option);
-          }
-          const match = matchCatalogModel(listing.listedModel || "", models);
-          if (match) {
-            Object.assign(listingData, match, { vehicleTitle: catalogVehicleTitle(listingData, match) });
-            identitySource.textContent = "Craigslist vehicle details matched to the NHTSA model list.";
-          } else {
-            identitySource.textContent = "No clear NHTSA model match. Choose a model under Edit vehicle.";
-          }
-        } catch {
-          if (request !== latestRequest) return;
-          identitySource.textContent = "NHTSA’s model list is unavailable. Enter the model under Edit vehicle.";
-        }
-      }
+      identitySource.textContent = "No VIN listed. Vehicle identity from Craigslist.";
     }
     description.textContent = "";
     activeListing = listingData;
     const saved = getConfirmations(listingData);
-    if (isSearch) saved.sourceTabUrl = tab.url;
     const postDescription = listingData.sellerDescription || "";
     if (saved.post?.description !== postDescription) {
       saved.post = { description: postDescription, issues: findSellerIssues(postDescription) };
@@ -375,7 +311,6 @@ async function showListing() {
     yearInput.value = String(fields.year ?? "");
     makeInput.value = fields.make || "";
     modelInput.value = fields.model || "";
-    trimInput.value = fields.trim || "";
     mileageInput.value = fields.mileageMiles == null ? "" : String(fields.mileageMiles);
     document.getElementById("previewPostTitle").textContent = listingData.postTitle || "No title found.";
     document.getElementById("previewPostDescription").textContent = postDescription || "No description found.";
@@ -394,17 +329,11 @@ async function showListing() {
 
 chrome.tabs.onActivated.addListener(showListing);
 chrome.tabs.onUpdated.addListener((tabId, change, tab) => {
-  if (change.url) clearPreviewAfterLeaving(tabId, change.url).catch(console.error);
   const saved = confirmedByTab.get(tabId);
-  const sameListingPage = saved?.sourceTabUrl
-    ? samePreviewSearch(saved.sourceTabUrl, tab.url)
-    : saved?.listingUrl === tab.url;
-  if (saved && (change.url || change.status) && !sameListingPage) {
+  if (saved && (change.url || change.status) && saved.listingUrl !== tab.url) {
     confirmedByTab.delete(tabId);
   }
-  if (tab.active && tabId === displayedTabId && (change.url || change.status) &&
-      !samePreviewSearch(displayedSearchUrl, tab.url)) showListing();
+  if (tab.active && (change.url || change.status)) showListing();
 });
 chrome.tabs.onRemoved.addListener((tabId) => confirmedByTab.delete(tabId));
-watchPreviewSelections(showListing);
 showListing();
