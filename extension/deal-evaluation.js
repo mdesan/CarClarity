@@ -1,16 +1,14 @@
 /** 
  * Deal Valuation & Rating Module for CarClarity (F4)
- * 
  * Compares an asking price from seller against baseline market pricing data 
  * to determine if a listing is a good, fair, or overpriced deal.
  * Evaluates the listing deal rating based on asking price and market range
- * 
- * @param {number} askingPrice - The listing asking price
- * @param {number} marketAvgPrice - Average market price for the model year
- * @param {number} mileage - Vehicle mileage (can adjustment)
- * @returns {Object} Deal analysis result with rating, bounds, and summary details
+ * @param {number} askingPrice 
+ * @param {number} marketAvgPrice
+ * @param {number} mileage
+ * @returns {Object} 
  */
-export function calculateDealRating(askingPrice, marketAvgPrice, mileage = null) {
+function calculateDealRating(askingPrice, marketAvgPrice, mileage = null) {
   if (!askingPrice || !marketAvgPrice || askingPrice <= 0 || marketAvgPrice <= 0) {
     return {
       rating: "Unavailable",
@@ -23,7 +21,7 @@ export function calculateDealRating(askingPrice, marketAvgPrice, mileage = null)
   const lowerBound = Math.round(marketAvgPrice * 0.90);
   const upperBound = Math.round(marketAvgPrice * 1.10);
   let rating = "Fair Deal";
-  let color = "yellow"; // Green = Good, Yellow = Fair, Red = Overpriced
+  let color = "yellow";
   let explanation = "";
   if (askingPrice < lowerBound) {
     rating = "Good Deal";
