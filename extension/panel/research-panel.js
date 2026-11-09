@@ -10,7 +10,6 @@ const researchJsonPreview = document.getElementById("researchJson");
 const researchOverview = document.getElementById("researchOverview");
 const researchComplaintsSection = document.getElementById("researchComplaintsSection");
 const researchRecallsSection = document.getElementById("researchRecallsSection");
-const researchDiagnostics = document.getElementById("researchDiagnostics");
 const vinRecallCheck = document.getElementById("vinRecallCheck");
 
 function resetResearch() {
@@ -22,7 +21,8 @@ function resetResearch() {
   researchRecallsSection.hidden = true;
   researchSourcesDetails.hidden = true;
   researchJsonPreview.textContent = "";
-  for (const section of [researchSpecs, researchComplaints, researchRecalls, researchSources, researchDiagnostics, vinRecallCheck]) {
+  showUnavailableElements("Vehicle research");
+  for (const section of [researchSpecs, researchComplaints, researchRecalls, researchSources, vinRecallCheck]) {
     section.replaceChildren();
   }
 }
@@ -61,10 +61,6 @@ function fuelRatingText(city, highway, combined, unit) {
 }
 
 function renderFuelEconomy(data) {
-  if (data.fuelEconomyStatus !== "available") {
-    researchText(researchDiagnostics, "li", data.fuelEconomyNote || "Fuel economy is unavailable.");
-    if (!data.fuelEconomyOptions?.length) return;
-  }
   researchText(researchSpecs, "dt", "Fuel economy");
   const row = researchText(researchSpecs, "dd", "");
   if (data.fuelEconomyStatus === "available") {
@@ -104,7 +100,7 @@ function renderFuelEconomy(data) {
 
 function renderResearch(data, sellerSpecs) {
   researchStatus.textContent = "";
-  if (data.status === "unavailable") researchText(researchDiagnostics, "li", "External research unavailable.");
+  const missing = [];
   const fields = {
     bodyStyle: "Body style", engine: "Engine", transmission: "Transmission",
     drivetrain: "Drivetrain", fuelType: "Fuel type"
@@ -115,20 +111,25 @@ function renderResearch(data, sellerSpecs) {
     const source = data[field] ? data.specSources[field] : sellerValue ? "Seller-reported" : "";
     const value = data[field] || sellerValue;
     if (!value) {
-      researchText(researchDiagnostics, "li", name + " is unavailable.");
+      missing.push(name + " was not returned by research or listed by the seller.");
       continue;
     }
     researchText(researchSpecs, "dt", name);
     const row = researchText(researchSpecs, "dd", value);
     if (source) researchText(row, "small", source);
   }
-  renderFuelEconomy(data);
+  if (data.fuelEconomyStatus === "available" || data.fuelEconomyOptions?.length) {
+    renderFuelEconomy(data);
+  } else {
+    missing.push("Fuel economy — " + (data.fuelEconomyNote || "No rating was returned."));
+  }
   researchOverview.hidden = !researchSpecs.childElementCount;
+  if (researchOverview.hidden) missing.push("Vehicle overview — no specs to display.");
   researchComplaintsSection.hidden = data.complaintStatus !== "available";
   researchRecallsSection.hidden = data.recallStatus !== "available";
 
   if (data.complaintStatus !== "available") {
-    researchText(researchDiagnostics, "li", "NHTSA complaint data is unavailable for this model.");
+    missing.push("Owner complaints for this model — NHTSA data unavailable.");
   } else if (!data.complaintCount) {
     researchText(researchComplaints, "p", "NHTSA returned no complaints for the model name checked.");
   } else {
@@ -142,7 +143,7 @@ function renderResearch(data, sellerSpecs) {
   }
 
   if (data.recallStatus !== "available") {
-    researchText(researchDiagnostics, "li", "NHTSA model recall data is unavailable.");
+    missing.push("Model recall campaigns — NHTSA data unavailable.");
   } else if (!data.recalls.length) {
     researchText(researchRecalls, "p", "NHTSA returned no campaigns for the model name checked.");
   } else {
@@ -160,11 +161,14 @@ function renderResearch(data, sellerSpecs) {
     researchLink(vinRecallCheck, "Check this listing’s VIN for unrepaired recalls on NHTSA", data.vinRecallUrl);
   } else {
     vinRecallCheck.textContent = "Ask for the VIN to check for unrepaired recalls.";
+    missing.push("VIN recall lookup link — no matching VIN was available.");
   }
   for (const source of data.sources) {
     researchLink(researchText(researchSources, "li", ""), source.name, source.url);
   }
   researchSourcesDetails.hidden = !researchSources.childElementCount;
+  if (researchSourcesDetails.hidden) missing.push("Research sources — no source links returned.");
+  showUnavailableElements("Vehicle research", missing);
   researchJsonPreview.textContent = JSON.stringify(data, null, 2);
   researchDebug.hidden = false;
 }
@@ -185,7 +189,6 @@ async function showVehicleResearch(vehicle, vinData) {
   } catch (error) {
     if (activeResearch !== request) return;
     resetResearch();
-    researchText(researchDiagnostics, "li", "Vehicle research failed: " + error.message);
-    researchDebug.hidden = false;
+    showUnavailableElements("Vehicle research", ["Vehicle overview, owner complaints, and model recalls — lookup failed. " + error.message]);
   }
 }
