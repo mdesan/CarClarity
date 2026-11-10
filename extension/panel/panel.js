@@ -21,6 +21,16 @@ const sellerPost = document.getElementById("sellerPost");
 const listingJson = document.getElementById("listingJson");
 const reportSections = document.getElementById("reportSections");
 const reportPending = document.getElementById("reportPending");
+const clarityReportStatus = document.getElementById("clarityReportStatus");
+const clarityChecklist = document.getElementById("clarityChecklist");
+const generateReport = document.getElementById("generateReport");
+generateReport.addEventListener("click", () => {
+  clarityChecklist.hidden = true;
+  clarityReportStatus.classList.remove("confirmation-complete");
+  clarityReportStatus.textContent = "Report generation is coming soon.";
+});
+const clarityVehicleStatus = document.getElementById("clarityVehicleStatus");
+const clarityIssuesStatus = document.getElementById("clarityIssuesStatus");
 const issueReview = setupIssueReview(
   () => activeListing && getConfirmations(activeListing),
   saveConfirmation,
@@ -45,6 +55,18 @@ function showListingJson(listing) {
   // The report sections are built from the confirmed vehicle, so they wait for confirmation.
   reportSections.hidden = !confirmed;
   reportPending.hidden = Boolean(confirmed);
+  const issuesConfirmed = Boolean(post?.issuesVerified);
+  clarityVehicleStatus.textContent = confirmed ? "✓" : "(Pending)";
+  clarityIssuesStatus.textContent = issuesConfirmed ? "✓" : "(Pending)";
+  const reportReady = Boolean(confirmed && issuesConfirmed);
+  if (!reportReady) clarityChecklist.hidden = false;
+  generateReport.hidden = !reportReady;
+  clarityVehicleStatus.classList.toggle("confirmation-complete", Boolean(confirmed));
+  clarityIssuesStatus.classList.toggle("confirmation-complete", issuesConfirmed);
+  clarityReportStatus.classList.toggle("confirmation-complete", reportReady);
+  clarityReportStatus.textContent = reportReady
+    ? "Ready for your report."
+    : "Confirm both to continue.";
   showSimilarListings(confirmed);
   let identityChanged = false;
   if (confirmed) {
@@ -78,7 +100,7 @@ function showListingJson(listing) {
     showVehicleResearch(researchInput, matchingVin ? activeVinData : null);
     showDealBenchmark(output);
     showListingIssues(output);
-    showRepairCosts(output, userIssues, Boolean(post?.issuesVerified));
+    showRepairCosts(output, userIssues, issuesConfirmed);
   } else {
     resetResearch();
     resetDealBenchmark();
@@ -90,7 +112,7 @@ function showListingJson(listing) {
       ? post.issues.map((issue) => ({ ...issue, reviewed: true, status: "reviewed" }))
       : post.issues;
   }
-  output.issuesVerified = Boolean(post?.issuesVerified);
+  output.issuesVerified = issuesConfirmed;
   output.userAddedIssues = userIssues;
   issueReview.show(confirmed ? post : null, userIssues);
   listingJson.textContent = JSON.stringify(output, null, 2);
@@ -111,7 +133,7 @@ function parseMileage(value) {
 }
 
 function vehicleConfirmedMessage(vehicle) {
-  const message = "Vehicle confirmed with NHTSA.";
+  const message = "Vehicle found in the NHTSA database.";
   const miles = vehicle.mileageMiles;
   if (miles === null || miles === undefined) return message;
   const formatted = miles.toLocaleString("en-US") + (miles === 1 ? " mile" : " miles");
@@ -224,6 +246,7 @@ async function showListing() {
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
+  clarityChecklist.hidden = false;
   sellerPost.hidden = true;
   issueReview.reset();
   setStatus(verificationStatus, "");
@@ -374,6 +397,7 @@ async function showListing() {
     }
     description.textContent = "";
     activeListing = listingData;
+    setLookupStatus("listing", isSearch ? "Right-click preview" : "Open listing");
     const saved = getConfirmations(listingData);
     if (isSearch) saved.sourceTabUrl = tab.url;
     const postDescription = listingData.sellerDescription || "";
