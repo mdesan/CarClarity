@@ -98,6 +98,7 @@
       </section>
       <section class="review-card">
         <h2>Repair costs</h2>
+        <p id="repairCostsHint" hidden>Add anything you noticed, then click Confirm issues to see repair estimates.</p>
         <section id="sellerIssues" hidden>
           <h3>Your observations</h3>
           <ul id="userIssueList"></ul>
@@ -125,6 +126,13 @@
           <button id="confirmIssues" type="button">Confirm issues</button>
           <button id="editIssues" type="button" hidden>Edit issues</button>
           <p id="userIssueStatus" role="status"></p>
+        </section>
+        <section id="repairCosts" hidden>
+          <h3>Estimated repair costs</h3>
+          <p id="repairCostsStatus" role="status"></p>
+          <ul id="repairCostsList" class="issue-cards"></ul>
+          <p id="repairCostsTotal" class="repair-total" hidden></p>
+          <p id="repairCostsNote" hidden>Rough AI estimates, not quotes. Prices vary by shop and area.</p>
         </section>
       </section>
       <section id="dealAnalysis" class="review-card" hidden>
@@ -210,6 +218,7 @@
     <script src="research-panel.js"></script>
     <script src="deal-benchmark.js"></script>
     <script src="listing-issues.js"></script>
+    <script src="repair-costs.js"></script>
     <script src="right-click-panel.js"></script>
     <script src="panel.js"></script>
   </body>

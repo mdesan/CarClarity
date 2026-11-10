@@ -78,10 +78,12 @@ function showListingJson(listing) {
     showVehicleResearch(researchInput, matchingVin ? activeVinData : null);
     showDealBenchmark(output);
     showListingIssues(output);
+    showRepairCosts(output, userIssues, Boolean(post?.issuesVerified));
   } else {
     resetResearch();
     resetDealBenchmark();
     resetListingIssues();
+    resetRepairCosts();
   }
   if (post) {
     output.sellerIssues = post.issuesVerified
@@ -218,6 +220,7 @@ async function showListing() {
   resetResearch();
   resetDealBenchmark();
   resetListingIssues();
+  resetRepairCosts();
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;

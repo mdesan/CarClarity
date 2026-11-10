@@ -73,3 +73,45 @@ export const RESPONSE_SCHEMA = {
   },
   required: ["issues"]
 };
+
+// Instructions for the repair cost estimate, sent after the buyer confirms the issues.
+export const REPAIR_PROMPT = `You estimate repair costs for first-time used-car buyers who know nothing about cars.
+You get a car and a list of problems. Each problem has a "name" and sometimes a "detail" with more information.
+
+Rules:
+1. Return exactly one estimate for each problem, in the same order, with "name" copied exactly.
+2. "lowUsd" and "highUsd" are whole US dollars for parts and labor at a typical independent repair shop in the US,
+   for this car's year, make, and model. Use realistic typical prices, not dealer prices and not the worst case.
+3. If the cost depends a lot on the cause, give a range that covers the likely causes and say so in "note".
+   Example: "transmission slips" can be a fluid change or a rebuild, so the range is wide.
+4. If a problem is too vague to price ("needs some work", "other issue"), set "lowUsd" and "highUsd" to null and use
+   "note" to say what to ask a mechanic.
+   Set "isRepair" to false, and both prices to null, for anything a repair can't fix, like "sold as is",
+   "no warranty", or a title problem. Set it to true for everything else, including vague problems.
+5. Price the usual fix for cosmetic problems, like dent repair for a small ding, not a full repaint.
+6. "note" is one short sentence in plain, everyday words: what the price covers or what makes it vary.
+7. Every car part named in "note" needs a short plain explanation in parentheses right after it. Write "a leaking seal
+   or the compressor (the pump that runs the A/C)", not "a seal or the compressor or evaporator core". Name at most
+   two parts so the sentence stays short.`;
+
+// Shape of the JSON Gemini must return for repair costs.
+export const REPAIR_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    estimates: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          name: { type: "STRING", description: "The problem's name, copied exactly" },
+          isRepair: { type: "BOOLEAN", description: "False for things a repair can't fix, like 'sold as is'" },
+          lowUsd: { type: "INTEGER", nullable: true, description: "Low end of the cost in US dollars" },
+          highUsd: { type: "INTEGER", nullable: true, description: "High end of the cost in US dollars" },
+          note: { type: "STRING", description: "One plain sentence about what the price covers or why it varies" }
+        },
+        required: ["name", "isRepair", "lowUsd", "highUsd", "note"]
+      }
+    }
+  },
+  required: ["estimates"]
+};
