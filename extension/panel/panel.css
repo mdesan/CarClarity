@@ -203,7 +203,16 @@ body {
   text-align: center;
 }
 
+#dealDetails {
+  margin-top: 12px;
+}
+
+#dealDetails summary {
+  cursor: pointer;
+}
+
 #dealBenchmarkRows {
+  margin-top: 8px;
   grid-template-columns: minmax(0, 1fr) max-content;
   gap: 6px 12px;
 }
