@@ -11,6 +11,9 @@ const dealNeedle = document.getElementById("dealNeedle");
 const dealGaugePrice = document.getElementById("dealGaugePrice");
 const dealConfidence = document.getElementById("dealConfidence");
 const dealRange = document.getElementById("dealRange");
+const dealTakeaway = document.getElementById("dealTakeaway");
+const dealDetails = document.getElementById("dealDetails");
+const dealWarnings = document.getElementById("dealWarnings");
 let marketIndexRequest;
 let dealRequest = 0;
 let activeDealKey = null;
@@ -21,6 +24,7 @@ showDealRating.addEventListener("click", () => {
 
 function setDealRatingVisible(visible) {
   dealRating.hidden = !visible;
+  dealRange.hidden = !visible;
   showDealRating.textContent = visible ? "Hide rating" : "Show me anyway";
   showDealRating.setAttribute("aria-expanded", String(visible));
 }
@@ -62,13 +66,22 @@ function renderDealRating(result, usd, lowConfidence) {
   const { min, max } = estimatedRange;
   const edges = [min - comparisonPrice * 0.1, min, max, highPriceCutoff, highPriceCutoff + comparisonPrice * 0.1];
   const zone = ["Below band", "Within band", "Above band", "Well above band"].indexOf(rating);
+  const label = [lowConfidence ? "Low price · Worth a closer look" : "Potential good deal",
+    "Fair deal", "A little pricey", "Overpriced"][zone];
+  const takeaway = [
+    "Priced lower than similar cars. Check its condition before buying.",
+    "Priced about the same as similar cars.",
+    "Priced a bit higher than similar cars.",
+    "Priced much higher than similar cars."
+  ][zone];
   const width = edges[zone + 1] - edges[zone];
   const progress = width > 0 ? (askingPrice - edges[zone]) / width : 0.5;
   const angle = -90 + 45 * (zone + Math.max(0.02, Math.min(0.98, progress)));
   dealNeedle.setAttribute("transform", "rotate(" + angle + " 110 104)");
   dealGaugePrice.textContent = usd.format(askingPrice);
-  dealScale.setAttribute("aria-label", dealGaugePrice.textContent + " asking price. " + rating + ".");
-  dealRatingLabel.textContent = rating;
+  dealScale.setAttribute("aria-label", dealGaugePrice.textContent + " asking price. " + label + ".");
+  dealRatingLabel.textContent = label;
+  dealTakeaway.textContent = takeaway;
   dealConfidence.hidden = !lowConfidence;
   dealRange.textContent = explanation + " Comparison band: " +
     usd.format(estimatedRange.min) + "–" + usd.format(estimatedRange.max) +
@@ -96,6 +109,10 @@ function resetDealBenchmark() {
   activeDealKey = null;
   showUnavailableElements("Deal analysis");
   dealBenchmark.hidden = true;
+  dealDetails.hidden = true;
+  dealDetails.open = false;
+  dealWarnings.hidden = true;
+  dealWarnings.textContent = "";
   setDealRatingVisible(false);
   showDealRating.hidden = true;
   forcarDebug.hidden = true;
@@ -141,6 +158,7 @@ async function showDealBenchmark(vehicle) {
     }
     const hasAsk = Number.isFinite(ask) && ask > 0;
     if (hasAsk) addBenchmarkRow("Asking price", usd.format(ask));
+    dealDetails.hidden = false;
     if (match.year !== vehicle.year) addBenchmarkRow("Benchmark model year", String(match.year));
     addBenchmarkRow("ForCar average ask", usd.format(match.averagePriceUsd));
     if (match.listingCount != null) addBenchmarkRow("Listings in sample", match.listingCount.toLocaleString("en-US"));
@@ -169,7 +187,9 @@ async function showDealBenchmark(vehicle) {
       if (rating.mileageGap === null) warnings.push("mileage comparison unavailable");
       else if (rating.substantialGap) warnings.push("mileage differs substantially from the sample average");
       renderDealRating(rating, usd, warnings.length > 0);
-      dealBenchmarkStatus.textContent = warnings.length ? "Insufficient data for a confident rating: " + warnings.join("; ") + "." : "";
+      dealBenchmarkStatus.textContent = warnings.length ? "This estimate is less certain." : "";
+      dealWarnings.hidden = !warnings.length;
+      dealWarnings.textContent = warnings.length ? "Why confidence is low: " + warnings.join("; ") + "." : "";
     } else {
       missing.push("Deal rating — " + unavailable);
       dealBenchmarkStatus.textContent = "";
