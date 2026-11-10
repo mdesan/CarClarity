@@ -1,7 +1,7 @@
 {
   "name": "CarClarity",
   "description": "Car shopping with clarity.",
-  "version": "v1.0 Beta",
+  "version": "1.0",
   "manifest_version": 3,
   "permissions": ["activeTab", "scripting", "sidePanel", "contextMenus", "storage"],
   "host_permissions": [
