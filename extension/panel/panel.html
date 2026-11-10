@@ -45,12 +45,14 @@
         <label for="mileage">Mileage</label>
         <input id="mileage" inputmode="numeric" placeholder="Optional – e.g. 85,000">
       </fieldset>
-      <button id="confirmVehicle" type="submit">Confirm vehicle</button>
-      <button id="editVehicle" type="button">Edit vehicle</button>
+      <div class="panel-actions">
+        <button id="confirmVehicle" class="confirm-action" type="submit">Confirm vehicle</button>
+        <button id="editVehicle" type="button">Edit vehicle</button>
+      </div>
       <p id="verificationStatus" role="status"></p>
     </form>
 
-    <p id="reportPending" hidden>Your CarClarity report will be available once vehicle details are confirmed.</p>
+    <p id="reportPending" hidden>Confirm vehicle details to continue.</p>
 
     <!-- Report sections. Shown only after the buyer confirms the vehicle (panel.js toggles #reportSections). -->
     <div id="reportSections" hidden>
@@ -121,9 +123,11 @@
               <option value="air-conditioning">Air conditioning trouble</option>
               <option value="other">Other issue</option>
             </select>
-            <button type="submit">Add issue</button>
+            <div class="panel-actions">
+              <button id="confirmIssues" class="confirm-action" type="button">Confirm issues</button>
+              <button type="submit">Add issue</button>
+            </div>
           </form>
-          <button id="confirmIssues" type="button">Confirm issues</button>
           <button id="editIssues" type="button" hidden>Edit issues</button>
           <p id="userIssueStatus" role="status"></p>
         </section>
@@ -149,14 +153,16 @@
               <line id="dealNeedle" x1="110" y1="104" x2="110" y2="28"></line>
               <circle cx="110" cy="104" r="5"></circle>
             </svg>
-            <p class="deal-gauge-caption"><strong id="dealRatingLabel"></strong> · <span id="dealGaugePrice"></span></p>
+            <p class="deal-gauge-caption"><strong id="dealRatingLabel"></strong> · Asking price <span id="dealGaugePrice"></span></p>
+            <p id="dealRange" class="deal-gauge-caption"></p>
             <p id="dealConfidence" class="deal-gauge-caption" hidden>Low confidence</p>
             <p id="dealTakeaway" class="deal-gauge-caption"></p>
+            <p id="dealCaution" class="deal-gauge-caption" hidden>Check the car’s condition and compare a few listings before making an offer.</p>
           </div>
           <details id="dealDetails" hidden>
             <summary>How we compared prices</summary>
             <p id="dealWarnings" hidden></p>
-            <p id="dealRange" hidden></p>
+            <p id="dealMileageAdjustment" hidden></p>
             <dl id="dealBenchmarkRows" class="vehicle-preview"></dl>
             <p>Source: <a href="https://forcar.org/open-data/" target="_blank" rel="noopener noreferrer">ForCar Open Data</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> · Adapted for CarClarity</p>
           </details>
@@ -164,7 +170,12 @@
       </section>
       <section class="review-card">
         <h2>Clarity report</h2>
-        <p id="clarityReportHint" hidden>Confirm your issues in Repair costs to see your Clarity report.</p>
+        <p id="clarityReportStatus" role="status"></p>
+        <ul id="clarityChecklist">
+          <li>Vehicle details <strong id="clarityVehicleStatus"></strong></li>
+          <li>Repair Costs (Observations) <strong id="clarityIssuesStatus"></strong></li>
+        </ul>
+        <button id="generateReport" class="confirm-action" type="button" hidden>Generate report</button>
         <p id="clarityReportText" role="status"></p>
       </section>
       <section class="review-card">
@@ -176,6 +187,16 @@
 
     <a id="previewLink" target="_blank" rel="noopener noreferrer" hidden>Open original listing</a>
     <div id="debugSections" hidden>
+    <details>
+      <summary>Lookup status</summary>
+      <ul>
+        <li>Listing: <span id="lookup-listing"></span></li>
+        <li>NHTSA safety data: <span id="lookup-nhtsa"></span></li>
+        <li>FuelEconomy.gov: <span id="lookup-fuel"></span></li>
+        <li>ForCar: <span id="lookup-forcar"></span></li>
+        <li>Gemini listing analysis: <span id="lookup-gemini"></span></li>
+      </ul>
+    </details>
     <details>
       <summary>Unavailable panel elements</summary>
       <p id="noUnavailableElements">No unavailable panel elements to report.</p>
@@ -217,6 +238,7 @@
     <script src="similar-listings.js"></script>
     <script src="../research/vehicle-research.js"></script>
     <script src="../deal-evaluation.js"></script>
+    <script src="fuel-economy-panel.js"></script>
     <script src="research-panel.js"></script>
     <script src="deal-benchmark.js"></script>
     <script src="listing-issues.js"></script>

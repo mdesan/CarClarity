@@ -21,6 +21,14 @@ const sellerPost = document.getElementById("sellerPost");
 const listingJson = document.getElementById("listingJson");
 const reportSections = document.getElementById("reportSections");
 const reportPending = document.getElementById("reportPending");
+const clarityReportStatus = document.getElementById("clarityReportStatus");
+const clarityChecklist = document.getElementById("clarityChecklist");
+const generateReport = document.getElementById("generateReport");
+generateReport.addEventListener("click", () => {
+  if (activeListing) showListingJson(activeListing, true);
+});
+const clarityVehicleStatus = document.getElementById("clarityVehicleStatus");
+const clarityIssuesStatus = document.getElementById("clarityIssuesStatus");
 const issueReview = setupIssueReview(
   () => activeListing && getConfirmations(activeListing),
   saveConfirmation,
@@ -39,12 +47,29 @@ function saveConfirmation(section, value) {
   showListingJson(activeListing);
 }
 
-function showListingJson(listing) {
+function showListingJson(listing, generate = false) {
   const output = { ...listing };
   const { vehicle: confirmed, post, userIssues = [] } = getConfirmations(listing);
   // The report sections are built from the confirmed vehicle, so they wait for confirmation.
   reportSections.hidden = !confirmed;
   reportPending.hidden = Boolean(confirmed);
+  const issuesConfirmed = Boolean(post?.issuesVerified);
+  clarityVehicleStatus.textContent = confirmed ? "✓" : "(Pending)";
+  clarityIssuesStatus.textContent = issuesConfirmed ? "✓" : "(Pending)";
+  const reportReady = Boolean(confirmed && issuesConfirmed);
+  if (!reportReady) {
+    clarityChecklist.hidden = false;
+    resetClarityReport();
+  } else if (generate) {
+    clarityChecklist.hidden = true;
+  }
+  generateReport.hidden = !reportReady || clarityChecklist.hidden;
+  clarityVehicleStatus.classList.toggle("confirmation-complete", Boolean(confirmed));
+  clarityIssuesStatus.classList.toggle("confirmation-complete", issuesConfirmed);
+  clarityReportStatus.classList.toggle("confirmation-complete", reportReady);
+  clarityReportStatus.textContent = clarityChecklist.hidden ? "" : reportReady
+    ? "Ready for your report."
+    : "Confirm both to continue.";
   showSimilarListings(confirmed);
   let identityChanged = false;
   if (confirmed) {
@@ -78,21 +103,20 @@ function showListingJson(listing) {
     showVehicleResearch(researchInput, matchingVin ? activeVinData : null);
     showDealBenchmark(output);
     showListingIssues(output);
-    showRepairCosts(output, userIssues, Boolean(post?.issuesVerified));
-    showClarityReport(output, userIssues, Boolean(post?.issuesVerified));
+    showRepairCosts(output, userIssues, issuesConfirmed);
+    if (reportReady && generate) showClarityReport(output, userIssues);
   } else {
     resetResearch();
     resetDealBenchmark();
     resetListingIssues();
     resetRepairCosts();
-    resetClarityReport();
   }
   if (post) {
     output.sellerIssues = post.issuesVerified
       ? post.issues.map((issue) => ({ ...issue, reviewed: true, status: "reviewed" }))
       : post.issues;
   }
-  output.issuesVerified = Boolean(post?.issuesVerified);
+  output.issuesVerified = issuesConfirmed;
   output.userAddedIssues = userIssues;
   issueReview.show(confirmed ? post : null, userIssues);
   listingJson.textContent = JSON.stringify(output, null, 2);
@@ -113,7 +137,7 @@ function parseMileage(value) {
 }
 
 function vehicleConfirmedMessage(vehicle) {
-  const message = "Vehicle confirmed with NHTSA.";
+  const message = "Vehicle found in the NHTSA database.";
   const miles = vehicle.mileageMiles;
   if (miles === null || miles === undefined) return message;
   const formatted = miles.toLocaleString("en-US") + (miles === 1 ? " mile" : " miles");
@@ -227,6 +251,7 @@ async function showListing() {
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
+  clarityChecklist.hidden = false;
   sellerPost.hidden = true;
   issueReview.reset();
   setStatus(verificationStatus, "");
@@ -377,6 +402,7 @@ async function showListing() {
     }
     description.textContent = "";
     activeListing = listingData;
+    setLookupStatus("listing", isSearch ? "Right-click preview" : "Open listing");
     const saved = getConfirmations(listingData);
     if (isSearch) saved.sourceTabUrl = tab.url;
     const postDescription = listingData.sellerDescription || "";

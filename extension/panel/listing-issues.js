@@ -54,6 +54,7 @@ const issueResults = new Map();
 let activeIssues = null;
 
 function resetListingIssues() {
+  setLookupStatus("gemini");
   activeIssues = null;
   listingIssues.hidden = true;
   listingIssuesStatus.textContent = "";
@@ -176,11 +177,13 @@ function showListingIssues(vehicle) {
 // Resolves to the problem cards shown, or null if the description couldn't be analyzed.
 async function loadSellerIssues(request, car, description, titleProblem) {
   if (!description) {
+    setLookupStatus("gemini", "Skipped because the listing has no description");
     listingIssuesStatus.textContent = "The seller didn’t write a description to analyze.";
     return [];
   }
 
   listingIssuesStatus.textContent = "Reading the seller’s description…";
+  setLookupStatus("gemini", "Loading…");
   try {
     if (!issueResults.has(request.key)) {
       issueResults.set(request.key, requestIssues(car, description).catch((error) => {
@@ -190,9 +193,12 @@ async function loadSellerIssues(request, car, description, titleProblem) {
     }
     const issues = await issueResults.get(request.key);
     if (activeIssues !== request) return [];
-    return renderIssues(issues, description, titleProblem);
-  } catch {
+    const concerns = renderIssues(issues, description, titleProblem);
+    setLookupStatus("gemini", "Loaded");
+    return concerns;
+  } catch (error) {
     if (activeIssues !== request) return [];
+    setLookupStatus("gemini", error.name === "TimeoutError" ? "Timed out" : "Could not analyze the listing");
     listingIssuesStatus.textContent = "We couldn’t analyze the seller’s description right now. Try again in a moment.";
     return null;
   }

@@ -86,6 +86,37 @@ body {
   font-size: 1rem;
 }
 
+#vehicleForm > h2,
+#reportSections .review-card-header h2 {
+  font-size: 1.25rem;
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.review-card-header h2,
+.review-card-minimized > .review-card-header {
+  margin: 0;
+}
+
+.review-card .review-card-toggle[type="button"] {
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.review-card-minimized > :not(.review-card-header) {
+  display: none;
+}
+
 .vehicle-preview {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -126,7 +157,10 @@ body {
   font-size: 1em;
 }
 
-.fuel-cost-savings {
+.fuel-cost-savings,
+#sellerIssues:has(#editIssues:not([hidden])) #userIssueStatus,
+.confirmation-complete,
+#vehicleForm:has(#confirmVehicle[hidden]) #verificationStatus {
   color: light-dark(#17652f, #86d89b);
 }
 
@@ -285,10 +319,10 @@ body {
 .review-card button {
   margin-top: 12px;
   padding: 7px 12px;
-  border: 1px solid transparent;
+  border: 1px solid CanvasText;
   border-radius: 6px;
-  background: #195cc9;
-  color: white;
+  background: Canvas;
+  color: CanvasText;
   font: inherit;
   font-weight: 600;
 }
@@ -297,10 +331,20 @@ body {
   opacity: 0.65;
 }
 
-.review-card button[type="button"] {
-  background: Canvas;
-  color: CanvasText;
-  border-color: GrayText;
+.review-card button.confirm-action {
+  background: CanvasText;
+  color: Canvas;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.panel-actions > button {
+  margin: 0;
 }
 
 .review-card button.remove-issue {

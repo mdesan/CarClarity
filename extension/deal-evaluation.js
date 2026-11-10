@@ -8,6 +8,7 @@
  */
 const mileageDiscountPer10k = 0.05;
 const maxMileageDiscount = 0.30;
+const fairPriceMargin = 0.125;
 
 function calculateDealRating(askingPrice, marketAvgPrice, mileageMiles, averageMileageMiles) {
   if (!Number.isFinite(askingPrice) || !Number.isFinite(marketAvgPrice) ||
@@ -28,19 +29,14 @@ function calculateDealRating(askingPrice, marketAvgPrice, mileageMiles, averageM
   const mileageDiscount = Math.min(maxMileageDiscount,
     Math.max(0, mileageGap ?? 0) / 10000 * mileageDiscountPer10k);
   const comparisonPrice = marketAvgPrice * (1 - mileageDiscount);
-  const lowerBound = Math.round(comparisonPrice * 0.90);
-  const upperBound = Math.round(comparisonPrice * 1.10);
+  const lowerBound = Math.round(comparisonPrice * (1 - fairPriceMargin));
+  const upperBound = Math.round(comparisonPrice * (1 + fairPriceMargin));
   const highPriceCutoff = Math.round(comparisonPrice * 1.20);
   let rating = "Within band";
-  let explanation = "The asking price is within the comparison band.";
   if (askingPrice < lowerBound) {
     rating = "Below band";
-    explanation = substantialGap && mileageGap > 0
-      ? "The asking price is below the comparison band, but the high mileage limits the comparison."
-      : "The asking price is below the comparison band. Condition, trim, and local prices can change how it compares.";
   } else if (askingPrice > upperBound) {
     rating = askingPrice > highPriceCutoff ? "Well above band" : "Above band";
-    explanation = "The asking price is above the comparison band.";
   }
   return {
     rating,
@@ -54,7 +50,6 @@ function calculateDealRating(askingPrice, marketAvgPrice, mileageMiles, averageM
     estimatedRange: {
       min: lowerBound,
       max: upperBound
-    },
-    explanation
+    }
   };
 }

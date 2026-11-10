@@ -1,5 +1,4 @@
 // Clarity report: a short summary built only from what the other sections already found.
-const clarityReportHint = document.getElementById("clarityReportHint");
 const clarityReportText = document.getElementById("clarityReportText");
 const dealPhrases = [
   "which is lower than similar cars",
@@ -18,7 +17,6 @@ let activeReport = null;
 
 function resetClarityReport() {
   activeReport = null;
-  clarityReportHint.hidden = true;
   clarityReportText.textContent = "";
 }
 
@@ -41,18 +39,14 @@ function listWords(items) {
   return items.slice(0, -1).join(", ") + lastJoin + items.at(-1);
 }
 
-function showClarityReport(vehicle, userIssues, issuesConfirmed) {
+function showClarityReport(vehicle, userIssues) {
   const observations = userIssues.map((issue) => issue.name);
   const key = JSON.stringify([vehicle.listingUrl, vehicle.year, vehicle.make, vehicle.model,
-    vehicle.mileageMiles, vehicle.askingPriceUsd, observations, issuesConfirmed]);
+    vehicle.mileageMiles, vehicle.askingPriceUsd, observations]);
   if (activeReport?.key === key) return;
   resetClarityReport();
   const request = { key };
   activeReport = request;
-  if (!issuesConfirmed) {
-    clarityReportHint.hidden = false;
-    return;
-  }
   clarityReportText.textContent = "Putting your report together…";
   buildClarityReport(request, vehicle, observations);
 }

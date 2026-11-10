@@ -11,7 +11,9 @@ const dealNeedle = document.getElementById("dealNeedle");
 const dealGaugePrice = document.getElementById("dealGaugePrice");
 const dealConfidence = document.getElementById("dealConfidence");
 const dealRange = document.getElementById("dealRange");
+const dealMileageAdjustment = document.getElementById("dealMileageAdjustment");
 const dealTakeaway = document.getElementById("dealTakeaway");
+const dealCaution = document.getElementById("dealCaution");
 const dealDetails = document.getElementById("dealDetails");
 const dealWarnings = document.getElementById("dealWarnings");
 let marketIndexRequest;
@@ -26,7 +28,6 @@ showDealRating.addEventListener("click", () => {
 
 function setDealRatingVisible(visible) {
   dealRating.hidden = !visible;
-  dealRange.hidden = !visible;
   showDealRating.textContent = visible ? "Hide rating" : "Show me anyway";
   showDealRating.setAttribute("aria-expanded", String(visible));
 }
@@ -64,19 +65,37 @@ function findMarketMatch(index, vehicle) {
 }
 
 function renderDealRating(result, usd, lowConfidence) {
-  const { rating, askingPrice, comparisonPrice, estimatedRange, highPriceCutoff, explanation, mileageDiscount, mileageGap } = result;
+  const { rating, askingPrice, comparisonPrice, estimatedRange, highPriceCutoff, mileageDiscount, mileageGap } = result;
   const { min, max } = estimatedRange;
   const edges = [min - comparisonPrice * 0.1, min, max, highPriceCutoff, highPriceCutoff + comparisonPrice * 0.1];
   const zone = ["Below band", "Within band", "Above band", "Well above band"].indexOf(rating);
   currentDealSummary = { zone, lowConfidence };
-  const label = [lowConfidence ? "Low price · Worth a closer look" : "Potential good deal",
+  let label = [lowConfidence ? "Low price · Worth a closer look" : "Low asking price",
     "Fair deal", "A little pricey", "Overpriced"][zone];
-  const takeaway = [
-    "Priced lower than similar cars. Check its condition before buying.",
+  let takeaway = [
+    "Proceed with caution. Ask why the price is low and check the car’s condition before buying.",
     "Priced about the same as similar cars.",
     "Priced a bit higher than similar cars.",
     "Priced much higher than similar cars."
   ][zone];
+  const edgeMargin = 0.02;
+  const fairEdge = zone === 0 ? min : max;
+  const fairGap = Math.abs(askingPrice - fairEdge);
+  const highGap = Math.abs(askingPrice - highPriceCutoff);
+  const nearFairRange = (zone === 0 || zone === 2) && fairGap <= fairEdge * edgeMargin;
+  if (nearFairRange) {
+    label = "Close to a fair price";
+    takeaway = "Only " + usd.format(fairGap) + (zone === 0 ? " below" : " above") +
+      " the estimated range.";
+  } else if (zone === 1 && askingPrice - min <= min * edgeMargin) {
+    takeaway = "Near the low end of the estimated range.";
+  } else if (zone === 1 && max - askingPrice <= max * edgeMargin) {
+    takeaway = "Near the high end of the estimated range.";
+  } else if ((zone === 2 || zone === 3) && highGap <= highPriceCutoff * edgeMargin) {
+    label = "On the edge of overpriced";
+    takeaway = askingPrice === highPriceCutoff ? "Right at the overpriced cutoff." :
+      "Only " + usd.format(highGap) + (zone === 2 ? " below" : " above") + " the overpriced cutoff.";
+  }
   const width = edges[zone + 1] - edges[zone];
   const progress = width > 0 ? (askingPrice - edges[zone]) / width : 0.5;
   const angle = -90 + 45 * (zone + Math.max(0.02, Math.min(0.98, progress)));
@@ -85,14 +104,13 @@ function renderDealRating(result, usd, lowConfidence) {
   dealScale.setAttribute("aria-label", dealGaugePrice.textContent + " asking price. " + label + ".");
   dealRatingLabel.textContent = label;
   dealTakeaway.textContent = takeaway;
+  dealCaution.hidden = !nearFairRange;
   dealConfidence.hidden = !lowConfidence;
-  dealRange.textContent = explanation + " Comparison band: " +
-    usd.format(estimatedRange.min) + "–" + usd.format(estimatedRange.max) +
-    (mileageDiscount ? " (10% either side of the mileage-adjusted benchmark)." :
-      " (10% either side of the ForCar average).");
+  dealRange.textContent = "Estimated price range " + usd.format(min) + "–" + usd.format(max);
+  dealMileageAdjustment.hidden = !mileageDiscount;
   if (mileageDiscount) {
-    dealRange.textContent += " The listing has " + Math.round(mileageGap).toLocaleString("en-US") +
-      " more miles than average, so the benchmark was lowered by " +
+    dealMileageAdjustment.textContent = "The listing has " + Math.round(mileageGap).toLocaleString("en-US") +
+      " more miles than average, so we lowered the estimate by " +
       (mileageDiscount * 100).toLocaleString("en-US", { maximumFractionDigits: 1 }) + "%.";
   }
   showDealRating.hidden = !lowConfidence;
@@ -108,6 +126,7 @@ function addBenchmarkRow(label, value) {
 }
 
 function resetDealBenchmark() {
+  setLookupStatus("forcar");
   dealRequest++;
   activeDealKey = null;
   currentDealSummary = null;
@@ -115,6 +134,7 @@ function resetDealBenchmark() {
   dealBenchmark.hidden = true;
   dealDetails.hidden = true;
   dealDetails.open = false;
+  dealMileageAdjustment.hidden = true;
   dealWarnings.hidden = true;
   dealWarnings.textContent = "";
   setDealRatingVisible(false);
@@ -141,7 +161,8 @@ async function showDealBenchmark(vehicle) {
   const lookup = "Lookup key: " + key + "\nAsking price: " + (Number.isFinite(ask) ? usd.format(ask) : "Unavailable");
   forcarDebug.hidden = false;
   forcarCalculation.textContent = lookup + "\nLoading bundled ForCar data…";
-  dealBenchmarkStatus.textContent = "Checking the bundled ForCar benchmark…";
+  dealBenchmarkStatus.textContent = "Checking prices for similar cars…";
+  setLookupStatus("forcar", "Loading…");
 
   try {
     if (!marketIndexRequest) {
@@ -154,17 +175,19 @@ async function showDealBenchmark(vehicle) {
     if (request !== dealRequest) return;
     const match = findMarketMatch(index, vehicle);
     if (!match) {
-      dealBenchmark.hidden = true;
+      dealBenchmarkStatus.textContent = "We couldn’t find enough similar cars to compare prices.";
+      setLookupStatus("forcar", "No usable match");
       const reason = "No usable ForCar benchmark for this make and model within two model years.";
       showUnavailableElements("Deal analysis", [reason]);
       forcarCalculation.textContent = lookup + "\n" + reason;
       return;
     }
     const hasAsk = Number.isFinite(ask) && ask > 0;
+    setLookupStatus("forcar", match.year === vehicle.year ? "Loaded" : "Loaded a nearby model year");
     if (hasAsk) addBenchmarkRow("Asking price", usd.format(ask));
     dealDetails.hidden = false;
-    if (match.year !== vehicle.year) addBenchmarkRow("Benchmark model year", String(match.year));
-    addBenchmarkRow("ForCar average ask", usd.format(match.averagePriceUsd));
+    if (match.year !== vehicle.year) addBenchmarkRow("Model year used", String(match.year));
+    addBenchmarkRow("Average asking price", usd.format(match.averagePriceUsd));
     if (match.listingCount != null) addBenchmarkRow("Listings in sample", match.listingCount.toLocaleString("en-US"));
     if (match.averageMileageMiles != null) addBenchmarkRow("Average mileage", match.averageMileageMiles.toLocaleString("en-US") + " mi");
     const difference = hasAsk ? ask - match.averagePriceUsd : null;
@@ -173,7 +196,7 @@ async function showDealBenchmark(vehicle) {
     if (match.listingCount == null) missing.push("Listings in sample — ForCar did not provide a count.");
     if (match.averageMileageMiles == null) missing.push("Average mileage — ForCar did not provide mileage.");
     const warnings = [];
-    if (match.year !== vehicle.year) warnings.push("benchmark uses model year " + match.year);
+    if (match.year !== vehicle.year) warnings.push("we used prices for the " + match.year + " model");
     if (!(match.listingCount >= 20)) warnings.push("fewer than 20 listings or unknown sample size");
     const title = vehicle.sellerSpecs?.titleStatus;
     if (title && title.toLowerCase() !== "clean") warnings.push("seller reports a " + title + " title");
@@ -184,10 +207,7 @@ async function showDealBenchmark(vehicle) {
       ? "The asking price is outside the usable comparison limits."
       : "A positive asking price is needed.";
     if (rating) {
-      const adjustedDifference = Math.round(ask - rating.comparisonPrice);
-      addBenchmarkRow(rating.mileageDiscount ? "Compared with adjusted benchmark" : "Compared with average",
-        adjustedDifference === 0 ? "About the same" :
-          usd.format(Math.abs(adjustedDifference)) + (adjustedDifference < 0 ? " below" : " above"));
+      addBenchmarkRow("Fair price range", "±" + fairPriceMargin * 100 + "% around our estimate");
       if (rating.mileageGap === null) warnings.push("mileage comparison unavailable");
       else if (rating.substantialGap) warnings.push("mileage differs substantially from the sample average");
       renderDealRating(rating, usd, warnings.length > 0);
@@ -196,7 +216,7 @@ async function showDealBenchmark(vehicle) {
       dealWarnings.textContent = warnings.length ? "Why confidence is low: " + warnings.join("; ") + "." : "";
     } else {
       missing.push("Deal rating — " + unavailable);
-      dealBenchmarkStatus.textContent = "";
+      dealBenchmarkStatus.textContent = "We couldn’t compare the asking price for this listing.";
     }
     showUnavailableElements("Deal analysis", missing);
     const formula = difference === null
@@ -227,7 +247,8 @@ async function showDealBenchmark(vehicle) {
   } catch {
     if (request !== dealRequest) return;
     activeDealKey = null;
-    dealBenchmark.hidden = true;
+    dealBenchmarkStatus.textContent = "Price data couldn’t load right now.";
+    setLookupStatus("forcar", "Could not load price data");
     const reason = "The bundled ForCar data could not be read.";
     showUnavailableElements("Deal analysis", [reason]);
     forcarCalculation.textContent = lookup + "\n" + reason;
