@@ -67,7 +67,7 @@ async function requestRepairCosts(car, problems) {
 }
 
 // Estimates start only after the buyer clicks Confirm issues.
-async function showRepairCosts(vehicle, userIssues, issuesConfirmed) {
+function showRepairCosts(vehicle, userIssues, issuesConfirmed) {
   const car = {
     year: vehicle.year,
     make: vehicle.make,
@@ -84,11 +84,19 @@ async function showRepairCosts(vehicle, userIssues, issuesConfirmed) {
     repairCostsHint.hidden = false;
     return;
   }
+  request.result = loadRepairCosts(request, car, observations);
+}
 
+// Used by the Clarity report. Resolves to { concerns, estimates }; estimates is null if pricing failed.
+function currentRepairResult() {
+  return activeRepair?.result ?? Promise.resolve(null);
+}
+
+async function loadRepairCosts(request, car, observations) {
   repairCosts.hidden = false;
   repairCostsStatus.textContent = "Estimating repair costs…";
   const concerns = await currentSellerConcerns();
-  if (activeRepair !== request) return;
+  if (activeRepair !== request) return null;
   // Only problems the car has now get a price, not past repairs.
   const problems = [
     ...(concerns || []).filter((issue) => issue.status === "current")
@@ -99,7 +107,7 @@ async function showRepairCosts(vehicle, userIssues, issuesConfirmed) {
     repairCostsStatus.textContent = concerns === null
       ? "We couldn’t read the seller’s description, and you didn’t add any issues, so there’s nothing to price yet."
       : "Nothing to price. The seller didn’t mention any current problems, and you didn’t add any issues.";
-    return;
+    return { concerns, estimates: [] };
   }
 
   const resultKey = JSON.stringify([car, problems]);
@@ -112,19 +120,21 @@ async function showRepairCosts(vehicle, userIssues, issuesConfirmed) {
     }
     // Things like "sold as is" matter, but they aren't repairs, so they don't get a price card.
     const estimates = (await repairResults.get(resultKey)).filter((estimate) => estimate.isRepair !== false);
-    if (activeRepair !== request) return;
+    if (activeRepair !== request) return null;
     repairCostsStatus.textContent = concerns === null
       ? "We couldn’t read the seller’s description, so only your observations are priced."
       : "";
     if (!estimates.length) {
       repairCostsStatus.textContent = "Nothing to price. None of the problems found are things a repair can fix.";
-      return;
+      return { concerns, estimates };
     }
     repairCostsList.append(...estimates.map(repairCard));
     showRepairTotal(estimates);
     repairCostsNote.hidden = false;
+    return { concerns, estimates };
   } catch {
-    if (activeRepair !== request) return;
+    if (activeRepair !== request) return null;
     repairCostsStatus.textContent = "We couldn’t estimate repair costs right now. Click Edit issues, then Confirm issues to try again.";
+    return { concerns, estimates: null };
   }
 }
