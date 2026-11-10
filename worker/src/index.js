@@ -80,51 +80,81 @@ async function estimateRepairs(car, { problems }, env) {
   return askGemini(env, REPAIR_PROMPT, REPAIR_SCHEMA, userMessage, "estimates");
 }
 
-// Sends one request to Gemini and returns its JSON, which must contain a list under `listField`.
-async function askGemini(env, systemPrompt, schema, userMessage, listField) {
-  let response;
-  try {
-    response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/" + env.GEMINI_MODEL + ":generateContent",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_KEY },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemPrompt }] },
-          contents: [{ role: "user", parts: [{ text: userMessage }] }],
-          generationConfig: {
-            responseMimeType: "application/json",
-            responseSchema: schema,
-            // These tasks don't need much thinking; keeps responses fast.
-            thinkingConfig: { thinkingLevel: "low" }
-          }
-        }),
-        signal: AbortSignal.timeout(30000)
-      }
-    );
-  } catch (error) {
-    const timedOut = error?.name === "TimeoutError";
-    return Response.json(
-      { error: timedOut ? "Gemini took too long to respond." : "Couldn't reach Gemini." },
-      { status: timedOut ? 504 : 502 }
-    );
-  }
-  if (!response.ok) {
-    // 429 means the free-tier limit was hit.
-    const detail = await response.json().catch(() => null);
-    return Response.json({
-      error: "Gemini request failed.",
-      geminiStatus: response.status,
-      geminiMessage: detail?.error?.message ?? null
-    }, { status: 502 });
-  }
+// Errors that usually go away on their own: busy (503), too many requests (429), server error (500).
+const RETRY_STATUSES = [429, 500, 503];
+// The extension stops waiting after 35 seconds, so every attempt must finish before then.
+const TOTAL_TIME_MS = 28000;
+const ATTEMPT_TIME_MS = 15000;
 
-  try {
-    const data = await response.json();
-    const result = JSON.parse(data.candidates[0].content.parts[0].text);
-    if (!Array.isArray(result[listField])) throw new Error("Missing " + listField);
-    return Response.json(result);
-  } catch {
-    return Response.json({ error: "Gemini returned an unexpected response." }, { status: 502 });
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Asks each model in GEMINI_MODELS in order. A busy model gets one retry, then the next model is tried.
+// Returns Gemini's JSON, which must contain a list under `listField`.
+async function askGemini(env, systemPrompt, schema, userMessage, listField) {
+  const models = env.GEMINI_MODELS.split(",").map((model) => model.trim()).filter(Boolean);
+  const deadline = Date.now() + TOTAL_TIME_MS;
+  let failure = Response.json({ error: "Gemini is busy right now." }, { status: 503 });
+
+  for (const model of models) {
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      const timeLeft = deadline - Date.now();
+      if (timeLeft < 2000) return failure;
+
+      let response;
+      try {
+        response = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_KEY },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+              contents: [{ role: "user", parts: [{ text: userMessage }] }],
+              generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: schema,
+                // These tasks don't need much thinking; keeps responses fast.
+                thinkingConfig: { thinkingLevel: "low" }
+              }
+            }),
+            signal: AbortSignal.timeout(Math.min(ATTEMPT_TIME_MS, timeLeft))
+          }
+        );
+      } catch (error) {
+        // A slow or unreachable model goes straight to the next one.
+        const timedOut = error?.name === "TimeoutError";
+        failure = Response.json(
+          { error: timedOut ? "Gemini took too long to respond." : "Couldn't reach Gemini.", model },
+          { status: timedOut ? 504 : 502 }
+        );
+        break;
+      }
+
+      if (!response.ok) {
+        const detail = await response.json().catch(() => null);
+        failure = Response.json({
+          error: "Gemini request failed.",
+          model,
+          geminiStatus: response.status,
+          geminiMessage: detail?.error?.message ?? null
+        }, { status: 502 });
+        // Other errors, like a bad key, won't be fixed by trying again.
+        if (!RETRY_STATUSES.includes(response.status)) return failure;
+        if (attempt === 1) await wait(1000);
+        continue;
+      }
+
+      try {
+        const data = await response.json();
+        const result = JSON.parse(data.candidates[0].content.parts[0].text);
+        if (!Array.isArray(result[listField])) throw new Error("Missing " + listField);
+        // Shows which model answered, for checking in the browser's Network tab.
+        return Response.json(result, { headers: { "X-Gemini-Model": model } });
+      } catch {
+        failure = Response.json({ error: "Gemini returned an unexpected response.", model }, { status: 502 });
+        break;
+      }
+    }
   }
+  return failure;
 }

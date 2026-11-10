@@ -19,6 +19,8 @@ const dealWarnings = document.getElementById("dealWarnings");
 let marketIndexRequest;
 let dealRequest = 0;
 let activeDealKey = null;
+// Read by the Clarity report: { zone: 0 below, 1 within, 2 above, 3 well above, lowConfidence }.
+let currentDealSummary = null;
 
 showDealRating.addEventListener("click", () => {
   setDealRatingVisible(dealRating.hidden);
@@ -67,6 +69,7 @@ function renderDealRating(result, usd, lowConfidence) {
   const { min, max } = estimatedRange;
   const edges = [min - comparisonPrice * 0.1, min, max, highPriceCutoff, highPriceCutoff + comparisonPrice * 0.1];
   const zone = ["Below band", "Within band", "Above band", "Well above band"].indexOf(rating);
+  currentDealSummary = { zone, lowConfidence };
   let label = [lowConfidence ? "Low price · Worth a closer look" : "Low asking price",
     "Fair deal", "A little pricey", "Overpriced"][zone];
   let takeaway = [
@@ -126,6 +129,7 @@ function resetDealBenchmark() {
   setLookupStatus("forcar");
   dealRequest++;
   activeDealKey = null;
+  currentDealSummary = null;
   showUnavailableElements("Deal analysis");
   dealBenchmark.hidden = true;
   dealDetails.hidden = true;

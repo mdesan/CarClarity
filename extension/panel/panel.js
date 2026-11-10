@@ -25,9 +25,7 @@ const clarityReportStatus = document.getElementById("clarityReportStatus");
 const clarityChecklist = document.getElementById("clarityChecklist");
 const generateReport = document.getElementById("generateReport");
 generateReport.addEventListener("click", () => {
-  clarityChecklist.hidden = true;
-  clarityReportStatus.classList.remove("confirmation-complete");
-  clarityReportStatus.textContent = "Report generation is coming soon.";
+  if (activeListing) showListingJson(activeListing, true);
 });
 const clarityVehicleStatus = document.getElementById("clarityVehicleStatus");
 const clarityIssuesStatus = document.getElementById("clarityIssuesStatus");
@@ -49,7 +47,7 @@ function saveConfirmation(section, value) {
   showListingJson(activeListing);
 }
 
-function showListingJson(listing) {
+function showListingJson(listing, generate = false) {
   const output = { ...listing };
   const { vehicle: confirmed, post, userIssues = [] } = getConfirmations(listing);
   // The report sections are built from the confirmed vehicle, so they wait for confirmation.
@@ -59,12 +57,17 @@ function showListingJson(listing) {
   clarityVehicleStatus.textContent = confirmed ? "✓" : "(Pending)";
   clarityIssuesStatus.textContent = issuesConfirmed ? "✓" : "(Pending)";
   const reportReady = Boolean(confirmed && issuesConfirmed);
-  if (!reportReady) clarityChecklist.hidden = false;
-  generateReport.hidden = !reportReady;
+  if (!reportReady) {
+    clarityChecklist.hidden = false;
+    resetClarityReport();
+  } else if (generate) {
+    clarityChecklist.hidden = true;
+  }
+  generateReport.hidden = !reportReady || clarityChecklist.hidden;
   clarityVehicleStatus.classList.toggle("confirmation-complete", Boolean(confirmed));
   clarityIssuesStatus.classList.toggle("confirmation-complete", issuesConfirmed);
   clarityReportStatus.classList.toggle("confirmation-complete", reportReady);
-  clarityReportStatus.textContent = reportReady
+  clarityReportStatus.textContent = clarityChecklist.hidden ? "" : reportReady
     ? "Ready for your report."
     : "Confirm both to continue.";
   showSimilarListings(confirmed);
@@ -101,6 +104,7 @@ function showListingJson(listing) {
     showDealBenchmark(output);
     showListingIssues(output);
     showRepairCosts(output, userIssues, issuesConfirmed);
+    if (reportReady && generate) showClarityReport(output, userIssues);
   } else {
     resetResearch();
     resetDealBenchmark();
@@ -243,6 +247,7 @@ async function showListing() {
   resetDealBenchmark();
   resetListingIssues();
   resetRepairCosts();
+  resetClarityReport();
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
