@@ -369,6 +369,16 @@ body {
   font-style: italic;
 }
 
+.issue-card .repair-price {
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.repair-total {
+  margin: 12px 0 0;
+  font-weight: 600;
+}
+
 details {
   margin-top: 8px;
 }

@@ -132,6 +132,7 @@ function renderIssues(allIssues, description, shownTitleProblem) {
   listingGoodSignsList.append(...goodSigns.map(goodSignCard));
   listingGoodSigns.hidden = !goodSigns.length;
   if (issues.length) listingIssuesNote.hidden = false;
+  return concerns;
 }
 
 async function requestIssues(car, description) {
@@ -145,7 +146,7 @@ async function requestIssues(car, description) {
   return (await response.json()).issues;
 }
 
-async function showListingIssues(vehicle) {
+function showListingIssues(vehicle) {
   const description = (vehicle.sellerDescription || "").trim().slice(0, maxDescriptionLength);
   const car = {
     year: vehicle.year,
@@ -169,25 +170,35 @@ async function showListingIssues(vehicle) {
     listingIssuesList.append(issueCard({ ...titleProblems[titleProblem], source: "Listed in Craigslist’s title status" }));
     listingIssuesNote.hidden = false;
   }
+  request.concerns = loadSellerIssues(request, car, description, titleProblem);
+}
 
+// Resolves to the problem cards shown, or null if the description couldn't be analyzed.
+async function loadSellerIssues(request, car, description, titleProblem) {
   if (!description) {
     listingIssuesStatus.textContent = "The seller didn’t write a description to analyze.";
-    return;
+    return [];
   }
 
   listingIssuesStatus.textContent = "Reading the seller’s description…";
   try {
-    if (!issueResults.has(key)) {
-      issueResults.set(key, requestIssues(car, description).catch((error) => {
-        issueResults.delete(key);
+    if (!issueResults.has(request.key)) {
+      issueResults.set(request.key, requestIssues(car, description).catch((error) => {
+        issueResults.delete(request.key);
         throw error;
       }));
     }
-    const issues = await issueResults.get(key);
-    if (activeIssues !== request) return;
-    renderIssues(issues, description, titleProblem);
+    const issues = await issueResults.get(request.key);
+    if (activeIssues !== request) return [];
+    return renderIssues(issues, description, titleProblem);
   } catch {
-    if (activeIssues !== request) return;
+    if (activeIssues !== request) return [];
     listingIssuesStatus.textContent = "We couldn’t analyze the seller’s description right now. Try again in a moment.";
+    return null;
   }
+}
+
+// Used by the Repair costs section, which waits for the Vehicle issues result.
+function currentSellerConcerns() {
+  return activeIssues?.concerns ?? Promise.resolve([]);
 }
