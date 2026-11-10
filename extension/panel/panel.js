@@ -79,11 +79,13 @@ function showListingJson(listing) {
     showDealBenchmark(output);
     showListingIssues(output);
     showRepairCosts(output, userIssues, Boolean(post?.issuesVerified));
+    showClarityReport(output, userIssues, Boolean(post?.issuesVerified));
   } else {
     resetResearch();
     resetDealBenchmark();
     resetListingIssues();
     resetRepairCosts();
+    resetClarityReport();
   }
   if (post) {
     output.sellerIssues = post.issuesVerified
@@ -221,6 +223,7 @@ async function showListing() {
   resetDealBenchmark();
   resetListingIssues();
   resetRepairCosts();
+  resetClarityReport();
   vehicleForm.hidden = true;
   reportSections.hidden = true;
   reportPending.hidden = true;
