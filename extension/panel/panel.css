@@ -168,6 +168,10 @@ body {
   color: light-dark(#a52323, #ff9999);
 }
 
+#clarityChecklist strong:not(.confirmation-complete) {
+  color: light-dark(#775600, #f5cf62);
+}
+
 #researchFuelEconomy select + div:not(:empty) {
   margin-top: 8px;
 }
@@ -235,6 +239,10 @@ body {
 .deal-gauge-caption {
   margin: 2px 0;
   text-align: center;
+}
+
+#dealCaution {
+  margin-top: 8px;
 }
 
 #dealDetails {
@@ -371,6 +379,18 @@ body {
 #urlCheck:empty,
 #description:empty {
   display: none;
+}
+
+#userIssueList:empty {
+  display: none;
+}
+
+#sellerIssues:has(#editIssues:not([hidden])) > h3 {
+  margin-bottom: 8px;
+}
+
+#editIssues {
+  margin-top: 0;
 }
 
 .review-card .error {
