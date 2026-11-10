@@ -68,7 +68,7 @@ function showListingJson(listing, generate = false) {
   clarityIssuesStatus.classList.toggle("confirmation-complete", issuesConfirmed);
   clarityReportStatus.classList.toggle("confirmation-complete", reportReady);
   clarityReportStatus.textContent = clarityChecklist.hidden ? "" : reportReady
-    ? "Ready for your report."
+    ? "Your report is ready to be generated."
     : "Confirm both to continue.";
   showSimilarListings(confirmed);
   let identityChanged = false;

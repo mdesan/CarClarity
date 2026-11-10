@@ -16,7 +16,9 @@ function setupIssueReview(getCurrentConfirmations, saveConfirmation, setStatus) 
     addIssueForm.hidden = locked;
     confirmIssues.hidden = locked;
     editIssues.hidden = !locked;
-    if (locked) setStatus(userIssueStatus, "Issues confirmed.");
+    if (locked) setStatus(userIssueStatus, userIssues.length
+      ? "Issues confirmed."
+      : "Confirmed with no observations.");
     for (const issue of userIssues) {
       appendUserIssue(issue, locked);
     }
