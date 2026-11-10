@@ -1,7 +1,7 @@
 {
   "name": "CarClarity",
-  "description": "Base Level Extension",
-  "version": "1.0",
+  "description": "Car shopping with clarity.",
+  "version": "v1.0 Beta",
   "manifest_version": 3,
   "permissions": ["activeTab", "scripting", "sidePanel", "contextMenus", "storage"],
   "host_permissions": [

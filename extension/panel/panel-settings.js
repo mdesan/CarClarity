@@ -25,14 +25,14 @@ function showUnavailableElements(section, messages = []) {
   noUnavailableElements.hidden = unavailableBySection.size > 0;
 }
 
-function showDebugSections(enabled) {
-  debugMode.checked = enabled;
-  debugSections.hidden = !enabled;
+function updateDebugVisibility() {
+  debugSections.hidden = !debugMode.checked || document.getElementById("formatted").hidden;
 }
 
-showDebugSections(localStorage.getItem(debugModeKey) === "true");
+debugMode.checked = localStorage.getItem(debugModeKey) === "true";
+updateDebugVisibility();
 
 debugMode.addEventListener("change", () => {
-  showDebugSections(debugMode.checked);
+  updateDebugVisibility();
   localStorage.setItem(debugModeKey, String(debugMode.checked));
 });

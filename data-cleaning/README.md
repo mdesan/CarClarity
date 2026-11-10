@@ -24,6 +24,16 @@ python data-cleaning/build_forcar_bundle.py datasets/ForCar/used-car-prices-by-m
 
 The bundle uses asking-price averages, sample counts, and average mileage. Source: [ForCar Open Data](https://forcar.org/open-data/) ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)).
 
+CarClarity lowers the benchmark by 5% per 10,000 miles above the ForCar sample average, capped at 30%. This is a comparison heuristic. The aggregate ForCar rows lack individual price and mileage pairs for fitting a model-specific rate. Research documents mileage-related price changes and models separate depreciation curves for different vehicle configurations. [Retail odometer study](https://www.nber.org/system/files/working_papers/w18820/w18820.pdf) · [Vehicle-specific depreciation study](https://www.nber.org/system/files/working_papers/w21441/w21441.pdf)
+
+To regenerate the fuel comparison bundle, download the [FuelEconomy.gov vehicles CSV archive](https://www.fueleconomy.gov/feg/download.shtml) and run:
+
+```bash
+python data-cleaning/build_fuel_benchmarks.py vehicles.csv.zip > extension/data/fuel-class-benchmarks.json
+```
+
+The bundle stores the median combined MPG and configuration count by model year, EPA size class, and primary fuel grade. It requires at least five single-fuel gasoline or diesel configurations per group.
+
 - `output/forcar_cleaned.json` or `output/craigslist_cleaned.json`: normalized rows.
 - `output/forcar_quality_report.json` or `output/craigslist_quality_report.json`: row counts, exact duplicates removed, and up to 100 rejection examples.
 

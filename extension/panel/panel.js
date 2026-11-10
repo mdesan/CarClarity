@@ -233,6 +233,7 @@ async function showListing() {
   details.replaceChildren();
   scrapedDetails.hidden = true;
   formatted.hidden = true;
+  updateDebugVisibility();
   listingJson.textContent = "";
   description.textContent = "";
   previewLink.hidden = true;
@@ -393,6 +394,7 @@ async function showListing() {
     sellerPost.hidden = false;
     scrapedDetails.hidden = false;
     formatted.hidden = false;
+    updateDebugVisibility();
   } catch {
     if (request !== latestRequest) return;
     description.textContent = "Could not read the listing details.";

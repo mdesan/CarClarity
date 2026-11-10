@@ -23,7 +23,7 @@ function engineLabel(displacement, cylinderCount) {
   const liters = positiveNumber(displacement);
   const cylinders = positiveNumber(cylinderCount);
   const parts = [];
-  if (liters) parts.push(liters + " L");
+  if (liters) parts.push(liters.toLocaleString("en-US", { maximumFractionDigits: 1 }) + " L");
   if (cylinders) parts.push(cylinders + " cylinders");
   return parts.join(", ") || null;
 }
@@ -173,7 +173,12 @@ async function lookUpFuelEconomy(vehicle, variant, signal, vinData) {
     const source = { name: "FuelEconomy.gov (model configurations)", url: "https://www.fueleconomy.gov/feg/findacar.shtml" };
     if (compatible && (exactModel || records.length > 1) && sharedRating) {
       if (plausible.length === 1) return options[0];
-      return { ...options[0], id: null, specs: sharedFuelSpecs(plausible), source };
+      const savings = options[0].fiveYearFuelSavingsUsd;
+      return {
+        ...options[0], id: null, specs: sharedFuelSpecs(plausible), source,
+        fiveYearFuelSavingsUsd: options.every((option) => option.fiveYearFuelSavingsUsd === savings)
+          ? savings : null
+      };
     }
     return {
       ...ambiguous,
@@ -199,9 +204,13 @@ function fuelSpecs(record, commonOnly = false) {
   if (commonOnly && transmission?.startsWith("Auto")) transmission = "Automatic";
   return {
     bodyStyle,
+    epaClass: vehicleClass.trim() || null,
+    comparisonFuel: !record.fuelType2?.trim() && fuelKind(record.atvType) !== "plug-in hybrid"
+      ? record.fuelType1 || null : null,
     engine: engineLabel(record.displ, record.cylinders),
     transmission,
     drivetrain: record.drive || null,
+    electrification: record.atvType || null,
     fuelType: record.fuelType1 || null
   };
 }
@@ -210,10 +219,13 @@ function fuelRatings(record, id) {
   const cityMpg = positiveNumber(record.city08);
   const highwayMpg = positiveNumber(record.highway08);
   const combinedMpg = positiveNumber(record.comb08);
+  const savings = record.youSaveSpend;
+  const fiveYearFuelSavingsUsd = savings == null || savings === "" ? NaN : Number(savings);
   return {
     status: cityMpg || highwayMpg || combinedMpg ? "available" : "unavailable",
     reason: "No fuel economy ratings were returned for this configuration.",
     cityMpg, highwayMpg, combinedMpg,
+    fiveYearFuelSavingsUsd: Number.isFinite(fiveYearFuelSavingsUsd) ? fiveYearFuelSavingsUsd : null,
     unit: record.fuelType1 === "Electricity" ? "MPGe" : "MPG",
     specs: fuelSpecs(record),
     source: { name: "FuelEconomy.gov", url: "https://www.fueleconomy.gov/feg/noframes/" + encodeURIComponent(id) + ".shtml" }
@@ -264,7 +276,7 @@ async function researchVehicle(vehicle, vinData) {
   ]);
   const specs = {};
   const specSources = {};
-  for (const field of ["bodyStyle", "engine", "transmission", "drivetrain", "fuelType"]) {
+  for (const field of ["bodyStyle", "engine", "transmission", "drivetrain", "fuelType", "seats"]) {
     specs[field] = vinData?.specs?.[field] || fuel.specs?.[field] || null;
     specSources[field] = vinData?.specs?.[field] ? "NHTSA VIN decode" : fuel.specs?.[field] ? fuel.source.name : null;
   }
@@ -276,10 +288,15 @@ async function researchVehicle(vehicle, vinData) {
   }
   if (fuel.source) sources.push(fuel.source);
   return {
-    year: vehicle.year, make: vehicle.make, model: vehicle.model,
+    year: vehicle.year, make: vehicle.make, model: vehicle.model, trim: vehicle.trim,
+    electrification: vinData?.specs?.electrification || fuel.specs?.electrification || null,
     ...specs, specSources,
     cityMpg: fuel.cityMpg ?? null, highwayMpg: fuel.highwayMpg ?? null, combinedMpg: fuel.combinedMpg ?? null,
     fuelEconomyUnit: fuel.unit || "MPG", fuelEconomyStatus: fuel.status,
+    fiveYearFuelSavingsUsd: fuel.fiveYearFuelSavingsUsd ?? null,
+    fuelEconomyClass: fuel.specs?.epaClass ?? null,
+    fuelEconomyFuelType: fuel.specs?.comparisonFuel ?? null,
+    fuelEconomyElectrification: fuel.specs?.electrification ?? null,
     fuelEconomyNote: fuel.status === "available" ? null : fuel.reason,
     fuelEconomyOptions: fuel.options || [],
     fuelEconomyVehicleId: fuel.id ?? null,

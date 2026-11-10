@@ -6,6 +6,13 @@ body {
   padding-left: 20px;
 }
 
+#debugSections {
+  margin: 8px 0;
+  padding: 8px 10px;
+  border: 1px solid GrayText;
+  border-radius: 8px;
+}
+
 .listing-panel {
   margin: 16px;
   font: 14px system-ui, sans-serif;
@@ -21,14 +28,10 @@ body {
 
 .listing-panel.unsupported-popup {
   width: 260px;
-  color-scheme: dark;
-  background: black;
-  color: white;
 }
 
 .unsupported-popup .review-card {
   margin-bottom: 0;
-  border-color: #666;
 }
 
 .unsupported-popup .review-card p:last-child {
@@ -103,15 +106,51 @@ body {
   margin: 0;
 }
 
-#researchSpecs small {
+#researchExtraSpecs small,
+#researchFuelEconomy small {
   display: block;
   color: GrayText;
 }
 
-#researchSpecs select {
+.overview-specs {
+  margin: 8px 0;
+  line-height: 1.45;
+}
+
+#researchFuelEconomy {
+  margin: 12px 0;
+}
+
+#researchFuelEconomy h3 {
+  margin: 0 0 4px;
+  font-size: 1em;
+}
+
+.fuel-cost-savings {
+  color: light-dark(#17652f, #86d89b);
+}
+
+.fuel-cost-extra {
+  color: light-dark(#a52323, #ff9999);
+}
+
+#researchFuelEconomy select + div:not(:empty) {
+  margin-top: 8px;
+}
+
+#researchFuelEconomy select {
   width: 100%;
   margin-top: 6px;
   font: inherit;
+}
+
+#researchSpecGuide,
+#researchSourcesDetails {
+  margin-top: 8px;
+}
+
+#researchExtraSpecs:not(:empty) {
+  margin-top: 8px;
 }
 
 #researchStatus:empty {
@@ -138,28 +177,66 @@ body {
   font-weight: 600;
 }
 
-.deal-rating-label {
-  font-weight: 700;
+#researchComplaintsSection {
+  margin: 14px 0 10px;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, CanvasText 22%, Canvas);
+  font-size: 0.9em;
+}
+
+#researchComplaintsSection h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+#researchComplaintsSection p,
+#researchComplaintsSection ul {
+  margin: 6px 0 0;
+}
+
+#researchComplaintsSection ul {
+  padding-inline-start: 18px;
+}
+
+.deal-gauge-caption {
+  margin: 2px 0;
+  text-align: center;
+}
+
+#dealBenchmarkRows {
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 6px 12px;
+}
+
+#dealBenchmarkRows dd {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .deal-scale {
-  position: relative;
-  height: 10px;
-  margin: 12px 6px;
-  border-radius: 6px;
-  background: linear-gradient(to right, #30834b 25%, #bd891f 25% 75%, #c34848 75%);
+  display: block;
+  width: 100%;
+  max-width: 230px;
+  margin: 8px auto 0;
+  fill: CanvasText;
 }
 
-.deal-marker {
-  position: absolute;
-  left: var(--asking-position);
-  top: 50%;
-  width: 12px;
-  height: 18px;
-  transform: translate(-50%, -50%);
-  border: 2px solid Canvas;
-  border-radius: 5px;
-  background: CanvasText;
+.deal-arc {
+  fill: none;
+  stroke-width: 14;
+  stroke-dasharray: 25 75;
+}
+
+.deal-arc-below { stroke: #80868b; }
+.deal-arc-within { stroke: #30834b; stroke-dashoffset: -25; }
+.deal-arc-above { stroke: #bd891f; stroke-dashoffset: -50; }
+.deal-arc-high { stroke: #c34848; stroke-dashoffset: -75; }
+
+#dealNeedle {
+  stroke: CanvasText;
+  stroke-width: 3;
+  stroke-linecap: round;
 }
 
 .post-description {

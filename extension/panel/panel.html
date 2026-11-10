@@ -57,10 +57,15 @@
       <section id="researchOverview" class="review-card" hidden>
         <h2>Vehicle overview</h2>
         <p id="researchStatus" role="status"></p>
-        <dl id="researchSpecs" class="vehicle-preview"></dl>
-        <details>
+        <p id="researchSpecs" class="overview-specs" hidden></p>
+        <div id="researchFuelEconomy" hidden></div>
+        <details id="researchSpecGuide" hidden>
           <summary>What do these specs mean?</summary>
-          <p>Drivetrain tells you which wheels get power. Engine size in liters describes the volume inside the cylinders. MPG means miles per gallon. MPGe is the energy-equivalent rating for electric driving.</p>
+          <dl id="researchExtraSpecs" class="vehicle-preview"></dl>
+          <p><strong>Drivetrain.</strong> Front- and rear-wheel drive power one pair of wheels. All-wheel drive can power both pairs. Four-wheel drive is often used off-road.</p>
+          <p><strong>Transmission.</strong> An automatic changes gears for you. With a manual, you change gears yourself.</p>
+          <p><strong>Engine size.</strong> Engine size is measured in liters (ex. 2.4 L).</p>
+          <p><strong>Fuel economy.</strong> MPG tells you how far a car can go on a gallon of gas (ex. 30 MPG means about 30 miles per gallon). MPGe is a similar rating for electric driving.</p>
         </details>
         <details id="researchSourcesDetails" hidden>
           <summary>Research sources</summary>
@@ -85,7 +90,7 @@
           <ul id="researchComplaints"></ul>
         </section>
         <details id="researchRecallsSection" hidden>
-          <summary id="researchRecallsSummary">Model recall campaigns</summary>
+          <summary id="researchRecallsSummary">Possible model recall campaigns</summary>
           <p>These campaigns apply to the model, not necessarily this car.</p>
           <div id="researchRecalls"></div>
         </details>
@@ -128,10 +133,17 @@
           <p id="dealBenchmarkStatus" role="status"></p>
           <button id="showDealRating" type="button" aria-controls="dealRating" aria-expanded="false" hidden>Show me anyway</button>
           <div id="dealRating" hidden>
-            <p id="dealRatingLabel" class="deal-rating-label"></p>
-            <div id="dealScale" class="deal-scale" role="img">
-              <span class="deal-marker" aria-hidden="true"></span>
-            </div>
+            <h3>Price comparison</h3>
+            <svg id="dealScale" class="deal-scale" viewBox="0 0 220 120" role="img">
+              <path class="deal-arc deal-arc-below" d="M 20 104 A 90 90 0 0 1 200 104" pathLength="100"></path>
+              <path class="deal-arc deal-arc-within" d="M 20 104 A 90 90 0 0 1 200 104" pathLength="100"></path>
+              <path class="deal-arc deal-arc-above" d="M 20 104 A 90 90 0 0 1 200 104" pathLength="100"></path>
+              <path class="deal-arc deal-arc-high" d="M 20 104 A 90 90 0 0 1 200 104" pathLength="100"></path>
+              <line id="dealNeedle" x1="110" y1="104" x2="110" y2="28"></line>
+              <circle cx="110" cy="104" r="5"></circle>
+            </svg>
+            <p class="deal-gauge-caption"><strong id="dealGaugePrice"></strong> · <span id="dealRatingLabel"></span></p>
+            <p id="dealConfidence" class="deal-gauge-caption" hidden>Low confidence</p>
             <p id="dealRange"></p>
           </div>
           <dl id="dealBenchmarkRows" class="vehicle-preview"></dl>
@@ -170,6 +182,7 @@
     </details>
     <details id="researchDebug" hidden>
       <summary>Vehicle research</summary>
+      <pre id="fuelComparisonDebug"></pre>
       <pre id="researchJson"></pre>
     </details>
     <details id="complaintDebug" hidden>
