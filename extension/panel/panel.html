@@ -7,62 +7,62 @@
   </head>
   <body class="listing-panel">
     <header class="panel-header">
-      <h1>CarClarity</h1>
+      <h1>🚗 CarClarity</h1>
       <details class="panel-settings">
-        <summary aria-label="Settings" title="Settings">⚙︎</summary>
+        <summary aria-label="Settings" title="Settings">⚙️</summary>
         <div class="settings-menu">
-          <label><input id="debugMode" type="checkbox"> Debug mode</label>
+          <label><input id="debugMode" type="checkbox"> 🛠️ Debug mode</label>
           <p>Show the seller post, scraped details, and formatted data.</p>
         </div>
       </details>
     </header>
-    <p id="urlCheck">Loading website...</p>
+    <p id="urlCheck">🌐 Loading website...</p>
     <p id="description" role="status"></p>
     <p id="previewTimer" role="status" hidden>
       <span id="previewSpinner" aria-hidden="true" hidden></span>
       <span id="previewTimerText"></span>
     </p>
     <form id="vehicleForm" class="review-card" hidden novalidate>
-      <h2>Vehicle details</h2>
+      <h2>🚙 Vehicle details</h2>
       <p id="identitySource"></p>
       <dl id="vehiclePreview" class="vehicle-preview">
-        <dt>Year</dt><dd id="previewYear"></dd>
-        <dt>Make</dt><dd id="previewMake"></dd>
-        <dt>Model</dt><dd id="previewModel"></dd>
-        <dt>Trim</dt><dd id="previewTrim"></dd>
-        <dt>Mileage</dt><dd id="previewMileage"></dd>
+        <dt>📅 Year</dt><dd id="previewYear"></dd>
+        <dt>🏭 Make</dt><dd id="previewMake"></dd>
+        <dt>🚘 Model</dt><dd id="previewModel"></dd>
+        <dt>✨ Trim</dt><dd id="previewTrim"></dd>
+        <dt>🛣️ Mileage</dt><dd id="previewMileage"></dd>
       </dl>
       <fieldset id="vehicleFields" aria-label="Year, make, model, trim, and mileage" hidden>
-        <label for="year">Year</label>
+        <label for="year">📅 Year</label>
         <input id="year" inputmode="numeric" maxlength="4" required>
-        <label for="make">Make</label>
+        <label for="make">🏭 Make</label>
         <input id="make" required>
-        <label for="model">Model</label>
+        <label for="model">🚘 Model</label>
         <input id="model" list="vehicleModels" required>
         <datalist id="vehicleModels"></datalist>
-        <label for="trim">Trim</label>
+        <label for="trim">✨ Trim</label>
         <input id="trim" placeholder="Optional – e.g. XLE">
-        <label for="mileage">Mileage</label>
+        <label for="mileage">🛣️ Mileage</label>
         <input id="mileage" inputmode="numeric" placeholder="Optional – e.g. 85,000">
       </fieldset>
       <div class="panel-actions">
-        <button id="confirmVehicle" class="confirm-action" type="submit">Confirm vehicle</button>
-        <button id="editVehicle" type="button">Edit vehicle</button>
+        <button id="confirmVehicle" class="confirm-action" type="submit">✅ Confirm vehicle</button>
+        <button id="editVehicle" type="button">✏️ Edit vehicle</button>
       </div>
       <p id="verificationStatus" role="status"></p>
     </form>
 
-    <p id="reportPending" hidden>Confirm vehicle details to continue.</p>
+    <p id="reportPending" hidden>⏳ Confirm vehicle details to continue.</p>
 
     <!-- Report sections. Shown only after the buyer confirms the vehicle (panel.js toggles #reportSections). -->
     <div id="reportSections" hidden>
       <section id="researchOverview" class="review-card" hidden>
-        <h2>Vehicle overview</h2>
+        <h2>📋 Vehicle overview</h2>
         <p id="researchStatus" role="status"></p>
         <p id="researchSpecs" class="overview-specs" hidden></p>
         <div id="researchFuelEconomy" hidden></div>
         <details id="researchSpecGuide" hidden>
-          <summary>What do these specs mean?</summary>
+          <summary>⛽ What do these specs mean?</summary>
           <dl id="researchExtraSpecs" class="vehicle-preview"></dl>
           <p><strong>Drivetrain.</strong> Front- and rear-wheel drive power one pair of wheels. All-wheel drive can power both pairs. Four-wheel drive is often used off-road.</p>
           <p><strong>Transmission.</strong> An automatic changes gears for you. With a manual, you change gears yourself.</p>
@@ -70,42 +70,42 @@
           <p><strong>Fuel economy.</strong> MPG tells you how far a car can go on a gallon of gas (ex. 30 MPG means about 30 miles per gallon). MPGe is a similar rating for electric driving.</p>
         </details>
         <details id="researchSourcesDetails" hidden>
-          <summary>Research sources</summary>
+          <summary>📚 Research sources</summary>
           <ul id="researchSources"></ul>
         </details>
       </section>
       <section class="review-card">
-        <h2>Vehicle issues</h2>
+        <h2>⚠️ Vehicle issues</h2>
         <section id="listingIssues" hidden>
-          <h3>What the seller mentioned</h3>
+          <h3>📝 What the seller mentioned</h3>
           <p id="listingIssuesStatus" role="status"></p>
           <ul id="listingIssuesList" class="issue-cards"></ul>
           <section id="listingGoodSigns" hidden>
-            <h4>Good signs, according to the seller</h4>
+            <h4>👍 Good signs, according to the seller</h4>
             <ul id="listingGoodSignsList" class="issue-cards"></ul>
           </section>
           <p id="listingIssuesNote" hidden>Based on what the seller wrote. Always have a mechanic inspect the car.</p>
         </section>
         <section id="researchComplaintsSection" hidden>
-          <h3>Worth checking</h3>
+          <h3>🚨 Worth checking</h3>
           <p>These components stood out in NHTSA complaints for this model year. One report can mention several components.</p>
           <ul id="researchComplaints"></ul>
         </section>
         <details id="researchRecallsSection" hidden>
-          <summary id="researchRecallsSummary">Possible model recall campaigns</summary>
+          <summary id="researchRecallsSummary">📢 Possible model recall campaigns</summary>
           <p>These campaigns apply to the model, not necessarily this car.</p>
           <div id="researchRecalls"></div>
         </details>
         <p id="vinRecallCheck"></p>
       </section>
       <section class="review-card">
-        <h2>Repair costs</h2>
+        <h2>🔧 Repair costs</h2>
         <p id="repairCostsHint" hidden>Add anything you noticed, then click Confirm issues to see repair estimates.</p>
         <section id="sellerIssues" hidden>
-          <h3>Your observations</h3>
+          <h3>👀 Your observations</h3>
           <ul id="userIssueList"></ul>
           <form id="addIssueForm">
-            <label for="issueChoice">Issue you noticed</label>
+            <label for="issueChoice">🔍 Issue you noticed</label>
             <select id="issueChoice" required>
               <option value="">Choose an issue</option>
               <option value="bumper-damage">Bumper damage</option>
@@ -124,15 +124,15 @@
               <option value="other">Other issue</option>
             </select>
             <div class="panel-actions">
-              <button id="confirmIssues" class="confirm-action" type="button">Confirm issues</button>
-              <button type="submit">Add issue</button>
+              <button id="confirmIssues" class="confirm-action" type="button">✅ Confirm issues</button>
+              <button type="submit">➕ Add issue</button>
             </div>
           </form>
-          <button id="editIssues" type="button" hidden>Edit issues</button>
+          <button id="editIssues" type="button" hidden>✏️ Edit issues</button>
           <p id="userIssueStatus" role="status"></p>
         </section>
         <section id="repairCosts" hidden>
-          <h3>Estimated repair costs</h3>
+          <h3>💸 Estimated repair costs</h3>
           <p id="repairCostsStatus" role="status"></p>
           <ul id="repairCostsList" class="issue-cards"></ul>
           <p id="repairCostsTotal" class="repair-total" hidden></p>
@@ -140,10 +140,10 @@
         </section>
       </section>
       <section id="dealAnalysis" class="review-card" hidden>
-        <h2>Deal analysis</h2>
+        <h2>💲 Deal analysis</h2>
         <div>
           <p id="dealBenchmarkStatus" role="status"></p>
-          <button id="showDealRating" type="button" aria-controls="dealRating" aria-expanded="false" hidden>Show me anyway</button>
+          <button id="showDealRating" type="button" aria-controls="dealRating" aria-expanded="false" hidden>📊 Show me anyway</button>
           <div id="dealRating" hidden>
             <svg id="dealScale" class="deal-scale" viewBox="0 0 220 120" role="img">
               <path class="deal-arc deal-arc-below" d="M 20 104 A 90 90 0 0 1 200 104" pathLength="100"></path>
@@ -160,7 +160,7 @@
             <p id="dealCaution" class="deal-gauge-caption" hidden>Check the car’s condition and compare a few listings before making an offer.</p>
           </div>
           <details id="dealDetails" hidden>
-            <summary>How we compared prices</summary>
+            <summary>📈 How we compared prices</summary>
             <p id="dealWarnings" hidden></p>
             <p id="dealMileageAdjustment" hidden></p>
             <dl id="dealBenchmarkRows" class="vehicle-preview"></dl>
@@ -169,26 +169,26 @@
         </div>
       </section>
       <section class="review-card">
-        <h2>Clarity report</h2>
+        <h2>🧾 Clarity report</h2>
         <ul id="clarityChecklist">
           <li>Vehicle details <strong id="clarityVehicleStatus"></strong></li>
           <li>Observations <strong id="clarityIssuesStatus"></strong></li>
         </ul>
         <p id="clarityReportStatus" role="status"></p>
-        <button id="generateReport" class="confirm-action" type="button" hidden>Generate report</button>
+        <button id="generateReport" class="confirm-action" type="button" hidden>📄 Generate report</button>
         <p id="clarityReportText" role="status"></p>
       </section>
       <section class="review-card">
-        <h2>Similar listings</h2>
+        <h2>🔎 Similar listings</h2>
         <p id="similarListingsMessage"></p>
         <ul id="similarListingsLinks"></ul>
       </section>
     </div>
 
-    <a id="previewLink" target="_blank" rel="noopener noreferrer" hidden>Open original listing</a>
+    <a id="previewLink" target="_blank" rel="noopener noreferrer" hidden>🔗 Open original listing</a>
     <div id="debugSections" hidden>
     <details>
-      <summary>Lookup status</summary>
+      <summary>📡 Lookup status</summary>
       <ul>
         <li>Listing: <span id="lookup-listing"></span></li>
         <li>NHTSA safety data: <span id="lookup-nhtsa"></span></li>
@@ -198,35 +198,35 @@
       </ul>
     </details>
     <details>
-      <summary>Unavailable panel elements</summary>
+      <summary>🧩 Unavailable panel elements</summary>
       <p id="noUnavailableElements">No unavailable panel elements to report.</p>
       <ul id="unavailableElements"></ul>
     </details>
     <details id="sellerPost" hidden>
-      <summary>Seller post</summary>
+      <summary>🗒️ Seller post</summary>
       <p id="previewPostTitle" class="post-title"></p>
       <p id="previewPostDescription" class="post-description"></p>
     </details>
     <details id="scrapedDetails" hidden>
-      <summary>Craigslist listing details</summary>
+      <summary>🕷️ Craigslist listing details</summary>
       <ul id="details"></ul>
     </details>
     <details id="formatted" hidden>
-      <summary>Formatted listing data</summary>
+      <summary>🧾 Formatted listing data</summary>
       <pre id="listingJson"></pre>
     </details>
     <details id="researchDebug" hidden>
-      <summary>Vehicle research</summary>
+      <summary>🔬 Vehicle research</summary>
       <pre id="fuelComparisonDebug"></pre>
       <pre id="researchJson"></pre>
     </details>
     <details id="complaintDebug" hidden>
-      <summary>Owner complaints not highlighted</summary>
+      <summary>📋 Owner complaints not highlighted</summary>
       <p id="complaintDebugStatus"></p>
       <ul id="complaintDebugRows"></ul>
     </details>
     <details id="forcarDebug" hidden>
-      <summary>ForCar calculation</summary>
+      <summary>🧮 ForCar calculation</summary>
       <pre id="forcarCalculation"></pre>
     </details>
     </div>
